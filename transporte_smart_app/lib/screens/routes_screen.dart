@@ -30,10 +30,18 @@ class _RoutesScreenState extends State<RoutesScreen> {
       final String data = await rootBundle.loadString('assets/rutas.json');
       final Map<String, dynamic> jsonMap = jsonDecode(data);
 
-      final List<AppRoute> loadedRoutes = jsonMap.entries.map((entry) {
-        // Usamos el 'factory constructor' que creamos en el modelo
-        return AppRoute.fromJson(entry.key, entry.value as Map<String, dynamic>);
-      }).toList();
+      final List<AppRoute> loadedRoutes = []; // Lista vacía
+
+      // Usamos un bucle 'for' en lugar de 'map'
+      for (var entry in jsonMap.entries) {
+        try {
+          // Intentamos convertir cada ruta individualmente
+          final route = AppRoute.fromJson(entry.key, entry.value as Map<String, dynamic>);
+          loadedRoutes.add(route);
+        } catch (e) {
+          print("Error al cargar la ruta ${entry.key}: $e. Omitiendo.");
+        }
+      }
 
       setState(() {
         _allRoutes = loadedRoutes;
@@ -41,7 +49,7 @@ class _RoutesScreenState extends State<RoutesScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      print("Error cargando rutas: $e");
+      print("Error GIGANTE cargando rutas.json: $e");
       setState(() {
         _isLoading = false;
       });
