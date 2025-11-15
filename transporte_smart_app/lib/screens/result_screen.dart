@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/models/route_model.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
+import 'package:transporte_smart_app/screens/map_screen.dart';
 
 class ResultScreen extends StatefulWidget {
   // Recibirá la ruta que queremos mostrar
@@ -22,84 +23,133 @@ class _ResultScreenState extends State<ResultScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surface, // Fondo bg-[#1C1917]
-      body: CustomScrollView(
-        slivers: [
-          // --- 1. Encabezado (con botón de cerrar) ---
-          SliverAppBar(
-            backgroundColor: Colors.transparent,
-            pinned: true,
-            leading: IconButton(
-              icon: Icon(LucideIcons.x, color: AppColors.textSecondary),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            actions: [
-              // Botón de Favorito
-              IconButton(
-                icon: Icon(LucideIcons.star, color: AppColors.star),
-                onPressed: () {
-                  // Lógica para guardar favorito
-                },
+      body: Stack(
+        children: [
+          CustomScrollView(
+            slivers: [
+              // --- 1. Encabezado (con botón de cerrar) ---
+              SliverAppBar(
+                backgroundColor: Colors.transparent,
+                pinned: true,
+                leading: IconButton(
+                  icon: Icon(LucideIcons.x, color: AppColors.textSecondary),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                actions: [
+                  IconButton(
+                    icon: Icon(LucideIcons.star, color: AppColors.star),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+
+              // --- 2. Tarjeta principal de la Ruta ---
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Línea detectada",
+                        style: TextStyle(color: AppColors.textSecondary, fontSize: 16),
+                      ),
+                      const SizedBox(height: 16),
+                      _buildRouteHeader(widget.route),
+                      const SizedBox(height: 32),
+                    ],
+                  ),
+                ),
+              ),
+
+              // --- 3. Pestañas de "Ida" y "Vuelta" ---
+              SliverPersistentHeader(
+                delegate: _StopsHeaderDelegate(
+                  selectedTab: _selectedTab,
+                  onTabSelected: (tab) {
+                    setState(() {
+                      _selectedTab = tab;
+                    });
+                  },
+                ),
+                pinned: true,
+              ),
+
+              // --- 4. Lista de Paradas ---
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final stops = widget.route.stops[_selectedTab] ?? [];
+                    final stopName = stops[index];
+                    final isFirst = index == 0;
+                    final isLast = index == stops.length - 1;
+                    return _StopRowItem(
+                      stopName: stopName,
+                      isFirst: isFirst,
+                      isLast: isLast,
+                    );
+                  },
+                  childCount: (widget.route.stops[_selectedTab] ?? []).length,
+                ),
+              ),
+              
+              // Espacio al final para el botón flotante
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 120),
               ),
             ],
           ),
 
-          // --- 2. Tarjeta principal de la Ruta (Traducción de tu tarjeta) ---
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Línea detectada",
-                    style: TextStyle(color: AppColors.textSecondary, fontSize: 16),
-                  ),
-                  const SizedBox(height: 16),
-                  _buildRouteHeader(widget.route),
-                  const SizedBox(height: 32),
-                ],
-              ),
-            ),
-          ),
-
-          // --- 3. Pestañas de "Ida" y "Vuelta" ---
-          SliverPersistentHeader(
-            delegate: _StopsHeaderDelegate(
-              selectedTab: _selectedTab,
-              onTabSelected: (tab) {
-                setState(() {
-                  _selectedTab = tab;
-                });
-              },
-            ),
-            pinned: true, // Se queda pegado arriba
-          ),
-
-          // --- 4. Lista de Paradas (ListView) ---
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                // Muestra la lista de 'ida' o 'vuelta' según la pestaña
-                final stops = widget.route.stops[_selectedTab] ?? [];
-                final stopName = stops[index];
-                final isFirst = index == 0;
-                final isLast = index == stops.length - 1;
-
-                return _StopRowItem(
-                  stopName: stopName,
-                  isFirst: isFirst,
-                  isLast: isLast,
-                );
-              },
-              // Cuenta la cantidad de paradas en la pestaña seleccionada
-              childCount: (widget.route.stops[_selectedTab] ?? []).length,
-            ),
-          ),
+          // --- AÑADIDO: Botón flotante "Ver en Mapa" ---
+          _buildViewMapButton(context),
         ],
       ),
     );
   }
-
+  Widget _buildViewMapButton(BuildContext context) {
+    return Positioned(
+      bottom: 24,
+      left: 24,
+      right: 24,
+      child: GestureDetector(
+        onTap: () {
+           print("Navegar al mapa...");
+        },
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: BoxDecoration(
+            // bg-gradient-to-r from-[#2DD4BF] to-[#D97706]
+            gradient: const LinearGradient(
+              colors: [AppColors.primary, AppColors.secondary],
+            ),
+            borderRadius: BorderRadius.circular(32), // rounded-[2rem]
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withOpacity(0.3),
+                blurRadius: 20,
+              )
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(LucideIcons.map, color: Colors.white, size: 20),
+              const SizedBox(width: 8),
+              Text(
+                "Ver en mapa",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
   // Tarjeta principal (Traducción de tu 'RouteItem' de RoutesScreen)
   Widget _buildRouteHeader(AppRoute route) {
     return Container(
@@ -277,4 +327,5 @@ class _StopsHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => 72.0;
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => true;
+
 }
