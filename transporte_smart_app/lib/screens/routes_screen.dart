@@ -4,7 +4,6 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
 import 'package:transporte_smart_app/models/route_model.dart';
-// ¡Ya no necesitamos importar ResultScreen aquí!
 
 class RoutesScreen extends StatefulWidget {
   // --- PARÁMETROS REQUERIDOS ---

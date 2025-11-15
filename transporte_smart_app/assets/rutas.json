@@ -1284,6 +1284,49 @@
       "vuelta":[]
     }
   },
+  "245": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "246": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "247": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "248": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "249": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "250": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "251": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "252": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "253": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "254": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "255": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "256": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "257": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "258": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "259": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "260": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "261": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "262": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "263": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "264": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "265": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "266": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "267": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "268": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "269": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "270": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "271": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "272": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "273": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "274": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "275": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "276": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "277": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "278": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "279": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "280": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "281": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "282": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "283": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "284": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "285": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "286": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "287": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
   "288":{
     "nombre": "Avenida Entre Rios - Avenida del Escultor",
     "paradas": {
@@ -1359,6 +1402,817 @@
         "Av. Entre Ríos",
         "Calle Damas de Cotagaita"
       ]
+    }
+  },
+  
+  "800":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "801":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "802":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "803":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "804":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "805":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "806":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "807":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "808":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "809":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "810":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "811":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "812":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "813":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "814":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "815":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "816":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "817":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "818":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "819":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "820":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "821":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "822":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "823":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "824":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "825":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "826":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "827":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "828":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "829":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "830":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "831":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "832":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "833":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "834":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "835":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "836":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "837":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "838":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "839":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "840": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "841": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "842": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "843": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "844": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "845": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "846": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "847": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "848": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "849": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "850": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "851": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "852": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "853": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "854": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "855": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "856": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "857": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "858": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "859": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "860": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "861": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "862": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "863": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "864": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "865": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "866": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "867": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "868": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "869": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "870": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "871": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "872": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "873": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "874": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "875": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "876": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "877": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "878": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "879": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "880": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "881": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "882": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "883": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "884": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "885": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "886": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "887": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "888": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "889": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "890": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "891": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "892": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "893": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "894": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "895": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "896": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "897": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "898": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "899": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "900": {
+    "nombre": "",
+    "paradas": {
+      "ida": [],
+      "vuelta": []
+    }
+  },
+  "901": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "902": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "903": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "904": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "905": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "906": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "907": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "908": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "909": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "910": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "911": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "912": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "913": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "914": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "915": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "916": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "917": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "918": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "919": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "920": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "921": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "922": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "923": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "924": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "925": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "926": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "927": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "928": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "929": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "930": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "931": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "932": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "933": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "934": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "935": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "936": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "937": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "938": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "939": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "940": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "941": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "942": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "943": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "944": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "945": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "946": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "947": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "948": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "949": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "950": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "951": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "952": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "953": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "954": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "955": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "956": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "957": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "958": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "959": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "960": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "961": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "962": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "963": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "964": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "965": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "966": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "967": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "968": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "969": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "970": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "971": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "972": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "973": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "974": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "975": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "976": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "977": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "978": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "979": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "980": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "981": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "982": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "983":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "984":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "985":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
     }
   }
 }
