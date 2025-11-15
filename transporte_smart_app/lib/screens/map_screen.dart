@@ -33,7 +33,16 @@ class MapScreen extends StatelessWidget {
               ),
             ),
           ),
-
+          Positioned(
+            top: 200, // Ajusta esta posición
+            left: 80,  // Ajusta esta posición
+            child: _buildMapPin("Origen: Pampahasi", AppColors.primary),
+          ),
+          Positioned(
+            bottom: 350, // Ajusta esta posición
+            right: 60,   // Ajusta esta posición
+            child: _buildMapPin("Destino: Cementerio", AppColors.secondary),
+          ),
           // --- 2. Contenido (Encabezado y Tarjeta) ---
           SafeArea(
             child: Padding(
@@ -196,4 +205,24 @@ class MapScreen extends StatelessWidget {
       ],
     );
   }
+  Widget _buildMapPin(String label, Color color) {
+  return Column(
+    children: [
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.border),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w600),
+        ),
+      ),
+      const SizedBox(height: 4),
+      Icon(LucideIcons.mapPin, color: color, size: 32),
+    ],
+  );
+}
 }

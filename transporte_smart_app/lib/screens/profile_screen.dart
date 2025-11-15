@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
-
+import 'package:transporte_smart_app/screens/placeholder_screen.dart';
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -72,20 +72,32 @@ class ProfileScreen extends StatelessWidget {
             label: "Configuración",
             icon: LucideIcons.settings,
             color: AppColors.textInactive,
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => const PlaceholderScreen(title: "Configuración"),
+              ));
+            },
           ),
           _MenuCard(
             label: "Notificaciones",
             icon: LucideIcons.bell,
             color: AppColors.textInactive,
             badge: "3", // Añade un 'badge' como en tu diseño
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => const PlaceholderScreen(title: "Notificaciones"),
+              ));
+            },
           ),
           _MenuCard(
             label: "Ayuda y soporte",
             icon: LucideIcons.info,
             color: AppColors.textInactive,
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => const PlaceholderScreen(title: "Ayuda y Soporte"),
+              ));
+            },
           ),
           const SizedBox(height: 16),
           // Botón de Cerrar Sesión (con color de error)

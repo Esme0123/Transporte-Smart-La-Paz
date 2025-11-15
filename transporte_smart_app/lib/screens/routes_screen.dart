@@ -1,13 +1,23 @@
-import 'dart:convert'; // Para jsonDecode
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
 import 'package:transporte_smart_app/models/route_model.dart';
-import 'package:transporte_smart_app/screens/result_screen.dart';
+// ¡Ya no necesitamos importar ResultScreen aquí!
 
 class RoutesScreen extends StatefulWidget {
-  const RoutesScreen({super.key});
+  // --- PARÁMETROS REQUERIDOS ---
+  final List<String> favoriteRoutes;
+  final Function(String) onToggleFavorite;
+  final Function(AppRoute) onShowResult;
+
+  const RoutesScreen({
+    super.key,
+    required this.favoriteRoutes,
+    required this.onToggleFavorite,
+    required this.onShowResult,
+  });
 
   @override
   State<RoutesScreen> createState() => _RoutesScreenState();
@@ -25,18 +35,15 @@ class _RoutesScreenState extends State<RoutesScreen> {
     _loadRoutes();
   }
 
-  // 1. Cargar las rutas desde tu 'rutas.json'
+  // --- Carga de rutas a prueba de errores ---
   Future<void> _loadRoutes() async {
     try {
       final String data = await rootBundle.loadString('assets/rutas.json');
       final Map<String, dynamic> jsonMap = jsonDecode(data);
+      final List<AppRoute> loadedRoutes = [];
 
-      final List<AppRoute> loadedRoutes = []; // Lista vacía
-
-      // Usamos un bucle 'for' en lugar de 'map'
       for (var entry in jsonMap.entries) {
         try {
-          // Intentamos convertir cada ruta individualmente
           final route = AppRoute.fromJson(entry.key, entry.value as Map<String, dynamic>);
           loadedRoutes.add(route);
         } catch (e) {
@@ -57,8 +64,8 @@ class _RoutesScreenState extends State<RoutesScreen> {
     }
   }
 
-  // 2. Lógica de filtro (como en tu RoutesScreen.tsx)
   void _filterRoutes(String query) {
+    // ... (Esta función no cambia)
     if (query.isEmpty) {
       setState(() {
         _filteredRoutes = _allRoutes;
@@ -78,52 +85,47 @@ class _RoutesScreenState extends State<RoutesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent, // El fondo ya está en main.dart
+      backgroundColor: Colors.transparent,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // --- 3. Encabezado (Traducción de tu 'motion.div') ---
-            const SizedBox(height: 60), // Espacio para la barra de estado
-            Text(
-              "Mis Rutas",
-              style: TextStyle(
-                color: AppColors.textPrimary,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            // --- Encabezado (Sin cambios) ---
+            const SizedBox(height: 60),
+            Text("Mis Rutas", style: TextStyle(color: AppColors.textPrimary, fontSize: 28, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            Text(
-              "Recientes y favoritas",
-              style: TextStyle(
-                color: AppColors.textSecondary,
-                fontSize: 16,
-              ),
-            ),
+            Text("Recientes y favoritas", style: TextStyle(color: AppColors.textSecondary, fontSize: 16)),
             const SizedBox(height: 24),
-
-            // --- 4. Barra de Búsqueda (Traducción de tu 'motion.div') ---
+            // --- Barra de Búsqueda (Sin cambios) ---
             _buildSearchBar(),
             const SizedBox(height: 24),
-
-            // --- 5. Lista de Rutas (Traducción de tu 'filteredRoutes.map') ---
+            // --- Lista de Rutas (Con cambios) ---
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : _filteredRoutes.isEmpty
-                      ? Center(
-                          child: Text(
-                            "No se encontraron rutas.",
-                            style: TextStyle(color: AppColors.textSecondary),
-                          ),
-                        )
+                      ? Center(child: Text("No se encontraron rutas.", style: TextStyle(color: AppColors.textSecondary)))
                       : ListView.builder(
                           itemCount: _filteredRoutes.length,
-                          padding: const EdgeInsets.only(bottom: 120), // Para la barra de nav
+                          padding: const EdgeInsets.only(bottom: 120),
                           itemBuilder: (context, index) {
-                            return _RouteCard(route: _filteredRoutes[index]);
+                            final route = _filteredRoutes[index];
+                            // --- CAMBIO ---
+                            // Comprueba si es favorita
+                            final bool isFavorite = widget.favoriteRoutes.contains(route.lineNumber);
+
+                            // Pasa todos los parámetros
+                            return _RouteCard(
+                              route: route,
+                              isFavorite: isFavorite,
+                              onToggleFavorite: () {
+                                widget.onToggleFavorite(route.lineNumber);
+                              },
+                              onShowResult: () {
+                                widget.onShowResult(route);
+                              },
+                            );
                           },
                         ),
             ),
@@ -133,76 +135,63 @@ class _RoutesScreenState extends State<RoutesScreen> {
     );
   }
 
-  // Widget para la barra de búsqueda estilizada
+  // Widget _buildSearchBar (Sin cambios)
   Widget _buildSearchBar() {
     return TextField(
       controller: _searchController,
-      onChanged: _filterRoutes, // Llama a la función de filtro
+      onChanged: _filterRoutes,
       style: TextStyle(color: AppColors.textPrimary),
       decoration: InputDecoration(
         hintText: "Buscar línea o ruta...",
         hintStyle: TextStyle(color: AppColors.textSecondary),
-        // Relleno y color de fondo
         filled: true,
-        fillColor: AppColors.surface, // bg-white/5
-        // Icono de búsqueda
-        prefixIcon: Icon(
-          LucideIcons.search,
-          color: AppColors.textSecondary,
-          size: 20,
-        ),
-        // Bordes
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: AppColors.border), // border-white/10
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: AppColors.border),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: AppColors.primary), // Borde activo
-        ),
+        fillColor: AppColors.surface,
+        prefixIcon: Icon(LucideIcons.search, color: AppColors.textSecondary, size: 20),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: AppColors.border)),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: AppColors.border)),
+        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: AppColors.primary)),
       ),
     );
   }
 }
 
-// --- WIDGET DE TARJETA DE RUTA (Traducción de tu RouteItem) ---
+// --- WIDGET DE TARJETA DE RUTA (Actualizado) ---
 class _RouteCard extends StatelessWidget {
   final AppRoute route;
-  const _RouteCard({required this.route});
+  // --- PARÁMETROS REQUERIDOS ---
+  final bool isFavorite;
+  final VoidCallback onToggleFavorite;
+  final VoidCallback onShowResult;
+
+  const _RouteCard({
+    required this.route,
+    required this.isFavorite,
+    required this.onToggleFavorite,
+    required this.onShowResult,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // Al tocar, abrimos la pantalla de resultados
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ResultScreen(route: route),
-          ),
-        );
-      },
-      child: Padding( 
+      // --- CAMBIO ---
+      // Llama a la función para mostrar resultado
+      onTap: onShowResult,
+      child: Padding(
         padding: const EdgeInsets.only(bottom: 16.0),
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppColors.surface, // bg-white/5
-            border: Border.all(color: AppColors.border), // border-white/10
+            color: AppColors.surface,
+            border: Border.all(color: AppColors.border),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Row(
             children: [
-              // Ícono de Minibús
+              // Ícono de Minibús (Sin cambios)
               Container(
                 width: 56,
                 height: 56,
                 decoration: BoxDecoration(
-                  // bg-gradient-to-br from-[#2DD4BF]/20...
                   color: AppColors.primary.withOpacity(0.2),
                   border: Border.all(color: AppColors.primary.withOpacity(0.3)),
                   borderRadius: BorderRadius.circular(16),
@@ -217,56 +206,56 @@ class _RouteCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        // Número de Línea
+                        // Número de Línea (Sin cambios)
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                           decoration: BoxDecoration(
-                            // bg-gradient-to-r from-[#2DD4BF]...
                             color: AppColors.primary,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
                             route.lineNumber,
-                            style: TextStyle(
-                              color: AppColors.background,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
+                            style: TextStyle(color: AppColors.background, fontWeight: FontWeight.bold, fontSize: 14),
                           ),
                         ),
                         const SizedBox(width: 8),
-                        // Estrella de Favorito (como en tu diseño)
-                        Icon(
-                          LucideIcons.star,
-                          color: AppColors.star,
-                          size: 16,
-                        ),
+                        // --- CAMBIO ---
+                        // Muestra la estrella solo si es favorita
+                        if (isFavorite)
+                          Icon(
+                            LucideIcons.star,
+                            color: AppColors.star,
+                            size: 16,
+                          ),
                       ],
                     ),
                     const SizedBox(height: 6),
-                    // Nombre de la Ruta
+                    // Nombre de la Ruta (Sin cambios)
                     Text(
                       route.routeName,
-                      style: TextStyle(
-                        color: AppColors.textPrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 2),
-                    // Destino
+                    // Destino (Sin cambios)
                     Text(
                       "→ ${route.destination}",
-                      style: TextStyle(
-                        color: AppColors.textSecondary,
-                        fontSize: 12,
-                      ),
+                      style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
+              ),
+              // --- CAMBIO ---
+              // Botón para (des)marcar favorito
+              IconButton(
+                icon: Icon(
+                  LucideIcons.star, // El ícono es el mismo
+                  color: isFavorite ? AppColors.star : AppColors.textInactive,
+                ),
+                onPressed: onToggleFavorite,
               ),
             ],
           ),

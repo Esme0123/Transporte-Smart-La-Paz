@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
 import 'package:transporte_smart_app/models/route_model.dart';
-import 'package:transporte_smart_app/screens/result_screen.dart';
+// ¡Ya no necesitamos importar ResultScreen aquí!
 
 class CameraScreen extends StatelessWidget {
-  const CameraScreen({super.key});
+  // --- PARÁMETRO REQUERIDO ---
+  final Function(AppRoute) onShowResult;
+
+  const CameraScreen({
+    super.key,
+    required this.onShowResult,
+  });
 
   // --- FUNCIÓN DE NAVEGACIÓN SIMULADA ---
-  // (Esto es lo que tu 'onDetect' hacía en React)
   void _simulateDetection(BuildContext context) {
-    // 1. Creamos una ruta de prueba (harcoded)
-    // En el futuro, esto vendrá de la IA.
+    // 1. Creamos una ruta de prueba
     final Map<String, dynamic> fakeJson = {
       "nombre": "C. Chuquiaguillo - San Pedro",
       "paradas": {
@@ -31,33 +35,26 @@ class CameraScreen extends StatelessWidget {
     };
     final AppRoute testRoute = AppRoute.fromJson("273", fakeJson);
 
-    // 2. Navegamos a la pantalla de resultados
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ResultScreen(route: testRoute),
-      ),
-    );
+    // 2. --- CAMBIO ---
+    // Ya no usamos Navigator.push. Llamamos a la función del padre.
+    onShowResult(testRoute);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent, // El fondo ya está en main.dart
+      backgroundColor: Colors.transparent,
       body: Stack(
-        fit: StackFit.expand, // Para que el fondo ocupe todo
+        fit: StackFit.expand,
         children: [
-          // --- 1. Fondo de Cámara Simulado ---
+          // --- Fondo de Cámara Simulado ---
           Image.asset(
             'assets/images/camera_bg.jpg',
             fit: BoxFit.cover,
           ),
-          // Filtro de desenfoque y opacidad
           Container(
             color: AppColors.background.withOpacity(0.4),
           ),
-
-          // --- 2. Overlay de Gradiente (como en CameraScreen.tsx) ---
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -73,15 +70,15 @@ class CameraScreen extends StatelessWidget {
             ),
           ),
 
-          // --- 3. Contenido Principal ---
+          // --- Contenido Principal ---
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0).copyWith(top: 60.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Encabezado
+                // --- CAMBIO DE TEXTO (Paso anterior) ---
                 Text(
-                  "Hola, Usuario", // Puedes cambiar esto
+                  "Detección de Ruta",
                   style: TextStyle(
                     color: AppColors.textPrimary,
                     fontSize: 28,
@@ -90,42 +87,36 @@ class CameraScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  "Listo para tu próximo viaje",
+                  "Apunta la cámara al letrero",
                   style: TextStyle(
                     color: AppColors.textSecondary,
                     fontSize: 16,
                   ),
                 ),
-                
-                // --- 4. Área de "Scanner" ---
                 Expanded(
                   child: Center(
                     child: _buildScannerArea(),
                   ),
                 ),
-
-                // Espacio para el botón flotante
                 const SizedBox(height: 120),
               ],
             ),
           ),
 
-          // --- 5. Botón de "Zap" (Detección) ---
+          // --- Botón de "Zap" (Detección) ---
           _buildZapButton(context),
         ],
       ),
     );
   }
 
-  // Widget para el área de escaneo
+  // Widget para el área de escaneo (Sin cambios)
   Widget _buildScannerArea() {
     return Container(
       width: 300,
       height: 200,
       decoration: BoxDecoration(
-        // bg-white/5
         color: AppColors.surfaceLight,
-        // border-white/10
         border: Border.all(color: AppColors.border),
         borderRadius: BorderRadius.circular(16),
       ),
@@ -138,10 +129,10 @@ class CameraScreen extends StatelessWidget {
     );
   }
 
-  // Widget para el botón "Zap" (como en CameraScreen.tsx)
+  // Widget para el botón "Zap" (Sin cambios)
   Widget _buildZapButton(BuildContext context) {
     return Positioned(
-      bottom: 120, // Altura para que quede justo encima de la nav
+      bottom: 120,
       right: 24,
       child: InkWell(
         onTap: () => _simulateDetection(context), // Llama a la simulación
@@ -151,13 +142,11 @@ class CameraScreen extends StatelessWidget {
           height: 64,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            // bg-gradient-to-br from-[#2DD4BF] to-[#D97706]
             gradient: const LinearGradient(
               colors: [AppColors.primary, AppColors.secondary],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            // border-2 border-white/20
             border: Border.all(color: Colors.white.withOpacity(0.2), width: 2),
             boxShadow: [
               BoxShadow(

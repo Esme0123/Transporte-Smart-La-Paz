@@ -2,13 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/models/route_model.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
-import 'package:transporte_smart_app/screens/map_screen.dart';
 
 class ResultScreen extends StatefulWidget {
-  // Recibirá la ruta que queremos mostrar
+  // --- PARÁMETROS REQUERIDOS ---
   final AppRoute route;
+  final List<String> favoriteRoutes;
+  final Function(String) onToggleFavorite;
+  final VoidCallback onClose; // Función para cerrar
 
-  const ResultScreen({super.key, required this.route});
+  const ResultScreen({
+    super.key,
+    required this.route,
+    required this.favoriteRoutes,
+    required this.onToggleFavorite,
+    required this.onClose,
+  });
 
   @override
   State<ResultScreen> createState() => _ResultScreenState();
@@ -16,44 +24,52 @@ class ResultScreen extends StatefulWidget {
 
 class _ResultScreenState extends State<ResultScreen>
     with SingleTickerProviderStateMixin {
-  // 'ida' o 'vuelta'
   String _selectedTab = 'ida';
 
   @override
   Widget build(BuildContext context) {
+    final bool isFavorite = widget.favoriteRoutes.contains(widget.route.lineNumber);
+
     return Scaffold(
-      backgroundColor: AppColors.surface, // Fondo bg-[#1C1917]
+      backgroundColor: AppColors.surface,
       body: Stack(
         children: [
           CustomScrollView(
             slivers: [
-              // --- 1. Encabezado (con botón de cerrar) ---
+              // --- Encabezado (con botones actualizados) ---
               SliverAppBar(
                 backgroundColor: Colors.transparent,
                 pinned: true,
                 leading: IconButton(
+                  // --- CAMBIO ---
+                  // Llama a la función onClose para cerrar
                   icon: Icon(LucideIcons.x, color: AppColors.textSecondary),
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: widget.onClose,
                 ),
                 actions: [
+                  // --- CAMBIO ---
+                  // Botón de Favorito
                   IconButton(
-                    icon: Icon(LucideIcons.star, color: AppColors.star),
-                    onPressed: () {},
+                    icon: Icon(
+                      LucideIcons.star,
+                      color: isFavorite ? AppColors.star : AppColors.textInactive,
+                    ),
+                    onPressed: () {
+                      // Llama a la función para (des)marcar
+                      widget.onToggleFavorite(widget.route.lineNumber);
+                    },
                   ),
                 ],
               ),
 
-              // --- 2. Tarjeta principal de la Ruta ---
+              // --- Tarjeta principal de la Ruta (Sin cambios) ---
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Línea detectada",
-                        style: TextStyle(color: AppColors.textSecondary, fontSize: 16),
-                      ),
+                      Text("Línea detectada", style: TextStyle(color: AppColors.textSecondary, fontSize: 16)),
                       const SizedBox(height: 16),
                       _buildRouteHeader(widget.route),
                       const SizedBox(height: 32),
@@ -62,7 +78,7 @@ class _ResultScreenState extends State<ResultScreen>
                 ),
               ),
 
-              // --- 3. Pestañas de "Ida" y "Vuelta" ---
+              // --- Pestañas de "Ida" y "Vuelta" (Sin cambios) ---
               SliverPersistentHeader(
                 delegate: _StopsHeaderDelegate(
                   selectedTab: _selectedTab,
@@ -75,7 +91,7 @@ class _ResultScreenState extends State<ResultScreen>
                 pinned: true,
               ),
 
-              // --- 4. Lista de Paradas ---
+              // --- Lista de Paradas (Sin cambios) ---
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
@@ -83,29 +99,27 @@ class _ResultScreenState extends State<ResultScreen>
                     final stopName = stops[index];
                     final isFirst = index == 0;
                     final isLast = index == stops.length - 1;
-                    return _StopRowItem(
-                      stopName: stopName,
-                      isFirst: isFirst,
-                      isLast: isLast,
-                    );
+                    return _StopRowItem(stopName: stopName, isFirst: isFirst, isLast: isLast);
                   },
                   childCount: (widget.route.stops[_selectedTab] ?? []).length,
                 ),
               ),
-              
-              // Espacio al final para el botón flotante
               const SliverToBoxAdapter(
-                child: SizedBox(height: 120),
+                child: SizedBox(height: 120), // Espacio para el botón flotante
               ),
             ],
           ),
 
-          // --- AÑADIDO: Botón flotante "Ver en Mapa" ---
+          // --- Botón flotante "Ver en Mapa" (Sin cambios) ---
           _buildViewMapButton(context),
         ],
       ),
     );
   }
+
+  // --- WIDGETS INTERNOS (Sin cambios) ---
+
+  // _buildViewMapButton (Sin cambios)
   Widget _buildViewMapButton(BuildContext context) {
     return Positioned(
       bottom: 24,
@@ -113,23 +127,20 @@ class _ResultScreenState extends State<ResultScreen>
       right: 24,
       child: GestureDetector(
         onTap: () {
-           print("Navegar al mapa...");
+          print("Botón 'Ver en mapa' presionado");
+          // Aquí puedes decidir si navega a la pestaña de mapa
+          // o abre una nueva pantalla de mapa detallado.
+          // Por ahora, solo imprime.
         },
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
-            // bg-gradient-to-r from-[#2DD4BF] to-[#D97706]
             gradient: const LinearGradient(
               colors: [AppColors.primary, AppColors.secondary],
             ),
-            borderRadius: BorderRadius.circular(32), // rounded-[2rem]
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary.withOpacity(0.3),
-                blurRadius: 20,
-              )
-            ],
+            borderRadius: BorderRadius.circular(32),
+            boxShadow: [BoxShadow(color: AppColors.primary.withOpacity(0.3), blurRadius: 20)],
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -138,11 +149,7 @@ class _ResultScreenState extends State<ResultScreen>
               const SizedBox(width: 8),
               Text(
                 "Ver en mapa",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
               ),
             ],
           ),
@@ -150,12 +157,13 @@ class _ResultScreenState extends State<ResultScreen>
       ),
     );
   }
-  // Tarjeta principal (Traducción de tu 'RouteItem' de RoutesScreen)
+
+  // _buildRouteHeader (Sin cambios)
   Widget _buildRouteHeader(AppRoute route) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.background.withOpacity(0.5), // Un poco más oscuro
+        color: AppColors.background.withOpacity(0.5),
         border: Border.all(color: AppColors.border),
         borderRadius: BorderRadius.circular(16),
       ),
@@ -184,20 +192,13 @@ class _ResultScreenState extends State<ResultScreen>
                   ),
                   child: Text(
                     route.lineNumber,
-                    style: TextStyle(
-                      color: AppColors.background,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(color: AppColors.background, fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   route.routeName,
-                  style: TextStyle(
-                    color: AppColors.textPrimary,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -210,17 +211,13 @@ class _ResultScreenState extends State<ResultScreen>
   }
 }
 
-// --- WIDGET PARA LA LISTA DE PARADAS (Traducción de tu 'StopRow') ---
+// _StopRowItem (Sin cambios)
 class _StopRowItem extends StatelessWidget {
   final String stopName;
   final bool isFirst;
   final bool isLast;
 
-  const _StopRowItem({
-    required this.stopName,
-    this.isFirst = false,
-    this.isLast = false,
-  });
+  const _StopRowItem({required this.stopName, this.isFirst = false, this.isLast = false});
 
   @override
   Widget build(BuildContext context) {
@@ -228,18 +225,11 @@ class _StopRowItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
       child: Row(
         children: [
-          // --- El círculo y las líneas de la línea de tiempo ---
           SizedBox(
-            width: 24, // Ancho fijo para alinear
+            width: 24,
             child: Column(
               children: [
-                // Línea superior (invisible si es el primero)
-                Container(
-                  width: 2,
-                  height: 12,
-                  color: isFirst ? Colors.transparent : AppColors.primary.withOpacity(0.3),
-                ),
-                // Círculo
+                Container(width: 2, height: 12, color: isFirst ? Colors.transparent : AppColors.primary.withOpacity(0.3)),
                 Container(
                   width: 12,
                   height: 12,
@@ -249,27 +239,15 @@ class _StopRowItem extends StatelessWidget {
                     border: Border.all(color: AppColors.primary, width: 2),
                   ),
                 ),
-                // Línea inferior (invisible si es el último)
-                Container(
-                  width: 2,
-                  height: 12,
-                  color: isLast ? Colors.transparent : AppColors.primary.withOpacity(0.3),
-                ),
+                Container(width: 2, height: 12, color: isLast ? Colors.transparent : AppColors.primary.withOpacity(0.3)),
               ],
             ),
           ),
           const SizedBox(width: 16),
-          // Nombre de la parada
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: 8.0), // Alinear con el círculo
-              child: Text(
-                stopName,
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 16,
-                ),
-              ),
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(stopName, style: TextStyle(color: AppColors.textPrimary, fontSize: 16)),
             ),
           ),
         ],
@@ -278,7 +256,6 @@ class _StopRowItem extends StatelessWidget {
   }
 }
 
-// --- WIDGET PARA LAS PESTAÑAS "IDA" Y "VUELTA" ---
 class _StopsHeaderDelegate extends SliverPersistentHeaderDelegate {
   final String selectedTab;
   final ValueChanged<String> onTabSelected;
@@ -288,7 +265,7 @@ class _StopsHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      color: AppColors.surface, // Fondo para que tape el scroll
+      color: AppColors.surface,
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
       child: Row(
         children: [
@@ -327,5 +304,4 @@ class _StopsHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => 72.0;
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => true;
-
 }

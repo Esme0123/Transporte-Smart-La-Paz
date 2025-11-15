@@ -1,12 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
+import 'package:transporte_smart_app/models/route_model.dart'; // Importa tu modelo
 import 'package:transporte_smart_app/screens/camera_screen.dart';
 import 'package:transporte_smart_app/screens/routes_screen.dart';
 import 'package:transporte_smart_app/screens/map_screen.dart';
 import 'package:transporte_smart_app/screens/profile_screen.dart';
+import 'package:transporte_smart_app/screens/result_screen.dart'; // Importa la pantalla de resultado
 
 void main() {
   runApp(const MyApp());
@@ -22,9 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
-        // Usa tus colores definidos
         scaffoldBackgroundColor: AppColors.background,
-        // Define el color de los íconos de nav inactivos
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           unselectedItemColor: AppColors.textInactive,
         ),
@@ -34,7 +33,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Este widget es el contenedor principal, como tu App.tsx
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
 
@@ -43,20 +41,56 @@ class AppShell extends StatefulWidget {
 }
 
 class _AppShellState extends State<AppShell> {
-  int _selectedIndex = 0; // 0: Detectar, 1: Rutas, 2: Mapa, 3: Perfil
+  int _selectedIndex = 0;
 
-  // Lista de las pantallas (las importamos arriba)
-  static const List<Widget> _screens = <Widget>[
-    CameraScreen(),
-    RoutesScreen(),
-    MapScreen(),
-    ProfileScreen(),
-  ];
+  // --- ESTADO CENTRALIZADO ---
+  List<String> _favoriteRoutes = ['273']; // Ejemplo de favorito inicial
+  AppRoute? _selectedRoute; // La ruta que se está viendo (null si no hay ninguna)
 
+  // --- FUNCIONES DE MANEJO DE ESTADO ---
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  void _toggleFavorite(String routeNumber) {
+    setState(() {
+      if (_favoriteRoutes.contains(routeNumber)) {
+        _favoriteRoutes.remove(routeNumber);
+      } else {
+        _favoriteRoutes.add(routeNumber);
+      }
+    });
+  }
+
+  void _showResult(AppRoute route) {
+    setState(() {
+      _selectedRoute = route;
+    });
+  }
+
+  void _hideResult() {
+    setState(() {
+      _selectedRoute = null;
+    });
+  }
+
+  // --- CONSTRUCTOR DE PANTALLAS ---
+  // (Ya no es 'static const', ahora es un método)
+  List<Widget> _buildScreens() {
+    return [
+      CameraScreen(
+        onShowResult: _showResult,
+      ),
+      RoutesScreen(
+        favoriteRoutes: _favoriteRoutes,
+        onToggleFavorite: _toggleFavorite,
+        onShowResult: _showResult,
+      ),
+      const MapScreen(),
+      const ProfileScreen(),
+    ];
   }
 
   @override
@@ -64,26 +98,37 @@ class _AppShellState extends State<AppShell> {
     return Scaffold(
       body: Stack(
         children: [
-          // IndexedStack mantiene el estado de las pantallas
-          // cuando cambias de pestaña
+          // --- PANTALLAS DE NAVEGACIÓN ---
           IndexedStack(
             index: _selectedIndex,
-            children: _screens,
+            children: _buildScreens(),
           ),
 
-          // Aquí construimos nuestra barra de navegación personalizada
-          _buildCustomNavBar(),
+          // --- BARRA DE NAVEGACIÓN (Condicional) ---
+          // Solo se muestra si NO estamos viendo un resultado
+          if (_selectedRoute == null)
+            _buildCustomNavBar(),
+
+          // --- PANTALLA DE RESULTADO (Condicional) ---
+          // Se muestra como un 'overlay' si una ruta está seleccionada
+          if (_selectedRoute != null)
+            ResultScreen(
+              route: _selectedRoute!,
+              favoriteRoutes: _favoriteRoutes,
+              onToggleFavorite: _toggleFavorite,
+              onClose: _hideResult, // Pasa la función para cerrar
+            ),
         ],
       ),
     );
   }
 
-  // --- WIDGET DE NAVEGACIÓN PERSONALIZADO ---
+  // --- WIDGET DE NAVEGACIÓN PERSONALIZADO (Sin cambios) ---
   Widget _buildCustomNavBar() {
     return Positioned(
-      bottom: 24.0, 
-      left: 16.0,   
-      right: 16.0,  
+      bottom: 24.0,
+      left: 16.0,
+      right: 16.0,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(32.0),
         child: BackdropFilter(
@@ -91,34 +136,17 @@ class _AppShellState extends State<AppShell> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
             decoration: BoxDecoration(
-              // 4. USA TUS COLORES DEFINIDOS
-              color: AppColors.surface.withOpacity(0.95), // bg-[#1C1917]/95
-              border: Border.all(color: AppColors.border), // border-white/10
+              color: AppColors.surface.withOpacity(0.95),
+              border: Border.all(color: AppColors.border),
               borderRadius: BorderRadius.circular(32.0),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildNavItem(
-                  icon: LucideIcons.camera,
-                  label: "Detectar",
-                  index: 0,
-                ),
-                _buildNavItem(
-                  icon: LucideIcons.list,
-                  label: "Rutas",
-                  index: 1,
-                ),
-                _buildNavItem(
-                  icon: LucideIcons.map,
-                  label: "Mapa",
-                  index: 2,
-                ),
-                _buildNavItem(
-                  icon: LucideIcons.user,
-                  label: "Perfil",
-                  index: 3,
-                ),
+                _buildNavItem(icon: LucideIcons.camera, label: "Detectar", index: 0),
+                _buildNavItem(icon: LucideIcons.list, label: "Rutas", index: 1),
+                _buildNavItem(icon: LucideIcons.map, label: "Mapa", index: 2),
+                _buildNavItem(icon: LucideIcons.user, label: "Perfil", index: 3),
               ],
             ),
           ),
@@ -127,34 +155,30 @@ class _AppShellState extends State<AppShell> {
     );
   }
 
-  // --- ÍTEM DE NAVEGACIÓN (AHORA USA AppColors) ---
-
+  // --- WIDGET PARA CADA BOTÓN DE NAVEGACIÓN (Sin cambios) ---
   Widget _buildNavItem(
       {required IconData icon, required String label, required int index}) {
     final bool isActive = _selectedIndex == index;
-
-    final Color activeColor = AppColors.primary;     // text-[#2DD4BF]
-    final Color inactiveColor = AppColors.textInactive; // text-white/40
+    final Color activeColor = AppColors.primary;
+    final Color inactiveColor = AppColors.textInactive;
 
     return GestureDetector(
       onTap: () => _onItemTapped(index),
       child: Stack(
-        clipBehavior: Clip.none, 
+        clipBehavior: Clip.none,
         alignment: Alignment.center,
         children: [
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             curve: Curves.ease,
-            width: isActive ? 75 : 60, 
+            width: isActive ? 75 : 60,
             height: 50,
             padding: const EdgeInsets.all(4.0),
             decoration: BoxDecoration(
-              color: isActive
-                  ? activeColor.withOpacity(0.2) 
-                  : Colors.transparent,
+              color: isActive ? activeColor.withOpacity(0.2) : Colors.transparent,
               borderRadius: BorderRadius.circular(16.0),
               border: isActive
-                  ? Border.all(color: AppColors.borderActive) 
+                  ? Border.all(color: AppColors.borderActive)
                   : Border.all(color: Colors.transparent),
             ),
             child: Column(
@@ -178,15 +202,14 @@ class _AppShellState extends State<AppShell> {
               ],
             ),
           ),
-
           if (isActive)
             Positioned(
-              top: -8, 
+              top: -8,
               child: Container(
                 width: 6,
                 height: 6,
                 decoration: BoxDecoration(
-                  color: activeColor, 
+                  color: activeColor,
                   shape: BoxShape.circle,
                 ),
               ),
