@@ -634,25 +634,199 @@
     }
   },
   "211":{
-    "nombre":"",
+    "nombre":"Av. 14 de Septiembre - Av. Julio Tellez",
     "paradas":{
       "ida":[
-
+        "Av. 14 de Septiembre",
+        "Calle Guillermo Aranda",
+        "Av. Armando Escobar Uria",
+        "Av. Nieves Linares",
+        "Av. Boris Bánzer",
+        "Av. Nieves Linares",
+        "Av. Juan XXIII",
+        "Calle San Juan",
+        "Av. Gringojahuira",
+        "Av. Regimiento Castrillo",
+        "Capitan Palacios",
+        "Av. Regimiento Castrillo",
+        "Av. Pasoskanki",
+        "Calle Guerrilleros Lanza",
+        "Miraflores",
+        "Plaza Uyuni",
+        "Calle Luis Gemio",
+        "Av. Saavedra",
+        "Calle Yungas",
+        "Calle Ingavi",
+        "Calle Mercado",
+        "Plaza San Francisco",
+        "Calle Figueroa",
+        "Calle Santa Cruz",
+        "Calle Eloy Salmón",
+        "Calle León de la Barra",
+        "Av. Buenos Aires",
+        "Calle Castro Arguedas",
+        "Av. Buenos Aires",
+        "Calle Tacagua",
+        "Las Nieves (Cotahuma)",
+        "Calle Inca Roca",
+        "Av. Julio Tellez"
       ],
       "vuelta":[
-        
+        "Calle Inca Roca",
+        "Las Nieves (Cotahuma)",
+        "Calle Tacagua",
+        "Av. Buenos Aires",
+        "Calle Castro Arguedas",
+        "Calle Luciano Alcoreza",
+        "Calle Rigoberto Paredes",
+        "Calle Benancio Burgoa",
+        "Calle Boquerón",
+        "Calle Colombia",
+        "Av. Eliodoro Camacho",
+        "Av. Simón Bolívar",
+        "Miraflores",
+        "Calle Capitán Hugo Estrada",
+        "Calle Carrasco",
+        "Calle Francisco de Miranda",
+        "Calle Gutiérrez Guerra",
+        "Av. Regimiento Castrillo",
+        "Capitan Palacios",
+        "Av. Regimiento Castrillo",
+        "Av. Gringojahuira",
+        "Calle San Juan",
+        "Av. Juan XXIII",
+        "Av. Nieves Linares",
+        "Av. Boris Bánzer",
+        "Av. Nieves Linares",
+        "Av. Armando Escobar Uria",
+        "Calle Guillermo Aranda",
+        "Av. 14 de Septiembre",
+        "San Isidro Bajo"
       ]
     }
   },
   "212":{
-    "nombre":"",
+    "nombre":"Av. Ismael Montes - Av. Villazón",
     "paradas":{
       "ida":[
-
+        "Av. Ismael Montes",
+        "Av. Uruguay",
+        "Av. Ismael Montes",
+        "Calle Evaristo Valle",
+        "Av. Ismael Montes",
+        "Av. Mariscal Santa Cruz",
+        "Calle Roman de Loayza",
+        "Casco Viejo",
+        "Calle Landaeta",
+        "Av. 6 de Agosto",
+        "Calle Pedro Salazar",
+        "Av. Aniceto Arce",
+        "Av. Villazón"
       ],
       "vuelta":[
-        
+        "Av. Villazón",
+        "Av. Aniceto Arce",
+        "Calle Pedro Salazar",
+        "Av. 6 de Agosto",
+        "Calle Landaeta",
+        "Casco Viejo",
+        "Calle Roman de Loayza",
+        "Av. Mariscal Santa Cruz",
+        "Av. Ismael Montes",
+        "Calle Evaristo Valle",
+        "Av. Ismael Montes",
+        "Av. Uruguay",
+        "Av. Ismael Montes"
       ]
+    }
+  },
+  "213":{
+    "nombre":"Calle Coro Coro - Kupillani",
+    "paradas":{
+      "ida":[
+        "Calle Coro Coro",
+        "Av. Ismael Vásquez",
+        "Calle Luis Salinas Vega",
+        "Av. Ismael Vásquez",
+        "Av. Manco Kapac",
+        "San Sebastián",
+        "Calle Figueroa",
+        "Av. Ismael Montes",
+        "Calle Evaristo Valle",
+        "Av. Mariscal Santa Cruz",
+        "Calle Roman de Loayza",
+        "Casco Viejo",
+        "Calle Landaeta",
+        "Av. 6 de Agosto",
+        "Av. Sánchez Lima",
+        "Av. Mariscal Bernandino Bilbao Rioja",
+        "Av. héctor Ormachea Zalles",
+        "Calle 5 - Roberto Jordán Cuellar",
+        "Av. Roma",
+        "Av. José Ballivián Calacoto",
+        "Calle Washington",
+        "Calle José Maria Aguirre Acha",
+        "Calle Las Retamas",
+        "Av. Costanera",
+        "Av. Los Rosales",
+        "Kupillani"
+      ],
+      "vuelta":[
+        "Av. Los Rosales",
+        "Av. Costanera",
+        "Calle Las Retamas",
+        "Calle José Maria Aguirre Acha",
+        "Calle Washington",
+        "Av. José Ballivián Calacoto",
+        "Av. Roma",
+        "Av. Hernando Siles Reyes",
+        "Av. del Libertador",
+        "Puente Libertad",
+        "Calle Prolongación Cordero",
+        "Av. Aniceto Arce",
+        "Av. Villazón",
+        "Casco Viejo",
+        "Calle Roman de Loayza",
+        "Av. Mariscal Santa Cruz",
+        "Calle Evaristo Valle",
+        "Av. Ismael Montes",
+        "Av. Pando",
+        "San Sebastián",
+        "Av. Manco Kapac",
+        "Av. Ismael Vásquez",
+        "Calle Luis Salinas Vega",
+        "Av. Ismael Vásquez",
+        "Calle Coro Coro",
+        "Calle A"
+      ]
+    }
+  },
+  "214":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "215":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "216":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "217":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
     }
   },
   "288":{

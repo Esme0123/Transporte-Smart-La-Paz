@@ -4,6 +4,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
 import 'package:transporte_smart_app/models/route_model.dart';
+import 'package:transporte_smart_app/screens/result_screen.dart';
 
 class RoutesScreen extends StatefulWidget {
   const RoutesScreen({super.key});
@@ -175,89 +176,100 @@ class _RouteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppColors.surface, // bg-white/5
-          border: Border.all(color: AppColors.border), // border-white/10
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Row(
-          children: [
-            // Ícono de Minibús
-            Container(
-              width: 56,
-              height: 56,
-              decoration: BoxDecoration(
-                // bg-gradient-to-br from-[#2DD4BF]/20...
-                color: AppColors.primary.withOpacity(0.2),
-                border: Border.all(color: AppColors.primary.withOpacity(0.3)),
-                borderRadius: BorderRadius.circular(16),
+    return GestureDetector(
+      onTap: () {
+        // Al tocar, abrimos la pantalla de resultados
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ResultScreen(route: route),
+          ),
+        );
+      },
+      child: Padding( 
+        padding: const EdgeInsets.only(bottom: 16.0),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppColors.surface, // bg-white/5
+            border: Border.all(color: AppColors.border), // border-white/10
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            children: [
+              // Ícono de Minibús
+              Container(
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(
+                  // bg-gradient-to-br from-[#2DD4BF]/20...
+                  color: AppColors.primary.withOpacity(0.2),
+                  border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Icon(LucideIcons.bus, color: AppColors.primary, size: 24),
               ),
-              child: Icon(LucideIcons.bus, color: AppColors.primary, size: 24),
-            ),
-            const SizedBox(width: 16),
-            // Información
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      // Número de Línea
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                        decoration: BoxDecoration(
-                          // bg-gradient-to-r from-[#2DD4BF]...
-                          color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          route.lineNumber,
-                          style: TextStyle(
-                            color: AppColors.background,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
+              const SizedBox(width: 16),
+              // Información
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        // Número de Línea
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            // bg-gradient-to-r from-[#2DD4BF]...
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            route.lineNumber,
+                            style: TextStyle(
+                              color: AppColors.background,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      // Estrella de Favorito (como en tu diseño)
-                      Icon(
-                        LucideIcons.star,
-                        color: AppColors.star,
-                        size: 16,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  // Nombre de la Ruta
-                  Text(
-                    route.routeName,
-                    style: TextStyle(
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeight.w600,
+                        const SizedBox(width: 8),
+                        // Estrella de Favorito (como en tu diseño)
+                        Icon(
+                          LucideIcons.star,
+                          color: AppColors.star,
+                          size: 16,
+                        ),
+                      ],
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 2),
-                  // Destino
-                  Text(
-                    "→ ${route.destination}",
-                    style: TextStyle(
-                      color: AppColors.textSecondary,
-                      fontSize: 12,
+                    const SizedBox(height: 6),
+                    // Nombre de la Ruta
+                    Text(
+                      route.routeName,
+                      style: TextStyle(
+                        color: AppColors.textPrimary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+                    const SizedBox(height: 2),
+                    // Destino
+                    Text(
+                      "→ ${route.destination}",
+                      style: TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
