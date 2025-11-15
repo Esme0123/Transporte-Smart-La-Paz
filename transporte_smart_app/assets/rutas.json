@@ -802,27 +802,482 @@
     }
   },
   "214":{
-    "nombre":"",
+    "nombre":"Av. Quintanilla Zuazo - Av. Rotary Internacional",
     "paradas":{
-      "ida":[],
-      "vuelta":[]
+      "ida":[
+        "Av. Quintanilla Zuazo",
+        "Calle Virrey Toledo",
+        "Av. Quintanilla Zuazo",
+        "Av. República",
+        "Av. América",
+        "Av. Pando",
+        "Calle Nicasio Cardozo",
+        "Calle Murillo",
+        "Calle México",
+        "Av. 6 de Agosto",
+        "Av. Aniceto Arce",
+        "Puente Libertad",
+        "Av. del Libertador",
+        "Av. Hernando Siles Reyes",
+        "Av. Roma",
+        "Av. Mecapaca",
+        "Av. José Ballivián Calacoto",
+        "Calle 23",
+        "Calle 10",
+        "Av. Manuel Víctor García Lanza",
+        "Av. José Manuel Chinchilla",
+        "Achumani",
+        "Av. The Strongest",
+        "Av. Strongest",
+        "Av. Rotary Internacional"
+      ],
+      "vuelta":[
+        "Av. Strongest",
+        "Av. The Strongest",
+        "Achumani",
+        "Av. José Manuel Chincilla",
+        "Av. Manuel Víctor García Lanza",
+        "Calle 11",
+        "Av. General Inofuentes",
+        "Calle 22",
+        "Av. José Ballivián Calacoto",
+        "Av. Mecapaca",
+        "Av. Roma",
+        "Av. Hernando Siles Reyes",
+        "Av. del Libertador",
+        "Puente Libertad",
+        "Calle Prolongación Cordero",
+        "Av. Aniceto Arce",
+        "Av. Villazón",
+        "Casco Viejo",
+        "Calle Roman de Loayza",
+        "Av. Mariscal Santa Cruz",
+        "Calle Evaristo Valle",
+        "Av. Ismael Montes",
+        "Av. Uruguay",
+        "Av. Ismael Montes",
+        "Calle Vicenta Juaristi Equino",
+        "Av. Manco Kapac",
+        "San Sebastián",
+        "Av. República",
+        "Av. Quihntanilla Zuazo",
+        "Calle Virrey Toledo",
+        "Av. Quintanilla Zuazo",
+        "Calle Virrey Toledo"
+      ]
     }
   },
   "215":{
-    "nombre":"",
+    "nombre":"Av. Ismael Montes - Autopista Héroes de la Guerra del Chaco",
     "paradas":{
-      "ida":[],
-      "vuelta":[]
+      "ida":[
+        "Av. Ismael Montes",
+        "Av. Uruguay",
+        "Av. Ismael Montes",
+        "Calle Evaristo Valle",
+        "Casco Viejo",
+        "Calle Landaeta",
+        "Av. 6 de Agosto",
+        "Av. Aniceto Arce",
+        "Calle Prolongación Cordero",
+        "Av. Aniceto Arce",
+        "Av. Villazón",
+        "Casco Viejo",
+        "Calle Roman de Loayza",
+        "Av. Mariscal Santa Cruz",
+        "Av. Ismael Montes",
+        "Autopista Héroes de la Guerra del Chaco"
+      ],
+      "vuelta":[
+        "Autopista Héroes de la Guerra del Chaco",
+        "Av. Ismael Montes",
+        "Av. Mariscal Santa Cruz",
+        "Calle Roman de Loayza",
+        "Casco Viejo",
+        "Av. Villazón",
+        "Av. Aniceto Arce",
+        "Calle Prolongación Cordero",
+        "Av. Aniceto Arce",
+        "Av. 6 de Agosto",
+        "Calle Landaeta",
+        "Casco Viejo",
+        "Calle Evaristo Valle",
+        "Av. Ismael Montes",
+        "Av. Uruguay",
+        "Av. Ismael Montes"
+      ]
     }
   },
   "216":{
+    "nombre":"Av. Naciones Unidas - Calle 29 de Enero",
+    "paradas":{
+      "ida":[
+        "Av. Naciones Unidas",
+        "Calle Final Kollasuyo",
+        "Calle Tacna",
+        "Calle Final Kollasuyo",
+        "Av. Kollasuyo",
+        "Av. Entre Ríos",
+        "Av. Tokio",
+        "Av. Entre Ríos",
+        "Av. Heroes del Pacífico",
+        "Av. Kollasuyo",
+        "Av. Mariano Baptista",
+        "Calle Max Paredes",
+        "Calle Batalla de Tarapacá",
+        "Calle Chorolque",
+        "Calle Sebastian Segurola",
+        "Calle Parque Marcelo Quiroga Santa Cruz",
+        "Calle Max Paredes",
+        "Calle Murillo",
+        "Calle Ayacucho",
+        "Calle Bueno",
+        "Av. Eliodoro Camacho",
+        "Av. Simón Bolívar",
+        "Miraflores",
+        "Av. Bautista Saavedra",
+        "Calle Ulloa",
+        "Calle Fernando Prudencio",
+        "Av. Bautista Saavedra",
+        "Rotonda del Estado Mayor",
+        "Av. Bautista Saavedra",
+        "Calle Nicaragua",
+        "Miraflores",
+        "Viaducto Claudio Pinilla - Juan Manuel Loza",
+        "Av. Mariscal Santa Cruz",
+        "Calle Yanacocha",
+        "Calle Mercado",
+        "Plaza San Francisco",
+        "Calle Figueroa",
+        "Calle Parque Marcelo Quiroga Santa Cruz",
+        "Calle Max Paredes",
+        "Av. Kollasuyo",
+        "Calle Yacuma",
+        "Av. Kollasuyo",
+        "Calle 29 de Enero"
+      ],
+      "vuelta":[
+        "Calle 29 de Enero",
+        "Av. Kollasuyo",
+        "Calle Yacuma",
+        "Av. Kollasuyo",
+        "Calle Max Paredes",
+        "Calle Parque Marcelo Quiroga Santa Cruz",
+        "Calle Figueroa",
+        "Plaza San Francisco",
+        "Calle Mercado",
+        "Calle Yanacocha",
+        "Av. Mariscal Santa Cruz",
+        "Viaducto Claudio Pinilla - Juan Manuel Loza",
+        "Miraflores",
+        "Calle Nicaragua",
+        "Av. Bautista Saavedra",
+        "Rotonda del Estado Mayor",
+        "Av. Bautista Saavedra",
+        "Calle Fernando Prudencio",
+        "Calle Ulloa",
+        "Av. Bautista Saavedra",
+        "Miraflores",
+        "Av. Simón Bolívar",
+        "Av. Eliodoro Camacho",
+        "Calle Bueno",
+        "Calle Ayacucho",
+        "Calle Murillo",
+        "Calle Max Paredes",
+        "Calle Parque Marcelo Quiroga Santa Cruz",
+        "Calle Sebastian Segurola",
+        "Calle Chorolque",
+        "Calle Batalla de Tarapacá",
+        "Calle Max Paredes",
+        "Av. Mariano Baptista",
+        "Av. Kollasuyo",
+        "Av. Heroes Del Pacífico",
+        "Av. Entre Ríos",
+        "Av. Tokio",
+        "Av. Entre Ríos",
+        "Av. Kollasuyo",
+        "Calle Final Kollasuyo",
+        "Calle Tacna",
+        "Calle Final Kollasuyo",
+        "Av. Naciones Unidas"
+      ]
+    }
+  },
+  "218":{
+    "nombre":"Av. Ismael Montes - Autopista Héroes de la Guerra del Chaco",
+    "paradas":{
+      "ida":[
+        "Av. Ismael Montes",
+        "Av. Uruguay",
+        "Av. Ismael Montes",
+        "Calle Evaristo Valle",
+        "Viaducto Potosí",
+        "Av. Ismael Montes",
+        "Calle Yanacocha",
+        "Calle Obispo Cardenas",
+        "Miraflores",
+        "Calle Capitán Hugo Estrada",
+        "Av. Bautista Saavedra",
+        "Calle Ulloa",
+        "Calle Fernando Prudencio",
+        "Av. Bautista Saavedra",
+        "Rotonda del Estado Mayor",
+        "Calle Nicaragua",
+        "Miraflores",
+        "Av. Simón Bolívar",
+        "Av. Eliodoro Camacho",
+        "Av. Mariscal Santa Cruz",
+        "Av. Ismael Montes",
+        "Autopista Héroes de la Guerra del Chaco"
+      ],
+      "vuelta":[
+        "Autopista Héroes de la Guerra del Chaco",
+        "Av. Ismael Montes",
+        "Av. Mariscal Santa Cruz",
+        "Av. Eliodoro Camacho",
+        "Av. Simón Bolívar",
+        "Miraflores",
+        "Calle Nicaragua",
+        "Rotonda del Estado Mayor",
+        "Av. Bautista Saavedra",
+        "Calle Fernando Prudencio",
+        "Calle Ulloa",
+        "Av. Bautista Saavedra",
+        "Calle Capitán Hugo Estrada",
+        "Miraflores",
+        "Calle Obispo Cardenas",
+        "Calle Yanacocha",
+        "Av. Ismael Montes",
+        "Viaducto Potosí",
+        "Calle Evaristo Valle",
+        "Av. Ismael Montes",
+        "Av. Uruguay",
+        "Av. Ismael Montes"
+      ]
+    }
+  },
+  "219":{
+    "nombre":"Av. Víctor Agustín Ugarte - Autopista Héroes de la Guerra del Chaco",
+    "paradas":{
+      "ida":[
+        "Av. Víctor Agustín Ugarte",
+        "Calle Menéndez y Pelayo",
+        "Cotahuma",
+        "Calle Terrazos",
+        "Av. General Lanza",
+        "Calle Conchitas",
+        "Av. 20 de Octubre",
+        "Calle Cañada Strongest",
+        "Calle Colombia",
+        "Av. Eliodoro Camacho",
+        "Av. Mariscal Santa Cruz",
+        "Calle Evaristo Valle",
+        "Av. Ismael Montes",
+        "Av. Uruguay",
+        "Av. Ismael Montes",
+        "Autopista Héroes de la Guerra del Chaco"
+      ],
+      "vuelta":[
+        "Av. Ismael Montes",
+        "Calle Evaristo Valle",
+        "Av. Mariscal Santa Cruz",
+        "Calle Roman de Loayza",
+        "Casco Viejo",
+        "Calle Landaeta",
+        "Calle Conchitas",
+        "Av. General Lanza",
+        "Calle Fernando Guachalla",
+        "Calle Terrazas",
+        "Calle Rafael Bustillos",
+        "Av. Ricardo Jaimes Freyre",
+        "Calle Menéndez y Pelayo",
+        "Calle Victor Agustín Ugarte"
+      ]
+    }
+  },
+  "221":{
+    "nombre":"Calle Benedeto Vincenti - Av. Ecuador",
+    "paradas":{
+      "ida":[
+        "Calle Benedeto Vincenti",
+        "Calle Ingreso del Montículo",
+        "Av. 20 de Octubre",
+        "Av. Aniceto Arce",
+        "Av. Villazón",
+        "Casco Viejo",
+        "Calle Roman de Loayza",
+        "Av. Mariscal Santa Cruz",
+        "Calle Evaristo Valle",
+        "Av. Ismael Montes",
+        "Av. Uruguay",
+        "Av. Ismael Montes",
+        "Calle Vicenta Juaristi Eguino",
+        "Autopista Héroes de la Guerra del Chaco",
+        "Av. Ismael Vásquez",
+        "Autopista Héroes de la Guerra del Chaco",
+        "Av. Ismael Montes",
+        "Calle Landaeta",
+        "Viaducto Belisario Salinas",
+        "Av. Ecuador"
+      ],
+      "vuelta":[
+        "Av. Ecuador",
+        "Viaducto Belisario Salinas",
+        "Calle Landaeta",
+        "Av. Ismael Montes",
+        "Autopista Héroes de la Guerra del Chaco",
+        "Av. Ismael Vásquez",
+        "Autopista Héroes de la Guerra del Chaco",
+        "Calle Vicenta Juaristi Eguino",
+        "Av. Ismael Montes",
+        "Av. Uruguay",
+        "Av. Ismael Montes",
+        "Calle Evaristo Valle",
+        "Av. Mariscal Santa Cruz",
+        "Calle Roman de Loayza",
+        "Casco Viejo",
+        "Av. Villazón",
+        "Av. Aniceto Arce",
+        "Av. 20 de Octubre",
+        "Calle Ingreso del Montículo",
+        "Calle Benedeto Vincenti"
+      ]
+    }
+  },
+  "222":{
     "nombre":"",
     "paradas":{
       "ida":[],
       "vuelta":[]
     }
   },
-  "217":{
+  "224":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "225":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "226":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "227":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "228":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "230":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "231":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "232":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "234":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "235":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "236":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "237":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "238":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "239":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "240":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "241":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "242":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "243":{
+    "nombre":"",
+    "paradas":{
+      "ida":[],
+      "vuelta":[]
+    }
+  },
+  "244":{
     "nombre":"",
     "paradas":{
       "ida":[],
