@@ -96,6 +96,7 @@ class _AppShellState extends State<AppShell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           // --- PANTALLAS DE NAVEGACIÓN ---
@@ -104,13 +105,9 @@ class _AppShellState extends State<AppShell> {
             children: _buildScreens(),
           ),
 
-          // --- BARRA DE NAVEGACIÓN (Condicional) ---
-          // Solo se muestra si NO estamos viendo un resultado
           if (_selectedRoute == null)
             _buildCustomNavBar(),
 
-          // --- PANTALLA DE RESULTADO (Condicional) ---
-          // Se muestra como un 'overlay' si una ruta está seleccionada
           if (_selectedRoute != null)
             ResultScreen(
               route: _selectedRoute!,
@@ -123,7 +120,7 @@ class _AppShellState extends State<AppShell> {
     );
   }
 
-  // --- WIDGET DE NAVEGACIÓN PERSONALIZADO (Sin cambios) ---
+  // --- WIDGET DE NAVEGACIÓN PERSONALIZADO  ---
   Widget _buildCustomNavBar() {
     return Positioned(
       bottom: 24.0,
@@ -155,7 +152,6 @@ class _AppShellState extends State<AppShell> {
     );
   }
 
-  // --- WIDGET PARA CADA BOTÓN DE NAVEGACIÓN (Sin cambios) ---
   Widget _buildNavItem(
       {required IconData icon, required String label, required int index}) {
     final bool isActive = _selectedIndex == index;

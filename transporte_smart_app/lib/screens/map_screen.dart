@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
 import 'dart:ui';
-
+import 'package:transporte_smart_app/painters/route_line_painter.dart';
 class MapScreen extends StatelessWidget {
   const MapScreen({super.key});
 
@@ -14,12 +14,11 @@ class MapScreen extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // --- 1. Fondo de Mapa Simulado ---
+          // --- 1. Fondo de Mapa Simulado (Sin cambios) ---
           Image.asset(
             'assets/images/map_bg.jpg',
             fit: BoxFit.cover,
           ),
-          // Overlay oscuro (como en tu MapScreen.tsx)
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -33,24 +32,33 @@ class MapScreen extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            top: 200, // Ajusta esta posición
-            left: 80,  // Ajusta esta posición
-            child: _buildMapPin("Origen: Pampahasi", AppColors.primary),
+
+          // --- 2. AÑADIDO: LÍNEA DE CONEXIÓN ---
+          CustomPaint(
+            painter: RouteLinePainter(), 
+            size: Size.infinite,
           ),
-          Positioned(
-            bottom: 350, // Ajusta esta posición
-            right: 60,   // Ajusta esta posición
-            child: _buildMapPin("Destino: Cementerio", AppColors.secondary),
+
+          // --- 3. CAMBIO: PINES CON 'Align' (Responsivo) ---
+          // Pin 1 (Origen)
+          Align(
+            alignment: const Alignment(-0.5, -0.4), // x, y (-1 a 1)
+            child: buildMapPin("Origen: Pampahasi", AppColors.primary)
           ),
-          // --- 2. Contenido (Encabezado y Tarjeta) ---
+
+          // Pin 2 (Destino)
+          Align(
+            alignment: const Alignment(0.5, -0.2), // x, y (-1 a 1)
+            child: buildMapPin("Destino: Cementerio", AppColors.secondary),
+          ),
+
+          // --- 4. Contenido (Encabezado y Tarjeta) 
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Encabezado
                   const SizedBox(height: 16),
                   Text(
                     "Mapa de Ruta",
@@ -68,11 +76,9 @@ class MapScreen extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-                  
-                  // Tarjeta de ejemplo (simulada)
-                  const Spacer(), // Empuja la tarjeta al fondo
+                  const Spacer(),
                   _buildSimulatedCard(),
-                  const SizedBox(height: 120), // Espacio para la barra de nav
+                  const SizedBox(height: 120),
                 ],
               ),
             ),
@@ -205,24 +211,6 @@ class MapScreen extends StatelessWidget {
       ],
     );
   }
-  Widget _buildMapPin(String label, Color color) {
-  return Column(
-    children: [
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.border),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w600),
-        ),
-      ),
-      const SizedBox(height: 4),
-      Icon(LucideIcons.mapPin, color: color, size: 32),
-    ],
-  );
 }
-}
+
+
