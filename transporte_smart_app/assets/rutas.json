@@ -9216,31 +9216,275 @@
       "Av. San José",
       "Calle Lima",
       "Av. Florida"
-      ], "vuelta": [] } },
+      ], "vuelta": [
+        "Av. Troncal",
+      "Av. Naciones Unidas",
+      "Calle Juan XXIII",
+      "Calle Desaguadero",
+      "Calle Vicente Peñaloza",
+      "Av. República",
+      "Av. Mariano Baptista",
+      "Calle Max Paredes",
+      "Av. Illampu",
+      "Calle Murillo",
+      "Calle Figueroa",
+      "Av. Ismael Montes",
+      "Viaducto Potosí",
+      "Calle Yanacocha",
+      "Calle Mariscal Antonio José de Sucre",
+      "Av. Tejada Sorzano",
+      "Av. German Busch",
+      "Av. de las Américas",
+      "Barrio Comibol",
+      "Calle Arapata",
+      "Calle Villa Aspiazu",
+      "Calle Caranavi",
+      "Av. Chirca",
+      "Av. Conzata"
+      ] } },
   "354": { 
-    "nombre": "", 
+    "nombre": "Av. Ramiro Castillo - Calle Canonigo Ayllon", 
     "paradas": { 
-      "ida": [], "vuelta": [] } },
+      "ida": [
+        "Av. Ramiro Castillo",
+      "Av. de las Américas",
+      "La Merced",
+      "Plaza del Maestro",
+      "Av. de las Américas",
+      "Av. German Busch",
+      "Plaza Villarroel",
+      "Calle Guerrilleros Lanza",
+      "Plaza Villarroel",
+      "Rotonda Germán Busch",
+      "Calle Francisco de Miranda",
+      "Calle Gutiérrez Guerra",
+      "Calle Diaz Romero",
+      "Av. del Ejército",
+      "Calle Federico Zuazo",
+      "Av. 16 de Julio",
+      "Av. 20 de Octubre",
+      "Calle Landaeta",
+      "Plaza El Condor",
+      "Av. Landaeta",
+      "Calle Canonigo Ayllon"
+      ], "vuelta": [
+        "Av. Landaeta",
+      "Calle Bernardo Bitti",
+      "Calle Landaeta",
+      "Calle Conchitas",
+      "Calle Héroes del Acre",
+      "Túnel del Instituto Americano",
+      "Av. Sánchez Lima",
+      "Calle Fernando Guachalla",
+      "Calle Pedro Salazar",
+      "Av. Aniceto Arce",
+      "Calle Juan de Vargas",
+      "Calle Chichas",
+      "Av. Bautista Saavedra",
+      "Calle Nicaragua",
+      "Av. Bautista Saavedra",
+      "Miraflores",
+      "Plaza Uyuni",
+      "Rotonda Germán Busch",
+      "Plaza Villarroel",
+      "Calle Hans Kund",
+      "Plaza Villarroel",
+      "Av. German Busch",
+      "Av. de las Américas",
+      "Av. Ramiro Castillo",
+      "Calle Batallon Ustarez",
+      "Alto La Merced"
+      ] } },
   "355": { 
-    "nombre": "", 
+    "nombre": "Av. Mariano Baptista - Av. Max Portugal Zamora", 
     "paradas": { 
       "ida": [
-        
-      ], "vuelta": [] } },
+          "Av. Mariano Baptista",
+      "Challampaya",
+      "Av. Apumalla",
+      "Av. Manco Kapac",
+      "Av. América",
+      "Av. Ismael Montes",
+      "Calle Evaristo Valle",
+      "Av. Mariscal Santa Cruz",
+      "Calle Murillo",
+      "Calle Ayacucho",
+      "Av. Eliodoro Camacho",
+      "Av. Simón Bolívar",
+      "Miraflores",
+      "Calle Capitán Hugo Estrada",
+      "Calle Genaro Gamarra",
+      "Calle Diaz Romero",
+      "Calle Rosendo Villalobos",
+      "Av. del Maestro",
+      "German Jordan",
+      "Av. del Maestro",
+      "Calle 6 de Agosto",
+      "Av. del Maestro",
+      "Calle Alfredo Guillen Pinto",
+      "Av. Raul Gamarra",
+      "Calle Francisco J. Molina",
+      "Av. Max Portugal Zamora"
+      ], "vuelta": [
+        "Calle Asunta Bozo",
+      "Calle Felix Eguino",
+      "Av. Raul Gamarra",
+      "Taypijahuira",
+      "Calle Jose Montero J",
+      "Av. Raul Gamarra",
+      "Av. del Maestro",
+      "Alto Obrajes Sector D",
+      "Calle 2",
+      "Av. del Maestro",
+      "Calle Asunta Bozo",
+      "Av. del Maestro",
+      "Calle 6 de Agosto",
+      "Av. del Maestro",
+      "German Jordan",
+      "Av. del Maestro",
+      "Calle Rosendo Villalobos",
+      "Calle Diaz Romero",
+      "Calle Capitán Hugo Estrada",
+      "Plaza Uyuni",
+      "Calle Luis Gemio",
+      "Av. Saavedra",
+      "Calle Yungas",
+      "Calle Ingavi",
+      "Av. Ismael Montes",
+      "Av. Pando",
+      "San Sebastián",
+      "Av. Apumalla",
+      "Challampaya",
+      "Av. Mariano Baptista",
+      "Av. Kollasuyo",
+      "Av. Heroes Del Pacifico",
+      "Calle Reyes Cardona",
+      "Calle Sebastian Pagador",
+      "Calle Mejillones"
+      ] } },
   "356": { 
-    "nombre": "", 
+    "nombre": "Av. General Juan José Torres González - Pasaje Luis Gamarra Peredo", 
     "paradas": { 
       "ida": [
-        
-      ], "vuelta": [] } },
+        "Av. General Juan José Torres González",
+      "Calle Segundo Crucero",
+      "Calle Manzaneda",
+      "Calle Genaro Sanjinéz",
+      "Calle Socabaya",
+      "Av. Mariscal Santa Cruz",
+      "Calle Roman de Loayza",
+      "Casco Viejo",
+      "Calle Landaeta",
+      "Av. 6 de Agosto",
+      "Av. Sánchez Lima",
+      "Av. Mariscal Bernardino Bilbao Rioja",
+      "Av. Presbítero Medina",
+      "Calle Romecín Campos",
+      "Pasaje Luis Gamarra Peredo"
+      ], "vuelta": [
+        "Calle Romecín Campos",
+      "Av. Presbítero Medina",
+      "Kantutani",
+      "Av. Mariscal Bernardino Bilbao Rioja",
+      "Av. 20 de Octubre",
+      "Calle Otero de la Vega",
+      "Av. 20 de Octubre",
+      "Calle Roman de Loayza",
+      "Av. Mariscal Santa Cruz",
+      "Calle Yanacocha",
+      "Calle Manzaneda",
+      "Calle Segundo Crucero",
+      "Calle Huayna Potosí",
+      "Av. General Juan José Torres González",
+      "Alto Las Delicias"
+      ] } },
   "357": { 
-    "nombre": "", 
+    "nombre": "Av. de las Américas - Calle Alberto Ostria", 
     "paradas": { 
-      "ida": [], "vuelta": [] } },
+      "ida": [
+        "Av. de las Américas",
+      "Plaza del Maestro",
+      "Av. de las Américas",
+      "Av. German Busch",
+      "Av. Tejada Sorzano",
+      "Calle Haiti",
+      "Calle Guatemala",
+      "Plaza Uyuni",
+      "Calle Capitán Hugo Estrada",
+      "Calle Diaz Romero",
+      "Calle Juan de Vargas",
+      "Calle Belisario Salinas",
+      "Calle Rosendo Gutiérrez",
+      "Calle Abdón Saavedra",
+      "Calle Agustín Aspiazu",
+      "Calle Abdón Saavedra",
+      "Calle Landaeta",
+      "Plaza El Condor",
+      "Av. Landaeta",
+      "Calle Valentin Abecia",
+      "Calle Alberto Ostria"
+      ], "vuelta": [
+        "Calle Valentin Abecia",
+      "Av. Landaeta",
+      "Plaza El Condor",
+      "Calle Landaeta",
+      "Calle Harrington",
+      "Calle Abdón Saavedra",
+      "Calle Agustín Aspiazu",
+      "Calle Abdón Saavedra",
+      "Calle Fernando Guachalla",
+      "Calle Pedro Salazar",
+      "Av. Aniceto Arce",
+      "Calle Juan de Vargas",
+      "Calle Chichas",
+      "Av. Bautista Saavedra",
+      "Calle Gutiérrez Guerra",
+      "Calle Francisco de Miranda",
+      "Rotonda Germán Busch",
+      "Plaza Villarroel",
+      "Calle Hans Kund",
+      "Plaza Villarroel",
+      "Av. German Busch",
+      "Av. de las Américas",
+      "Av. Ramiro Castillo"
+      ] } },
   "358": { 
-    "nombre": "", 
+    "nombre": "Av. Rogelio Carrillo - Av. Tokio", 
     "paradas": { 
-      "ida": [], "vuelta": [] } },
+      "ida": [
+        "Av. Rogelio Carrillo",
+      "Av. Armando Escobar Uria",
+      "Av. Nieves Linares",
+      "Av. Boris Bánzer",
+      "Av. Nieves Linares",
+      "German Jordan",
+      "Av. Juan XXIII",
+      "Calle Armonia",
+      "Calle Fortín Murguía",
+      "Av. Juan XXIII",
+      "German Jordan",
+      "Av. del Maestro",
+      "Calle Rosendo Villalobos",
+      "Calle Diaz Romero",
+      "Av. del Ejército",
+      "Calle Federico Zuazo",
+      "Casco Viejo",
+      "Calle Roman de Loayza",
+      "Av. Mariscal Santa Cruz",
+      "Calle Evaristo Valle",
+      "Av. Ismael Montes",
+      "Av. Pando",
+      "Av. Manco Kapac",
+      "Av. Apumalla",
+      "Challampaya",
+      "Av. Mariano Baptista",
+      "Av. Heroes Del Pacifico",
+      "Av. Entre Rios",
+      "Calle Mariscal de Zepita",
+      "Av. Tokio"
+      ], "vuelta": [
+
+      ] } },
   "359": { 
     "nombre": "", 
     "paradas": { 
@@ -9291,93 +9535,313 @@
     "paradas": { 
       "ida": [], "vuelta": [] } },
 
-  "371": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "372": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "373": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "374": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "375": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "376": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "377": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "378": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "379": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "380": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "371": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "372": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "373": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "374": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "375": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "376": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "377": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "378": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "379": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "380": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
 
-  "381": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "382": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "383": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "384": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "385": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "386": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "387": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "388": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "389": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "390": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "381": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "382": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "383": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "384": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "385": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "386": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "387": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "388": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "389": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "390": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
 
-  "391": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "392": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "393": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "394": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "395": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "396": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "397": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "398": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "399": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "400": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "391": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "392": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "393": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "394": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "395": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "396": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "397": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "398": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "399": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "400": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
 
-  "401": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "402": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "403": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "404": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "405": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "406": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "407": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "408": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "409": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "410": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "401": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "402": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "403": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "404": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "405": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "406": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "407": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "408": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "409": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "410": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
 
-  "411": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "412": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "413": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "414": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "415": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "416": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "417": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "418": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "419": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "420": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "411": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "412": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "413": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "414": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "415": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "416": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "417": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "418": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "419": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "420": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
 
-  "421": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "422": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "423": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "424": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "425": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "426": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "427": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "428": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "429": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "430": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "421": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "422": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "423": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "424": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "425": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "426": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "427": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "428": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "429": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "430": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
 
-  "431": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "432": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "433": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "434": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "435": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "436": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "437": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "438": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "439": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "440": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "431": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "432": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "433": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "434": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "435": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "436": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "437": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "438": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "439": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
+  "440": { 
+    "nombre": "", 
+    "paradas": { 
+      "ida": [], "vuelta": [] } },
 
-  "441": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "442": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "443": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "444": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "445": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "446": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "447": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "448": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "449": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "450": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "441": { 
+    "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "442": { 
+    "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "443": { 
+    "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "444": { 
+    "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "445": { 
+    "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "446": { 
+    "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "447": { 
+    "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "448": { 
+    "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "449": { 
+    "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
+  "450": { 
+    "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
 
   "451": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
   "452": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
