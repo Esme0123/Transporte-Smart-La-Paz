@@ -32,6 +32,7 @@ class _ResultScreenState extends State<ResultScreen>
 
     return Scaffold(
       backgroundColor: AppColors.surface,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           CustomScrollView(
@@ -41,14 +42,10 @@ class _ResultScreenState extends State<ResultScreen>
                 backgroundColor: Colors.transparent,
                 pinned: true,
                 leading: IconButton(
-                  // --- CAMBIO ---
-                  // Llama a la función onClose para cerrar
                   icon: Icon(LucideIcons.x, color: AppColors.textSecondary),
                   onPressed: widget.onClose,
                 ),
                 actions: [
-                  // --- CAMBIO ---
-                  // Botón de Favorito
                   IconButton(
                     icon: Icon(
                       LucideIcons.star,
@@ -117,41 +114,50 @@ class _ResultScreenState extends State<ResultScreen>
     );
   }
 
-  // --- WIDGETS INTERNOS (Sin cambios) ---
+  // --- WIDGETS INTERNOS ---
 
-  // _buildViewMapButton (Sin cambios)
+  // _buildViewMapButton 
   Widget _buildViewMapButton(BuildContext context) {
-    return Positioned(
-      bottom: 24,
-      left: 24,
-      right: 24,
-      child: GestureDetector(
-        onTap: () {
-          print("Botón 'Ver en mapa' presionado");
-          // Aquí puedes decidir si navega a la pestaña de mapa
-          // o abre una nueva pantalla de mapa detallado.
-          // Por ahora, solo imprime.
-        },
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [AppColors.primary, AppColors.secondary],
-            ),
-            borderRadius: BorderRadius.circular(32),
-            boxShadow: [BoxShadow(color: AppColors.primary.withOpacity(0.3), blurRadius: 20)],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(LucideIcons.map, color: Colors.white, size: 20),
-              const SizedBox(width: 8),
-              Text(
-                "Ver en mapa",
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
+          child: GestureDetector(
+            onTap: () {
+              // Acción del mapa
+            },
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [AppColors.primary, AppColors.secondary],
+                ),
+                borderRadius: BorderRadius.circular(32),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withOpacity(0.3),
+                    blurRadius: 20,
+                  )
+                ],
               ),
-            ],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(LucideIcons.map, color: Colors.white, size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    "Ver en mapa",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

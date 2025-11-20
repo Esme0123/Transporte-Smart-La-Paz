@@ -77,7 +77,6 @@ class _AppShellState extends State<AppShell> {
   }
 
   // --- CONSTRUCTOR DE PANTALLAS ---
-  // (Ya no es 'static const', ahora es un método)
   List<Widget> _buildScreens() {
     return [
       CameraScreen(
