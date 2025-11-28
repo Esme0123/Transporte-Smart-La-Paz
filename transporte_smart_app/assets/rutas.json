@@ -14351,628 +14351,493 @@
     }
   },
   "815":{
-    "nombre":"",
+    "nombre":"Calle 24 - Av. Panamericana",
     "paradas":{
-      "ida":[],
-      "vuelta":[]
+      "ida":[
+        "Calle 24",
+          "Av. Armando Escobar Uria",
+          "Av. Nieves Linares",
+          "Av. Boris Bánzer",
+          "Av. Nieves Linares",
+          "German Jordan",
+          "Av. Juan XXIII",
+          "German Jordan",
+          "Av. del Maestro",
+          "Calle Rosendo Villalobos",
+          "Calle Diaz Romero",
+          "Calle Capitán Hugo Estrada",
+          "Miraflores",
+          "Av. Simón Bolívar",
+          "Av. Eliodoro Camacho",
+          "Av. Mariscal Santa Cruz",
+          "Calle Yanacocha",
+          "Calle Mercado",
+          "Plaza San Francisco",
+          "Calle Figueroa",
+          "Calle Parque Marcelo Quiroga Santa Cruz",
+          "Calle Max Paredes",
+          "Av. Mariano Baptista",
+          "Av. Kollasuyo",
+          "Calle Yacuma",
+          "Av. Kollasuyo",
+          "Calle 29 de Enero",
+          "Calle Final Kollasuyo",
+          "Av. Naciones Unidas",
+          "Av. Panamericana"
+      ],
+      "vuelta":[
+        "Av. Naciones Unidas",
+          "Calle Final Kollasuyo",
+          "Av. Kollasuyo",
+          "Av. Entre Rios",
+          "Calle Mariscal de Zepita",
+          "Av. Entre Rios",
+          "Av. Heroes Del Pacífico",
+          "Av. Mariano Baptista",
+          "Av. Batalla de Tumusla",
+          "Av. Illampu",
+          "Calle Murillo",
+          "Calle Ayacucho",
+          "Av. Eliodoro Camacho",
+          "Av. Simón Bolívar",
+          "Miraflores",
+          "Calle Capitán Hugo Estrada",
+          "Calle Genaro Gamarra",
+          "Calle Diaz Romero",
+          "Calle Rosendo Villalobos",
+          "Av. del Maestro",
+          "Av. Juan XXIII",
+          "German Jordan",
+          "Av. Nieves Linares",
+          "Av. Boris Bánzer",
+          "Av. Nieves Linares",
+          "Av. Armando Escobar Uria",
+          "Calle 24",
+          "Calle 6"
+      ]
     }
   },
   "816":{
-    "nombre":"",
+    "nombre":"Av. Ismael Montes - Av. Mariscal Santa Cruz",
     "paradas":{
-      "ida":[],
-      "vuelta":[]
+      "ida":[
+        "Av. Ismael Montes",
+          "Av. Uruguay",
+          "Av. Ismael Montes",
+          "Calle Evaristo Valle",
+          "Viaducto Potosí",
+          "Calle Obispo Cardenas",
+          "Miraflores",
+          "Calle Capitán Hugo Estrada",
+          "Calle Guerrilleros Lanza",
+          "Calle Capitán Hugo Estrada",
+          "Av. Pasoskanki",
+          "Av. German Busch",
+          "Rotonda Germán Busch",
+          "Av. German Busch",
+          "Calle Felipe Reque",
+          "Plaza Villarroel",
+          "Calle Hans Kund",
+          "Plaza Villarroel",
+          "Av. German Busch",
+          "Calle Alto Beni",
+          "Av. de las Américas",
+          "Plaza del Maestro",
+          "Av. de las Américas",
+          "La Merced",
+          "Av. de las Américas",
+          "Av. Ramiro Castillo",
+          "Calle Raul Salmón de la Barra",
+          "Plaza Villarroel",
+          "Calle Guerrilleros Lanza",
+          "Calle Francisco de Miranda",
+          "Calle Gutiérrez Guerra",
+          "Calle Francisco de Miranda",
+          "Calle Carrasco",
+          "Calle Capitán Hugo Estrada",
+          "Miraflores",
+          "Av. Simón Bolívar",
+          "Av. Eliodoro Camacho",
+          "Av. Mariscal Santa Cruz"
+      ]
     }
   },
   "817":{
-    "nombre":"",
+    "nombre":"Calle Eyzaguirre - Calle 7",
     "paradas":{
-      "ida":[],
-      "vuelta":[]
+      "ida":[
+        "Calle Eyzaguirre",
+          "Av. República",
+          "Av. Quintanilla Zuazo",
+          "Calle Virrey Toledo",
+          "Av. Quintanilla Zuazo",
+          "Av. República",
+          "Av. América",
+          "Av. Ismael Montes",
+          "Av. Uruguay",
+          "Av. Ismael Montes",
+          "Calle Evaristo Valle",
+          "Av. Mariscal Santa Cruz",
+          "Calle Roman de Loayza",
+          "Casco Viejo",
+          "Calle Landaeta",
+          "Av. 6 de Agosto",
+          "Av. Aniceto Arce",
+          "Puente Libertad",
+          "Av. del Libertador",
+          "Av. Hernando Siles Reyes",
+          "Av. Roma",
+          "Av. Mecapaca",
+          "Av. José Ballivián Calacoto",
+          "Av. Fuerza Naval",
+          "Calle 1",
+          "Calle 2",
+          "Av. Jorge Muñoz Reyes",
+          "Av. Circunvalación",
+          "Av. Las Retamas",
+          "Calle 1",
+          "Calle Los Sauces",
+          "Av. Las Retamas",
+          "Av. Circunvalación",
+          "Calle 1",
+          "Calle D",
+          "Calle 13",
+          "Av. Circunvalación",
+          "Calle 1",
+          "Calle D",
+          "Calle 13",
+          "Av. Circunvalación",
+          "Calle 7",
+          "Peña Azul",
+          "Calle 2",
+          "Calle 7"
+      ],
+      "vuelta":[
+        "Calle 2",
+          "Peña Azul",
+          "Calle 7",
+          "Av. Circunvalación",
+          "Calle 13",
+          "Calle D",
+          "Calle 1",
+          "Av. Circunvalación",
+          "Av. Jorge Muñoz Reyes",
+          "Av. de la Fuerza Naval",
+          "Av. José Ballivián Calacoto",
+          "Av. Mecapaca",
+          "Av. Roma",
+          "Av. Hernando Siles Reyes",
+          "Av. del Libertador",
+          "Puente Libertad",
+          "Calle Prolongación Cordero",
+          "Av. Aniceto Arce",
+          "Av. Villazón",
+          "Casco Viejo",
+          "Calle Roman de Loayza",
+          "Av. Mariscal Santa Cruz",
+          "Av. Ismael Montes",
+          "Calle Evaristo Valle",
+          "Av. Ismael Montes",
+          "Av. Uruguay",
+          "Av. Perú",
+          "Av. Manco Kapac",
+          "Av. Apumalla",
+          "Challampaya",
+          "Av. Mariano Baptista",
+          "Av. Kollasuyo",
+          "Calle Reyes Cardona"
+      ]
     }
   },
   "818":{
-    "nombre":"",
+    "nombre":"Ovejuyo - Puente Unión",
     "paradas":{
-      "ida":[],
-      "vuelta":[]
+      "ida":[
+        "Ovejuyo",
+          "Urbanización Nueva Esperanza",
+          "Ovejuyo",
+          "Urbanización Nueva Esperanza",
+          "Calle Lanca",
+          "Calle Nº 59",
+          "Calle Nº 58",
+          "Av. Defensores del Chaco",
+          "Av. Héroes del Chaco",
+          "Av. Defensores del Chaco",
+          "Av. Héroes del Chaco",
+          "Av. Defensores del Chaco",
+          "Los Almedros",
+          "Av. Defensores del Chaco",
+          "Av. Juan Muñoz Reyes",
+          "Calle 28",
+          "Av. Juan Muñoz Reyes",
+          "Los Pinos",
+          "Extensión Av. Ballivián",
+          "Av. José Ballivián Calacoto",
+          "Av. Roma",
+          "Av. Mecapaca",
+          "Av. Roma",
+          "Av. Hernando Siles Reyes",
+          "Av. del Libertador",
+          "Puente Libertad",
+          "Av. Aniceto Arce",
+          "Calle Prolongación Cordero",
+          "Av. Aniceto Arce",
+          "Puente Nudo Villazón",
+          "Av. del Ejército",
+          "Calle Federico Zuazo",
+          "Calle Bueno",
+          "Av. Mariscal Santa Cruz",
+          "Av. Ismael Montes",
+          "Viaducto Potosí",
+          "Calle Evaristo Valle",
+          "Av. Ismael Montes",
+          "Av. Uruguay",
+          "Av. Perú",
+          "Av. Manco Kapac",
+          "San Sebastián",
+          "Calle Figueroa",
+          "Calle Roman de Loayza",
+          "Casco Viejo",
+          "Calle Landaeta",
+          "Av. 6 de Agosto",
+          "Puente Unión"
+      ]
     }
   },
   "819":{
-    "nombre":"",
+    "nombre":"Achachicala - Calle 2",
     "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "820":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "821":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "822":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "823":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "824":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "825":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "826":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "827":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "828":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "829":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "830":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "831":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "832":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "833":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "834":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "835":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "836":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "837":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "838":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "839":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "840": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "841": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "842": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "843": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "844": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "845": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "846": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "847": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "848": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "849": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "850": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "851": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "852": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "853": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "854": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "855": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "856": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "857": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "858": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "859": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "860": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "861": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "862": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "863": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "864": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "865": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "866": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "867": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "868": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "869": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "870": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "871": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "872": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "873": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "874": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "875": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "876": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "877": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "878": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "879": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "880": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
+      "ida":[
+        "Achachicala",
+          "Calle 9 Manuel Tovar",
+          "Achachicala",
+          "Av. Ramos Gavilán",
+          "Calle Amezaga",
+          "Av. Chacaltaya",
+          "Calle Constitución",
+          "Av. Perú",
+          "Av. Manco Kapac",
+          "San Sebastián",
+          "Calle Figueroa",
+          "Av. Ismael Montes",
+          "Calle Evaristo Valle",
+          "Av. Mariscal Santa Cruz",
+          "Calle Roman de Loayza",
+          "Casco Viejo",
+          "Calle Landaeta",
+          "Av. 6 de Agosto",
+          "Av. Sánchez Lima",
+          "Av. Mariscal Bernardino Bilbao Rioja",
+          "Av. Héctor Ormachea Zalles",
+          "Calle 5 - Roberto Jordán Cuellar",
+          "Av. Roma",
+          "Av. Mecapaca",
+          "Av. José Ballivián Calacoto",
+          "Av. Sánchez Bustamante",
+          "Calle 13-Carlos Flores Quintela",
+          "Av. de la Fuerza Naval",
+          "Calle 12-República de Portugal",
+          "Av. Teniente Coronel Rafael Pabón Cuevas",
+          "Ingreso Estacionamiento",
+          "Rotonda Colegio Militar",
+          "Calle 1 - General Centeno",
+          "Av. Braulio Vera",
+          "Calle 9 - General Angel Babia",
+          "Av. Alfredo Gobles",
+          "Av. El Vergel",
+          "El Vergel",
+          "Calle 5",
+          "Calle 2"
+      ],
+      "vuelta":[
+        "Calle 5",
+          "El Vergel",
+          "Av. El Vergel",
+          "Av. Alfredo Gobles",
+          "Calle Aviles",
+          "Calle Pablo Sanchez",
+          "Calle 1 - General Centeno",
+          "Rotonda Colegio Militar",
+          "Ingreso Estacionamiento",
+          "Av. Teniente Coronel Rafael Pabón Cuevas",
+          "Av. José Ballivián Calacoto",
+          "Av. Mecapaca",
+          "Av. Roma",
+          "Av. Hernando Siles Reyes",
+          "Av. del Libertador",
+          "Puente Libertad",
+          "Calle Prolongación Cordero",
+          "Av. Aniceto Arce",
+          "Av. Villazón",
+          "Casco Viejo",
+          "Calle Roman de Loayza",
+          "Av. Mariscal Santa Cruz",
+          "Calle Evaristo Valle",
+          "Av. Ismael Montes",
+          "Av. Pando",
+          "San Sebastián",
+          "Av. Manco Kapac",
+          "Calle Independencia",
+          "Av. Chacaltaya",
+          "Calle Constitución",
+          "Calle Huayna Potosí",
+          "Av. Chacaltaya",
+          "Av. Ramos Gavilán",
+          "Achachicala",
+          "Calle 9 Manuel Tovar",
+          "Plan Autopista",
+          "Tangani"
+      ]
     }
   },
   "881": {
-    "nombre": "",
+    "nombre": "Calle La Unión - Av. Cívica",
     "paradas": {
-      "ida": [],
-      "vuelta": []
+      "ida": [
+        "Calle La Unión",
+          "Av. Circunvalación",
+          "Calle 20",
+          "Plaza del Maestro",
+          "Av. de las Américas",
+          "Av. German Busch",
+          "Av. Tejada Sorzano",
+          "Av. Abel Iturralde",
+          "Calle Guatemala",
+          "Plaza Uyuni",
+          "Calle Capitán Hugo Estrada",
+          "Calle Juan Manuel Loza",
+          "Av. del Ejército",
+          "Calle Oscar Soria",
+          "Calle Rosendo Gutiérrez",
+          "Av. Aniceto Arce",
+          "Av. Villazón",
+          "Casco Viejo",
+          "Calle Roman de Loayza",
+          "Av. Mariscal Santa Cruz",
+          "Calle Yanacocha",
+          "Calle Mercado",
+          "Plaza San Francisco",
+          "Calle Figueroa",
+          "Calle Parque Marcelo Quiroga Santa Cruz",
+          "Calle Max Paredes",
+          "Calle Batalla de Tarapacá",
+          "Calle Nataniel Aguirre",
+          "Calle Chorolque",
+          "Av. Entre Rios",
+          "Calle Ayata",
+          "Av. 9 de Abril",
+          "Calle Juan Martinez Monje",
+          "Av. 9 de Abril",
+          "Calle Antonio Gallardo",
+          "Los Andes",
+          "Alto Chamoco Chico",
+          "Av. 9 de Abril",
+          "Av. Cívica"
+      ],
+      "vuelta": [
+        "Av. 9 de Abril",
+          "Alto Chamoco Chico",
+          "Los Andes",
+          "Calle Antonio Gallardo",
+          "Av. 9 de Abril",
+          "Calle Juan Martinez Monje",
+          "Av. 9 de Abril",
+          "Calle Ayata",
+          "Av. Entre Rios",
+          "Calle General Juan Granier",
+          "Av. Mariano Baptista",
+          "Challampaya",
+          "Av. Apumalla",
+          "Av. Manco Kapac",
+          "Av. Illampu",
+          "Alto San Pedro",
+          "Av. 20 de Octubre",
+          "Calle México",
+          "Av. 6 de Agosto",
+          "Calle Pedro Salazar",
+          "Av. Aniceto Arce",
+          "Calle Juan de Vargas",
+          "Calle Chichas",
+          "Av. Bautista Saavedra",
+          "Calle Nicaragua",
+          "Av. Bautista Saavedra",
+          "Calle Capitán Hugo Estrada",
+          "Av. Abel Iturralde",
+          "Miraflores",
+          "Av. Tejada Sorzano",
+          "Av. German Busch",
+          "Av. de las Américas",
+          "Calle 20",
+          "Av. Circunvalación",
+          "Calle La Unión",
+          "Av. Circunvalación"
+      ]
     }
   },
-  "882": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "883": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "884": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "885": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "886": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "887": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "888": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "889": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "890": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "891": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "892": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "893": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "894": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "895": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "896": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "897": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "898": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "899": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "900": {
-    "nombre": "",
-    "paradas": {
-      "ida": [],
-      "vuelta": []
-    }
-  },
-  "981": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "982": { "nombre": "", "paradas": { "ida": [], "vuelta": [] } },
-  "983":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "984":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  },
-  "985":{
-    "nombre":"",
-    "paradas":{
-      "ida":[],
-      "vuelta":[]
-    }
-  }
+  "981": { 
+    "nombre": "Av. 31 de Octubre - Av. Tokio ", 
+    "paradas": { 
+      "ida": [
+        "Av. 31 de Octubre",
+          "Calle Capitán Macedonio Orellana",
+          "Av. Esteban Arze",
+          "Calle Luis Braille",
+          "Av. Pasoskanki",
+          "Villa Copacabana",
+          "Av. Regimiento Castrillo",
+          "Av. Pasoskanki",
+          "Av. Brasil",
+          "Calle Francisco de Miranda",
+          "Calle Gutiérrez Guerra",
+          "Calle Nicaragua",
+          "Calle Fernando Prudencio",
+          "Calle Juan de Vargas",
+          "Calle Belisario Salinas",
+          "Av. Aniceto Arce",
+          "Av. Villazón",
+          "Calle Cañada Strongest",
+          "Calle Otero de la Vega",
+          "Calle General Gonzales",
+          "Calle Rigoberto Paredes",
+          "Calle Villamil de Rada",
+          "Av. Buenos Aires",
+          "Calle Antonio Gallardo",
+          "Calle Kalahumana",
+          "Calle Obispo Balderrama",
+          "Av. Eduardo Avaroa",
+          "Av. Entre Rios",
+          "Calle Ayata",
+          "Calle Mariscal de Zepita",
+          "Av. Tokio"
+      ], "vuelta": [
+        "Av. Entre Rios",
+          "Calle Ayata",
+          "Av. Entre Rios",
+          "Av. Eduardo Avaroa",
+          "Calle Obispo Balderrama",
+          "Los Andes",
+          "Calle Obispo Bilbao La Vieja",
+          "Calle Kalahumana",
+          "Calle Antonio Gallardo",
+          "Av. Buenos Aires",
+          "Calle Luciano Alcoreza",
+          "Calle Rigoberto Paredes",
+          "Plaza Libano",
+          "Calle Rigoberto Paredes",
+          "Calle Boquerón",
+          "Calle México",
+          "Av. 6 de Agosto",
+          "Calle Pedro Salazar",
+          "Av. Aniceto Arce",
+          "Calle Juan de Vargas",
+          "Calle Chichas",
+          "Av. Bautista Saavedra",
+          "Calle Gutiérrez Guerra",
+          "Av. Regimiento Castrillo",
+          "Villa Copacabana",
+          "Av. Pasoskanki",
+          "Av. Esteban Arze",
+          "Av. 31 de Octubre",
+          "Calle 9"
+      ] } }
 }
