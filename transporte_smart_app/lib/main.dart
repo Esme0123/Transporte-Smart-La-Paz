@@ -94,8 +94,10 @@ class _AppShellState extends State<AppShell> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true, 
       body: Stack(
         children: [
           // --- PANTALLAS DE NAVEGACIÓN ---
@@ -104,15 +106,18 @@ class _AppShellState extends State<AppShell> {
             children: _buildScreens(),
           ),
 
-          if (_selectedRoute == null)
+          // --- BARRA DE NAVEGACIÓN ---
+          // Solo mostrar si NO hay ruta seleccionada Y el teclado NO está visible
+          if (_selectedRoute == null && !isKeyboardVisible)
             _buildCustomNavBar(),
 
+          // --- PANTALLA DE RESULTADO ---
           if (_selectedRoute != null)
             ResultScreen(
               route: _selectedRoute!,
               favoriteRoutes: _favoriteRoutes,
               onToggleFavorite: _toggleFavorite,
-              onClose: _hideResult, // Pasa la función para cerrar
+              onClose: _hideResult,
             ),
         ],
       ),

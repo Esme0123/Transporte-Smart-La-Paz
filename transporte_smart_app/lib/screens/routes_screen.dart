@@ -83,38 +83,45 @@ class _RoutesScreenState extends State<RoutesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Padding(
+    @override
+  Widget build(BuildContext context) {
+    // CAMBIO 1: Quitamos el Scaffold, usamos un Container o SafeArea directamente
+    return SafeArea( 
+      bottom: false, // Dejar que el contenido fluya detrás del nav bar si es necesario
+      child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // --- Encabezado (Sin cambios) ---
-            const SizedBox(height: 60),
-            Text("Mis Rutas", style: TextStyle(color: AppColors.textPrimary, fontSize: 28, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 20), // Ajustado espacio superior
+            
+            // Encabezados
+            Text("Mis Rutas", 
+                style: TextStyle(color: AppColors.textPrimary, fontSize: 28, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            Text("Recientes y favoritas", style: TextStyle(color: AppColors.textSecondary, fontSize: 16)),
+            Text("Recientes y favoritas", 
+                style: TextStyle(color: AppColors.textSecondary, fontSize: 16)),
             const SizedBox(height: 24),
-            // --- Barra de Búsqueda (Sin cambios) ---
+            
+            // Barra de Búsqueda
             _buildSearchBar(),
             const SizedBox(height: 24),
-            // --- Lista de Rutas (Con cambios) ---
+            
+            // Lista de Rutas
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : _filteredRoutes.isEmpty
                       ? Center(child: Text("No se encontraron rutas.", style: TextStyle(color: AppColors.textSecondary)))
                       : ListView.builder(
-                          itemCount: _filteredRoutes.length,
+                          // CAMBIO 2: Padding inferior grande para que el último elemento 
+                          // no quede tapado por la barra de navegación flotante.
                           padding: const EdgeInsets.only(bottom: 120),
+                          itemCount: _filteredRoutes.length,
                           itemBuilder: (context, index) {
                             final route = _filteredRoutes[index];
-                            // --- CAMBIO ---
-                            // Comprueba si es favorita
                             final bool isFavorite = widget.favoriteRoutes.contains(route.lineNumber);
 
-                            // Pasa todos los parámetros
                             return _RouteCard(
                               route: route,
                               isFavorite: isFavorite,
@@ -122,6 +129,8 @@ class _RoutesScreenState extends State<RoutesScreen> {
                                 widget.onToggleFavorite(route.lineNumber);
                               },
                               onShowResult: () {
+                                // CAMBIO 3: Cerrar el teclado antes de navegar
+                                FocusScope.of(context).unfocus();
                                 widget.onShowResult(route);
                               },
                             );
