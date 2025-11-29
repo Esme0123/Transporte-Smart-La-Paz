@@ -80,10 +80,7 @@ class _RoutesScreenState extends State<RoutesScreen> {
       }).toList();
     });
   }
-
   @override
-  Widget build(BuildContext context) {
-    @override
   Widget build(BuildContext context) {
     // CAMBIO 1: Quitamos el Scaffold, usamos un Container o SafeArea directamente
     return SafeArea( 
