@@ -28,6 +28,8 @@ class _ResultScreenState extends State<ResultScreen>
 
   @override
   Widget build(BuildContext context) {
+    final stopsMap = widget.route.stops;
+    final List<String> currentStops = stopsMap[_selectedTab] ?? [];
     final bool isFavorite = widget.favoriteRoutes.contains(widget.route.lineNumber);
 
     return Scaffold(
@@ -89,21 +91,34 @@ class _ResultScreenState extends State<ResultScreen>
               ),
 
               // --- Lista de Paradas (Sin cambios) ---
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final stops = widget.route.stops[_selectedTab] ?? [];
-                    final stopName = stops[index];
-                    final isFirst = index == 0;
-                    final isLast = index == stops.length - 1;
-                    return _StopRowItem(stopName: stopName, isFirst: isFirst, isLast: isLast);
-                  },
-                  childCount: (widget.route.stops[_selectedTab] ?? []).length,
+              if (currentStops.isNotEmpty)
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final stopName = currentStops[index];
+                      final isFirst = index == 0;
+                      final isLast = index == currentStops.length - 1;
+                      return _StopRowItem(stopName: stopName, isFirst: isFirst, isLast: isLast);
+                    },
+                    childCount: currentStops.length,
+                  ),
+                )
+              else
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 40),
+                    child: Center(
+                      child: Text(
+                        "No hay información de paradas\npara el tramo de $_selectedTab",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: AppColors.textSecondary),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 120), // Espacio para el botón flotante
-              ),
+
+              // Espacio final
+              const SliverToBoxAdapter(child: SizedBox(height: 120)),
             ],
           ),
 

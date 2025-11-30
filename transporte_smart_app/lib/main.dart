@@ -136,28 +136,33 @@ class _AppShellState extends State<AppShell> {
   // --- WIDGET DE NAVEGACIÓN PERSONALIZADO  ---
   Widget _buildCustomNavBar() {
     return Positioned(
-      bottom: 24.0,
-      left: 16.0,
-      right: 16.0,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(32.0),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
-            decoration: BoxDecoration(
-              color: AppColors.surface.withOpacity(0.95),
-              border: Border.all(color: AppColors.border),
-              borderRadius: BorderRadius.circular(32.0),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildNavItem(icon: LucideIcons.camera, label: "Detectar", index: 0),
-                _buildNavItem(icon: LucideIcons.list, label: "Rutas", index: 1),
-                _buildNavItem(icon: LucideIcons.map, label: "Mapa", index: 2),
-                _buildNavItem(icon: LucideIcons.user, label: "Perfil", index: 3),
-              ],
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: SafeArea( // <--- ESTO ARREGLA EL OVERFLOW EN IPHONE/ANDROID NUEVOS
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 24.0), // Margen manual
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(32.0),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+                decoration: BoxDecoration(
+                  color: AppColors.surface.withOpacity(0.95),
+                  border: Border.all(color: AppColors.border),
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildNavItem(icon: LucideIcons.camera, label: "Detectar", index: 0),
+                    _buildNavItem(icon: LucideIcons.list, label: "Rutas", index: 1),
+                    _buildNavItem(icon: LucideIcons.map, label: "Mapa", index: 2),
+                    _buildNavItem(icon: LucideIcons.user, label: "Perfil", index: 3),
+                  ],
+                ),
+              ),
             ),
           ),
         ),

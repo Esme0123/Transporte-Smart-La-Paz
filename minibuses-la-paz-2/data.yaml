@@ -1,0 +1,33 @@
+names:
+- '207'
+- '243'
+- '265'
+- '282'
+- '288'
+- '311'
+- '345'
+- '501'
+- '547'
+- '800'
+- '888'
+- '905'
+- '906'
+- '933'
+- '952'
+- '962'
+- '965'
+- '969'
+- '978'
+- '980'
+- '988'
+- '991'
+nc: 22
+roboflow:
+  license: CC BY 4.0
+  project: minibuses-la-paz-benlc
+  url: https://universe.roboflow.com/transportesmart/minibuses-la-paz-benlc/dataset/2
+  version: 2
+  workspace: transportesmart
+test: ../test/images
+train: ../train/images
+val: ../valid/images

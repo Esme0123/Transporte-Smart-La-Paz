@@ -10,5 +10,5 @@ project = rf.workspace("transportesmart").project("minibuses-la-paz-benlc")
 version = project.version(2)
 
 print("Iniciando descarga del modelo...")
-version.download("tflite")
+version.download("yolov8")
 print("¡Descarga completa! Busca la carpeta nueva.")
