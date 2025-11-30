@@ -7,7 +7,12 @@ import 'package:transporte_smart_app/screens/camera_screen.dart';
 import 'package:transporte_smart_app/screens/routes_screen.dart';
 import 'package:transporte_smart_app/screens/map_screen.dart';
 import 'package:transporte_smart_app/screens/profile_screen.dart';
-import 'package:transporte_smart_app/screens/result_screen.dart'; // Importa la pantalla de resultado
+import 'package:transporte_smart_app/screens/result_screen.dart'; 
+import 'package:transporte_smart_app/screens/splash_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:transporte_smart_app/blocs/routes/routes_bloc.dart';
+import 'package:transporte_smart_app/blocs/routes/routes_event.dart';
+import 'package:transporte_smart_app/blocs/routes/routes_state.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,17 +23,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Transporte Smart',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: AppColors.background,
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          unselectedItemColor: AppColors.textInactive,
+    return BlocProvider(
+      create: (context) => RoutesBloc()..add(LoadRoutesEvent()),
+      child: MaterialApp(
+        title: 'Transporte Smart',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          scaffoldBackgroundColor: AppColors.background,
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            unselectedItemColor: AppColors.textInactive,
+          ),
         ),
+        home: const SplashScreen(),
       ),
-      home: const AppShell(),
     );
   }
 }
@@ -43,24 +51,13 @@ class AppShell extends StatefulWidget {
 class _AppShellState extends State<AppShell> {
   int _selectedIndex = 0;
 
-  // --- ESTADO CENTRALIZADO ---
-  List<String> _favoriteRoutes = ['273']; // Ejemplo de favorito inicial
+  // --- ESTADO CENTRALIZADO --- // Ejemplo de favorito inicial
   AppRoute? _selectedRoute; // La ruta que se está viendo (null si no hay ninguna)
 
   // --- FUNCIONES DE MANEJO DE ESTADO ---
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-    });
-  }
-
-  void _toggleFavorite(String routeNumber) {
-    setState(() {
-      if (_favoriteRoutes.contains(routeNumber)) {
-        _favoriteRoutes.remove(routeNumber);
-      } else {
-        _favoriteRoutes.add(routeNumber);
-      }
     });
   }
 
@@ -83,8 +80,6 @@ class _AppShellState extends State<AppShell> {
         onShowResult: _showResult,
       ),
       RoutesScreen(
-        favoriteRoutes: _favoriteRoutes,
-        onToggleFavorite: _toggleFavorite,
         onShowResult: _showResult,
       ),
       const MapScreen(),
@@ -113,12 +108,26 @@ class _AppShellState extends State<AppShell> {
 
           // --- PANTALLA DE RESULTADO ---
           if (_selectedRoute != null)
-            ResultScreen(
-              route: _selectedRoute!,
-              favoriteRoutes: _favoriteRoutes,
-              onToggleFavorite: _toggleFavorite,
-              onClose: _hideResult,
-            ),
+             // Necesitamos conectar el ResultScreen al BLoC también
+             // para que la estrella de favoritos funcione
+             BlocBuilder<RoutesBloc, RoutesState>(
+               builder: (context, state) {
+                 List<String> currentFavs = [];
+                 if (state is RoutesLoaded) {
+                   currentFavs = state.favoriteIds;
+                 }
+                 
+                 return ResultScreen(
+                    route: _selectedRoute!,
+                    favoriteRoutes: currentFavs, // Viene del BLoC
+                    onToggleFavorite: (id) {
+                      // Enviamos evento al BLoC
+                      context.read<RoutesBloc>().add(ToggleFavoriteEvent(id));
+                    },
+                    onClose: _hideResult,
+                 );
+               },
+             ),
         ],
       ),
     );

@@ -1,11 +1,12 @@
+import 'package:camera/camera.dart'; // Importante
 import 'package:flutter/material.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
 import 'package:transporte_smart_app/models/route_model.dart';
-// ¡Ya no necesitamos importar ResultScreen aquí!
+// Importaremos el servicio de IA luego
 
-class CameraScreen extends StatelessWidget {
-  // --- PARÁMETRO REQUERIDO ---
+class CameraScreen extends StatefulWidget {
   final Function(AppRoute) onShowResult;
 
   const CameraScreen({
@@ -13,48 +14,96 @@ class CameraScreen extends StatelessWidget {
     required this.onShowResult,
   });
 
-  // --- FUNCIÓN DE NAVEGACIÓN SIMULADA ---
-  void _simulateDetection(BuildContext context) {
-    // 1. Creamos una ruta de prueba
+  @override
+  State<CameraScreen> createState() => _CameraScreenState();
+}
+
+class _CameraScreenState extends State<CameraScreen> {
+  CameraController? _controller;
+  bool _isCameraInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeCamera();
+  }
+
+  // Inicializar la cámara real
+  Future<void> _initializeCamera() async {
+    // 1. Pedir permisos
+    var status = await Permission.camera.request();
+    if (status.isDenied) return;
+
+    // 2. Buscar cámaras
+    final cameras = await availableCameras();
+    if (cameras.isEmpty) return;
+
+    // 3. Configurar el controlador (Resolución media es suficiente para IA)
+    _controller = CameraController(
+      cameras[0], // Cámara trasera
+      ResolutionPreset.medium, 
+      enableAudio: false,
+    );
+
+    try {
+      await _controller!.initialize();
+      if (!mounted) return;
+      setState(() {
+        _isCameraInitialized = true;
+      });
+    } catch (e) {
+      print("Error cámara: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  // --- FUNCIÓN DE DETECCIÓN (Pronto conectaremos la IA aquí) ---
+  void _onTapDetect() {
+    // POR AHORA: Sigue simulando para no romper la app mientras entrenas
+    _simulateDetection();
+    
+    // FUTURO:
+    // 1. Tomar foto con _controller.takePicture()
+    // 2. Enviarla a AiService.runDetection()
+    // 3. Buscar el resultado en el JSON
+  }
+
+  void _simulateDetection() {
     final Map<String, dynamic> fakeJson = {
       "nombre": "C. Chuquiaguillo - San Pedro",
       "paradas": {
-        "ida": [
-          "Plaza Villarroel",
-          "Av. Busch",
-          "Estadio",
-          "Plaza San Pedro"
-        ],
-        "vuelta": [
-          "Plaza San Pedro",
-          "Plaza Eguino",
-          "Miraflores",
-          "Av. Busch"
-        ]
+        "ida": ["Plaza Villarroel", "Av. Busch", "Estadio", "Plaza San Pedro"],
+        "vuelta": ["Plaza San Pedro", "Plaza Eguino", "Miraflores", "Av. Busch"]
       }
     };
     final AppRoute testRoute = AppRoute.fromJson("273", fakeJson);
-
-    // 2. --- CAMBIO ---
-    // Ya no usamos Navigator.push. Llamamos a la función del padre.
-    onShowResult(testRoute);
+    widget.onShowResult(testRoute);
   }
 
   @override
   Widget build(BuildContext context) {
+    // Si la cámara no está lista, mostramos pantalla negra o loading
+    if (!_isCameraInitialized || _controller == null) {
+      return const Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(child: CircularProgressIndicator(color: AppColors.primary)),
+      );
+    }
+
+    // Si está lista, mostramos la vista previa (CameraPreview)
     return Scaffold(
-      backgroundColor: Colors.transparent,
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // --- Fondo de Cámara Simulado ---
-          Image.asset(
-            'assets/images/camera_bg.jpg',
-            fit: BoxFit.cover,
-          ),
-          Container(
-            color: AppColors.background.withOpacity(0.4),
-          ),
+          // 1. VISTA PREVIA DE LA CÁMARA REAL
+          CameraPreview(_controller!),
+
+          // 2. Overlay Oscuro y Diseño (Igual que antes)
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -70,13 +119,12 @@ class CameraScreen extends StatelessWidget {
             ),
           ),
 
-          // --- Contenido Principal ---
+          // 3. Textos e Interfaz
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0).copyWith(top: 60.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // --- CAMBIO DE TEXTO (Paso anterior) ---
                 Text(
                   "Detección de Ruta",
                   style: TextStyle(
@@ -103,39 +151,34 @@ class CameraScreen extends StatelessWidget {
             ),
           ),
 
-          // --- Botón de "Zap" (Detección) ---
-          _buildZapButton(context),
+          // 4. Botón Zap
+          _buildZapButton(),
         ],
       ),
     );
   }
 
-  // Widget para el área de escaneo (Sin cambios)
   Widget _buildScannerArea() {
     return Container(
       width: 300,
       height: 200,
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        border: Border.all(color: AppColors.border),
+        color: Colors.white.withOpacity(0.1), // Un poco más transparente
+        border: Border.all(color: AppColors.primary.withOpacity(0.5), width: 2),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Center(
-        child: Text(
-          "Enfoca el letrero del minibús",
-          style: TextStyle(color: AppColors.textSecondary),
-        ),
+        child: Icon(LucideIcons.scanLine, color: Colors.white.withOpacity(0.5), size: 40),
       ),
     );
   }
 
-  // Widget para el botón "Zap" (Sin cambios)
-  Widget _buildZapButton(BuildContext context) {
+  Widget _buildZapButton() {
     return Positioned(
       bottom: 120,
       right: 24,
       child: InkWell(
-        onTap: () => _simulateDetection(context), // Llama a la simulación
+        onTap: _onTapDetect, // Llama a la nueva función
         borderRadius: BorderRadius.circular(32),
         child: Container(
           width: 64,
