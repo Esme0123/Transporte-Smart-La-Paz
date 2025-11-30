@@ -1,7 +1,7 @@
 class AppRoute {
   final String lineNumber;
   final String routeName;
-  final String destination; 
+  final String destination;
   final Map<String, List<String>> stops;
 
   AppRoute({
@@ -11,18 +11,32 @@ class AppRoute {
     required this.stops,
   });
 
-  // Un 'factory constructor' para crear una ruta desde tu JSON
   factory AppRoute.fromJson(String number, Map<String, dynamic> json) {
-    // Asumimos que el JSON tiene la estructura que definimos
-    final paradas = json['paradas'] as Map<String, dynamic>;
-    final paradasIda = (paradas['ida'] as List).map((e) => e.toString()).toList();
-    final paradasVuelta = (paradas['vuelta'] as List).map((e) => e.toString()).toList();
+    // 1. PROTECCIÓN: Si no hay paradas, usamos un mapa vacío
+    final paradasMap = json['paradas'] is Map<String, dynamic> 
+        ? json['paradas'] as Map<String, dynamic> 
+        : <String, dynamic>{};
+
+    // 2. PROTECCIÓN: Si 'ida' es null, usamos lista vacía []
+    final rawIda = paradasMap['ida'];
+    final List<String> paradasIda = (rawIda is List) 
+        ? rawIda.map((e) => e.toString()).toList() 
+        : [];
+
+    // 3. PROTECCIÓN: Si 'vuelta' es null, usamos lista vacía []
+    final rawVuelta = paradasMap['vuelta'];
+    final List<String> paradasVuelta = (rawVuelta is List) 
+        ? rawVuelta.map((e) => e.toString()).toList() 
+        : [];
     
-    final String dest = paradasIda.isNotEmpty ? paradasIda.last : "Sin destino";
+    // Calculamos destino seguro
+    final String dest = paradasIda.isNotEmpty 
+        ? paradasIda.last 
+        : (json['nombre'] ?? "Sin destino"); // Fallback al nombre si no hay paradas
 
     return AppRoute(
       lineNumber: number,
-      routeName: json['nombre'] as String,
+      routeName: json['nombre']?.toString() ?? "Ruta Desconocida", // Protección nombre null
       destination: dest,
       stops: {
         'ida': paradasIda,
