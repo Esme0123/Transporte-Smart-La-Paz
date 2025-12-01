@@ -16,9 +16,9 @@ dependencies:
   equatable: ^2.0.5     # Para comparar estados fácilmente
   http: ^1.1.0
   camera: ^0.10.5
-  flutter_tflite: ^1.0.1
+  flutter_vision: ^1.1.4
   permission_handler: ^11.0.1
-  image_picker: ^1.0.7
+  image_picker: ^0.8.9
 
 dev_dependencies:
   flutter_test:

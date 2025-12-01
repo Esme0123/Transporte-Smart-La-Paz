@@ -1,56 +1,57 @@
-import 'package:flutter_tflite/flutter_tflite.dart';
+import 'package:flutter_vision/flutter_vision.dart';
+import 'dart:typed_data'; // Necesario para manejar bytes de imagen
 
 class AiService {
-  // Patrón Singleton (para tener una sola instancia del cerebro)
   static final AiService _instance = AiService._internal();
   factory AiService() => _instance;
   AiService._internal();
 
+  late FlutterVision _vision;
   bool _isModelLoaded = false;
 
-  // 1. Cargar el Modelo (Llamaremos a esto al iniciar la app)
+  // 1. Cargar el Modelo
   Future<void> loadModel() async {
     if (_isModelLoaded) return;
+    _vision = FlutterVision();
 
     try {
-      String? res = await Tflite.loadModel(
-        model: "assets/model/yolov8n.tflite", // El archivo que bajaremos de Roboflow
-        labels: "assets/model/labels.txt",     // Las etiquetas (273, 212, etc.)
-        numThreads: 1, // Usa 1 o 2 núcleos del celular
-        isAsset: true,
-        useGpuDelegate: false,
+      await _vision.loadYoloModel(
+        modelPath: "assets/model/yolov8n.tflite", 
+        labels: "assets/model/labels.txt",
+        modelVersion: "yolov8", // Le decimos explícitamente que es YOLOv8
+        quantization: false,    // Usamos float16 (lo que bajaste de Colab), no int8
+        numThreads: 2,
+        useGpu: false,
       );
-      
-      print("Modelo cargado: $res");
+      print("Modelo YOLOv8 cargado correctamente");
       _isModelLoaded = true;
     } catch (e) {
       print("Error al cargar modelo: $e");
     }
   }
 
-  // 2. Ejecutar detección en una imagen
-  Future<List<dynamic>?> runDetection(String imagePath) async {
+  // 2. Ejecutar detección (Ahora recibe bytes de imagen, es más rápido)
+  Future<List<Map<String, dynamic>>?> runDetection(Uint8List imageBytes, int height, int width) async {
     if (!_isModelLoaded) return null;
 
     try {
-      var recognitions = await Tflite.detectObjectOnImage(
-        path: imagePath,
-        model: "YOLO", // Importante para YOLO
-        threshold: 0.5, // Confianza mínima (50%)
-        imageMean: 0.0,
-        imageStd: 255.0,
-        numResultsPerClass: 1,
+      final result = await _vision.yoloOnImage(
+        bytesList: imageBytes,
+        imageHeight: height,
+        imageWidth: width,
+        iouThreshold: 0.4, // Sensibilidad de superposición
+        confThreshold: 0.4, // Confianza mínima (40%)
+        classThreshold: 0.4,
       );
-      return recognitions;
+      return result;
     } catch (e) {
       print("Error en detección: $e");
       return null;
     }
   }
 
-  // Liberar memoria
-  void dispose() {
-    Tflite.close();
+  void dispose() async {
+    await _vision.closeYoloModel();
     _isModelLoaded = false;
   }
 }

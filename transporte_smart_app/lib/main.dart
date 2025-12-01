@@ -139,9 +139,9 @@ class _AppShellState extends State<AppShell> {
       bottom: 0,
       left: 0,
       right: 0,
-      child: SafeArea( // <--- ESTO ARREGLA EL OVERFLOW EN IPHONE/ANDROID NUEVOS
+      //child: SafeArea( // <--- ESTO ARREGLA EL OVERFLOW EN IPHONE/ANDROID NUEVOS
         child: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 24.0), // Margen manual
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 30.0), // Margen manual
           child: ClipRRect(
             borderRadius: BorderRadius.circular(32.0),
             child: BackdropFilter(
@@ -166,7 +166,7 @@ class _AppShellState extends State<AppShell> {
             ),
           ),
         ),
-      ),
+      //),
     );
   }
 

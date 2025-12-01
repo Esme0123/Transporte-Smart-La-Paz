@@ -1,12 +1,19 @@
-import 'dart:io'; // Para manejar archivos
+import 'dart:io';
+import 'dart:typed_data'; // Necesario para manejar bytes
+import 'dart:ui' as ui;   // Necesario para decodificar imagen y sacar tamaño
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart'; 
+import 'package:image_picker/image_picker.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; // Importante para BLoC
+
+// Imports de tu proyecto
 import 'package:transporte_smart_app/theme/app_colors.dart';
 import 'package:transporte_smart_app/models/route_model.dart';
 import 'package:transporte_smart_app/services/ai_service.dart';
+import 'package:transporte_smart_app/blocs/routes/routes_bloc.dart';
+import 'package:transporte_smart_app/blocs/routes/routes_state.dart';
 
 class CameraScreen extends StatefulWidget {
   final Function(AppRoute) onShowResult;
@@ -23,7 +30,7 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   CameraController? _controller;
   bool _isCameraInitialized = false;
-  final ImagePicker _picker = ImagePicker(); // Instancia para la galería
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -66,84 +73,120 @@ class _CameraScreenState extends State<CameraScreen> {
     super.dispose();
   }
 
-  // --- LÓGICA CENTRAL DE IA ---
-  // Esta función recibe una ruta de imagen (sea de cámara o galería) y la procesa
-  Future<void> _processImage(String imagePath) async {
+  // --- LÓGICA DE PROCESAMIENTO DE IMAGEN (IA) ---
+  Future<void> _processImage(XFile imageFile) async {
     try {
-      // Mostrar indicador de carga
+      // 1. Mostrar feedback visual
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text("Analizando ruta..."),
-            duration: Duration(milliseconds: 1000)),
+            content: Text("Analizando imagen..."),
+            duration: Duration(milliseconds: 800)),
       );
 
-      final detections = await AiService().runDetection(imagePath);
+      // 2. Leer bytes (Requisito de flutter_vision)
+      final Uint8List imageBytes = await File(imageFile.path).readAsBytes();
 
+      // 3. Obtener dimensiones reales de la imagen
+      final ui.Image decodedImage = await decodeImageFromList(imageBytes);
+
+      // 4. Enviar a la IA
+      final detections = await AiService().runDetection(
+        imageBytes,
+        decodedImage.height,
+        decodedImage.width,
+      );
+
+      // 5. Analizar resultados
       if (detections != null && detections.isNotEmpty) {
+        // La librería devuelve una lista, tomamos el mejor resultado
         final topResult = detections.first;
-        final String detectedLabel = topResult['label'];
-        final double confidence = topResult['confidence'];
-
-        print("Detectado: $detectedLabel ($confidence)");
-
-        if (confidence > 0.40) {
-          _findAndShowRoute(detectedLabel);
-        } else {
-          _mostrarError("No estoy seguro qué número es.");
-        }
+        
+        // NOTA: flutter_vision usa la clave 'tag' para la clase detectada
+        final String detectedLabel = topResult['tag']; 
+        
+        // La confianza ya viene filtrada por el servicio (0.4), así que confiamos.
+        print("Detectado: $detectedLabel");
+        
+        // BUSCAR LA RUTA EN LA BASE DE DATOS (BLoC)
+        _findAndShowRoute(detectedLabel);
+        
       } else {
-        _mostrarError("No detecté ningún número de línea.");
+        _mostrarError("No detecté ningún número de línea claro.");
       }
     } catch (e) {
-      print("Error en procesamiento: $e");
-      _mostrarError("Error al procesar la imagen.");
+      print("Error procesando imagen: $e");
+      _mostrarError("Error técnico al analizar la imagen.");
     }
   }
 
-  // 1. Usar Cámara
+  // --- BUSCAR EN EL BLOC (Base de Datos JSON) ---
+  void _findAndShowRoute(String label) {
+    print("Buscando en BLoC la línea: $label");
+
+    // 1. Obtenemos el estado actual de las rutas
+    final state = context.read<RoutesBloc>().state;
+    AppRoute? rutaEncontrada;
+
+    // 2. Buscamos en la lista cargada
+    if (state is RoutesLoaded) {
+      try {
+        // Buscamos coincidencia exacta (ej. "200" == "200")
+        // Ojo: asegúrate que tu labels.txt coincida con las claves del JSON
+        rutaEncontrada = state.allRoutes.firstWhere(
+          (route) => route.lineNumber == label,
+        );
+      } catch (e) {
+        print("El número $label no existe en el JSON.");
+      }
+    }
+
+    // 3. Mostramos el resultado
+    if (rutaEncontrada != null) {
+      // ¡Éxito! Tenemos la ruta completa con paradas
+      widget.onShowResult(rutaEncontrada);
+    } else {
+      // Fallo parcial: La IA vio un número, pero no tenemos info de él
+      // Creamos una ruta temporal para mostrar algo al usuario
+      final rutaDesconocida = AppRoute(
+        lineNumber: label,
+        routeName: "Ruta no registrada",
+        destination: "Sin información",
+        stops: {}, // Lista vacía
+      );
+      widget.onShowResult(rutaDesconocida);
+      _mostrarError("Línea $label detectada, pero no hay datos de ruta.");
+    }
+  }
+
+  // --- BOTONES ---
   Future<void> _onTapCamera() async {
     if (!_isCameraInitialized || _controller == null) return;
     try {
       final image = await _controller!.takePicture();
-      await _processImage(image.path);
+      await _processImage(image);
     } catch (e) {
       _mostrarError("Error al tomar foto.");
     }
   }
 
-  // 2. Usar Galería (NUEVO)
   Future<void> _onTapGallery() async {
     try {
       final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
-        await _processImage(image.path);
+        await _processImage(image);
       }
     } catch (e) {
       _mostrarError("Error al abrir galería.");
     }
   }
 
-  void _findAndShowRoute(String label) {
-    // Creamos una ruta temporal con el ID detectado
-    // El Bloc/ResultScreen se encargará de buscar los detalles si existen en el JSON
-    final detectedRoute = AppRoute(
-      lineNumber: label,
-      routeName: "Ruta Detectada", 
-      destination: "Ver detalles",
-      stops: {},
-    );
-    widget.onShowResult(detectedRoute);
-  }
-
   void _mostrarError(String mensaje) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(mensaje),
-        backgroundColor: AppColors.error,
-      ),
+      SnackBar(content: Text(mensaje), backgroundColor: AppColors.error),
     );
   }
 
+  // --- INTERFAZ GRÁFICA ---
   @override
   Widget build(BuildContext context) {
     if (!_isCameraInitialized || _controller == null) {
@@ -157,9 +200,10 @@ class _CameraScreenState extends State<CameraScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
+          // 1. Vista de Cámara
           CameraPreview(_controller!),
-          
-          // Overlay decorativo
+
+          // 2. Overlay Oscuro
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -175,10 +219,9 @@ class _CameraScreenState extends State<CameraScreen> {
             ),
           ),
 
-          // Textos
+          // 3. Textos Superiores
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0)
-                .copyWith(top: 60.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0).copyWith(top: 60.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -204,7 +247,7 @@ class _CameraScreenState extends State<CameraScreen> {
             ),
           ),
 
-          // CONTROLES INFERIORES
+          // 4. Botones Inferiores
           Positioned(
             bottom: 120,
             left: 0,
@@ -212,14 +255,9 @@ class _CameraScreenState extends State<CameraScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // Botón Galería (Izquierda)
                 _buildGalleryButton(),
-
-                // Botón Zap / Cámara (Centro - Más grande)
                 _buildZapButton(),
-
-                // Espacio vacío a la derecha para equilibrar (o para flash en el futuro)
-                const SizedBox(width: 60), 
+                const SizedBox(width: 60), // Espacio para equilibrar
               ],
             ),
           ),
@@ -238,8 +276,7 @@ class _CameraScreenState extends State<CameraScreen> {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Center(
-        child: Icon(LucideIcons.scanLine,
-            color: Colors.white.withOpacity(0.5), size: 40),
+        child: Icon(LucideIcons.scanLine, color: Colors.white.withOpacity(0.5), size: 40),
       ),
     );
   }
@@ -289,7 +326,7 @@ class _CameraScreenState extends State<CameraScreen> {
           border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
         ),
         child: const Icon(
-          LucideIcons.image, // Ícono de imagen/galería
+          LucideIcons.image,
           color: Colors.white,
           size: 24,
         ),

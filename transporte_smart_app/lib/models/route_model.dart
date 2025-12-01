@@ -12,21 +12,22 @@ class AppRoute {
   });
 
   factory AppRoute.fromJson(String number, Map<String, dynamic> json) {
-    // 1. PROTECCIÓN: Si no hay paradas, usamos un mapa vacío
     final paradasMap = json['paradas'] is Map<String, dynamic> 
         ? json['paradas'] as Map<String, dynamic> 
         : <String, dynamic>{};
 
-    // 2. PROTECCIÓN: Si 'ida' es null, usamos lista vacía []
     final rawIda = paradasMap['ida'];
     final List<String> paradasIda = (rawIda is List) 
-        ? rawIda.map((e) => e.toString()).toList() 
+        ? rawIda.map((e) => e.toString())
+                .where((e) => e.trim().isNotEmpty) // <--- FILTRO MÁGICO
+                .toList() 
         : [];
 
-    // 3. PROTECCIÓN: Si 'vuelta' es null, usamos lista vacía []
     final rawVuelta = paradasMap['vuelta'];
     final List<String> paradasVuelta = (rawVuelta is List) 
-        ? rawVuelta.map((e) => e.toString()).toList() 
+        ? rawVuelta.map((e) => e.toString())
+                   .where((e) => e.trim().isNotEmpty) // <--- FILTRO MÁGICO
+                   .toList() 
         : [];
     
     // Calculamos destino seguro
