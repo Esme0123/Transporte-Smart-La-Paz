@@ -55,6 +55,8 @@ class _AppShellState extends State<AppShell> {
   // Variable para controlar si mostramos la pantalla de Resultado a pantalla completa
   AppRoute? _selectedRouteResult;
   AppRoute? _activeMapRoute;
+  bool _isMapReturn = false;
+
   void _onTabTapped(int index) {
     if (index == 2) {
       // Si toca la cámara (índice 2), abrimos la pantalla completa
@@ -83,6 +85,15 @@ class _AppShellState extends State<AppShell> {
     setState(() {
       _selectedRouteResult = route;
       _activeMapRoute = route;
+      _isMapReturn = false;
+    });
+  }
+  void _goToMapFromDetail(AppRoute route, bool isReturn) {
+    setState(() {
+      _selectedRouteResult = null; // Cerrar modal
+      _currentIndex = 0;           // Cambiar a pestaña Mapa
+      _activeMapRoute = route;     // Establecer ruta
+      _isMapReturn = isReturn;     // Establecer dirección
     });
   }
 
@@ -111,6 +122,7 @@ class _AppShellState extends State<AppShell> {
                context.read<RoutesBloc>().add(ToggleFavoriteEvent(id));
             },
             onClose: _closeResult,
+            onGoToMap: _goToMapFromDetail,
           );
         },
       );

@@ -8,6 +8,7 @@ class ResultScreen extends StatefulWidget {
   final AppRoute route;
   final List<String> favoriteRoutes;
   final Function(String) onToggleFavorite;
+  final Function(AppRoute, bool) onGoToMap;
   final VoidCallback onClose;
 
   const ResultScreen({
@@ -15,6 +16,7 @@ class ResultScreen extends StatefulWidget {
     required this.route,
     required this.favoriteRoutes,
     required this.onToggleFavorite,
+    required this.onGoToMap,
     required this.onClose,
   });
 
@@ -55,9 +57,20 @@ class _ResultScreenState extends State<ResultScreen> {
     // 1. Obtener paradas de forma segura
     final List<String> currentStops = widget.route.stops[_selectedTab] ?? [];
     final bool isFavorite = widget.favoriteRoutes.contains(widget.route.lineNumber);
-    
+    final bool isReturn = _selectedTab == 'vuelta';
+
     return Scaffold(
       backgroundColor: AppColors.surface,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // Llamamos a la función del padre pasándole si es vuelta o no
+          widget.onGoToMap(widget.route, isReturn);
+        },
+        backgroundColor: AppColors.primary,
+        icon: const Icon(LucideIcons.map, color: Colors.black),
+        label: const Text("VER EN MAPA", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+      ),
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -132,8 +145,8 @@ class _ResultScreenState extends State<ResultScreen> {
                       padding: const EdgeInsets.all(4),
                       child: Row(
                         children: [
-                          _buildTabButton("ida", "Ida"),
-                          _buildTabButton("vuelta", "Vuelta"),
+                          _buildTabButton("ida", "Ida (Inicio → Fin)"),
+                          _buildTabButton("vuelta", "Vuelta (Fin → Inicio)"),
                         ],
                       ),
                     ),
