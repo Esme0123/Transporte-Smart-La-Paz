@@ -19,6 +19,7 @@ dependencies:
   flutter_vision: ^1.1.4
   permission_handler: ^11.0.1
   image_picker: ^0.8.9
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

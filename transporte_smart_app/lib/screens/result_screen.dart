@@ -98,7 +98,64 @@ class _ResultScreenState extends State<ResultScreen>
                       final stopName = currentStops[index];
                       final isFirst = index == 0;
                       final isLast = index == currentStops.length - 1;
-                      return _StopRowItem(stopName: stopName, isFirst: isFirst, isLast: isLast);
+
+                      return IntrinsicHeight(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            // Línea de tiempo izquierda
+                            SizedBox(
+                              width: 50,
+                              child: Column(
+                                children: [
+                                  // Línea superior
+                                  Expanded(
+                                    child: Container(
+                                      width: 2,
+                                      color: isFirst ? Colors.transparent : AppColors.primary.withOpacity(0.3),
+                                    ),
+                                  ),
+                                  // Punto/Círculo
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(vertical: 4),
+                                    width: 12,
+                                    height: 12,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: AppColors.surface,
+                                      border: Border.all(
+                                        color: isFirst || isLast ? AppColors.secondary : AppColors.primary, 
+                                        width: 2
+                                      ),
+                                    ),
+                                  ),
+                                  // Línea inferior
+                                  Expanded(
+                                    child: Container(
+                                      width: 2,
+                                      color: isLast ? Colors.transparent : AppColors.primary.withOpacity(0.3),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Texto de la parada
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
+                                child: Text(
+                                  stopName,
+                                  style: TextStyle(
+                                    color: AppColors.textPrimary,
+                                    fontSize: 14,
+                                    fontWeight: isFirst || isLast ? FontWeight.bold : FontWeight.normal,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
                     },
                     childCount: currentStops.length,
                   ),

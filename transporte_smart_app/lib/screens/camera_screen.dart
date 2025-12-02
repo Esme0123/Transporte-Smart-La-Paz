@@ -161,12 +161,62 @@ class _CameraScreenState extends State<CameraScreen> {
   // --- BOTONES ---
   Future<void> _onTapCamera() async {
     if (!_isCameraInitialized || _controller == null) return;
+
     try {
-      final image = await _controller!.takePicture();
-      await _processImage(image);
+      // 1. Tomar la foto
+      final XFile image = await _controller!.takePicture();
+      
+      if (!mounted) return;
+
+      // Mostrar indicador de carga rápido
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Analizando ruta con IA...")),
+      );
+
+      // 2. Preparar imagen para la IA
+      final File imageFile = File(image.path);
+      final Uint8List imageBytes = await imageFile.readAsBytes();
+      final decodedImage = await decodeImageFromList(imageBytes);
+
+      // 3. Ejecutar YOLO
+      final detections = await AiService().runDetection(
+        imageBytes, 
+        decodedImage.height, 
+        decodedImage.width
+      );
+
+      if (!mounted) return;
+
+      if (detections != null && detections.isNotEmpty) {
+        // 4. Obtener la etiqueta con mayor confianza (ej: "265")
+        // La IA devuelve algo como: {'tag': '265', 'box': [...], 'confidence': 0.85}
+        final String detectedLabel = detections.first['tag'].toString();
+        
+        print("IA detectó: $detectedLabel"); // Para depuración
+
+        // 5. Buscar esa ruta en nuestro BLoC
+        final foundRoute = context.read<RoutesBloc>().findRouteByLabel(detectedLabel);
+
+        if (foundRoute != null) {
+          // ¡ÉXITO! Navegar al resultado
+          widget.onShowResult(foundRoute);
+        } else {
+          _showError("Ruta '$detectedLabel' detectada, pero no tenemos información detallada de ella.");
+        }
+      } else {
+        _showError("No pude leer el letrero. Intenta acercarte más.");
+      }
+
     } catch (e) {
-      _mostrarError("Error al tomar foto.");
+      print(e);
+      _showError("Error al procesar la imagen.");
     }
+  }
+
+  void _showError(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg), backgroundColor: AppColors.error),
+    );
   }
 
   Future<void> _onTapGallery() async {

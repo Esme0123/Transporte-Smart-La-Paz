@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart'; // Importante
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
 import 'package:transporte_smart_app/models/route_model.dart';
@@ -25,67 +25,78 @@ class RoutesScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 60),
+            // Título
             Text("Mis Rutas",
                 style: TextStyle(
                     color: AppColors.textPrimary,
                     fontSize: 28,
                     fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Text("Recientes y favoritas",
+            
+            const SizedBox(height: 16),
+            
+            // --- BUSCADOR ---
+            TextField(
+              style: const TextStyle(color: Colors.white),
+              onChanged: (value) {
+                // Dispara el evento al Bloc
+                context.read<RoutesBloc>().add(SearchRoutesEvent(value));
+              },
+              decoration: InputDecoration(
+                hintText: "Buscar línea (ej: 265, San Pedro...)",
+                hintStyle: const TextStyle(color: AppColors.textSecondary),
+                prefixIcon: const Icon(LucideIcons.search, color: AppColors.primary),
+                filled: true,
+                fillColor: AppColors.surface,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            
+            // Texto subtítulo
+            const Text("Resultados",
                 style: TextStyle(
-                    color: AppColors.textSecondary, fontSize: 16)),
-            const SizedBox(height: 24),
+                    color: AppColors.textSecondary,
+                    fontSize: 14)),
+            
+            const SizedBox(height: 10),
 
-            // Barra de búsqueda
-            _buildSearchBar(context),
-            const SizedBox(height: 24),
-
-            // --- AQUÍ CONECTAMOS EL BLoC ---
+            // Lista de Rutas (BlocBuilder)
             Expanded(
               child: BlocBuilder<RoutesBloc, RoutesState>(
                 builder: (context, state) {
-                  // 1. Estado Cargando
                   if (state is RoutesLoading) {
                     return const Center(child: CircularProgressIndicator());
-                  }
-                  
-                  // 2. Estado Cargado (Éxito)
-                  if (state is RoutesLoaded) {
+                  } else if (state is RoutesLoaded) {
                     if (state.filteredRoutes.isEmpty) {
-                      return Center(
-                        child: Text("No se encontraron rutas.",
-                            style: TextStyle(color: AppColors.textSecondary)),
+                      return const Center(
+                        child: Text("No se encontraron rutas", 
+                        style: TextStyle(color: Colors.white))
                       );
                     }
-
+                    
                     return ListView.builder(
+                      padding: EdgeInsets.zero,
                       itemCount: state.filteredRoutes.length,
-                      padding: const EdgeInsets.only(bottom: 120),
                       itemBuilder: (context, index) {
                         final route = state.filteredRoutes[index];
-                        // Verificamos si es favorito mirando el estado del BLoC
-                        final isFavorite = state.favoriteIds.contains(route.lineNumber);
-
+                        // Verificamos si esta ruta está en la lista de IDs favoritos
+                        final isFav = state.favoriteIds.contains(route.lineNumber);
+                        
                         return _RouteCard(
                           route: route,
-                          isFavorite: isFavorite,
+                          isFavorite: isFav,
+                          onTap: () => onShowResult(route),
                           onToggleFavorite: () {
-                            // ENVIAMOS EL EVENTO AL BLoC
                             context.read<RoutesBloc>().add(ToggleFavoriteEvent(route.lineNumber));
                           },
-                          onShowResult: () => onShowResult(route),
                         );
                       },
                     );
                   }
-
-                  // 3. Estado de Error
-                  if (state is RoutesError) {
-                    return Center(child: Text(state.message, style: TextStyle(color: Colors.red)));
-                  }
-
-                  // Estado inicial
-                  return const SizedBox();
+                  return const Text("Error al cargar", style: TextStyle(color: Colors.white));
                 },
               ),
             ),
@@ -94,131 +105,108 @@ class RoutesScreen extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildSearchBar(BuildContext context) {
-    return TextField(
-      // Ya no necesitamos controller, usamos onChanged directo al BLoC
-      onChanged: (value) {
-        context.read<RoutesBloc>().add(SearchRoutesEvent(value));
-      },
-      style: TextStyle(color: AppColors.textPrimary),
-      decoration: InputDecoration(
-        hintText: "Buscar línea o ruta...",
-        hintStyle: TextStyle(color: AppColors.textSecondary),
-        filled: true,
-        fillColor: AppColors.surface,
-        prefixIcon: Icon(LucideIcons.search,
-            color: AppColors.textSecondary, size: 20),
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: AppColors.border)),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: AppColors.border)),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: AppColors.primary)),
-      ),
-    );
-  }
 }
 
-// Tarjeta de Ruta (Esta queda casi igual, solo simplificada)
+// --- WIDGET TARJETA INDIVIDUAL (Faltaba esto) ---
 class _RouteCard extends StatelessWidget {
   final AppRoute route;
   final bool isFavorite;
+  final VoidCallback onTap;
   final VoidCallback onToggleFavorite;
-  final VoidCallback onShowResult;
 
   const _RouteCard({
     required this.route,
     required this.isFavorite,
+    required this.onTap,
     required this.onToggleFavorite,
-    required this.onShowResult,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onShowResult,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 16.0),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            border: Border.all(color: AppColors.border),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.2),
-                  border: Border.all(color: AppColors.primary.withOpacity(0.3)),
-                  borderRadius: BorderRadius.circular(16),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.surfaceLight),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                // Ícono de bus
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(LucideIcons.bus, color: AppColors.primary),
                 ),
-                child:
-                    Icon(LucideIcons.bus, color: AppColors.primary, size: 24),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(20),
+                const SizedBox(width: 16),
+                
+                // Textos
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: AppColors.surfaceLight,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              "Línea ${route.lineNumber}",
+                              style: const TextStyle(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12),
+                            ),
                           ),
-                          child: Text(
-                            route.lineNumber,
-                            style: TextStyle(
-                                color: AppColors.background,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        if (isFavorite)
-                          Icon(LucideIcons.star,
-                              color: AppColors.star, size: 16),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      route.routeName,
-                      style: TextStyle(
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.w600),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      "→ ${route.destination}",
-                      style: TextStyle(
-                          color: AppColors.textSecondary, fontSize: 12),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        route.routeName,
+                        style: const TextStyle(
+                            color: AppColors.textPrimary,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        "Destino: ${route.destination}",
+                        style: const TextStyle(
+                            color: AppColors.textSecondary, fontSize: 12),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              IconButton(
-                icon: Icon(
-                  LucideIcons.star,
-                  color: isFavorite ? AppColors.star : AppColors.textInactive,
+                
+                // Botón Favorito
+                IconButton(
+                  icon: Icon(
+                    isFavorite ? LucideIcons.star : LucideIcons.star, // Icono lleno si es favorito
+                    fill: isFavorite ? 1.0 : 0.0, // Relleno visual (hack para Lucide) o usa Icons.star
+                    color: isFavorite ? AppColors.star : AppColors.textSecondary.withOpacity(0.3),
+                  ),
+                  onPressed: onToggleFavorite,
                 ),
-                onPressed: onToggleFavorite,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
