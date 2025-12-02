@@ -4,11 +4,10 @@ import 'package:transporte_smart_app/models/route_model.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
 
 class ResultScreen extends StatefulWidget {
-  // --- PARÁMETROS REQUERIDOS ---
   final AppRoute route;
   final List<String> favoriteRoutes;
   final Function(String) onToggleFavorite;
-  final VoidCallback onClose; // Función para cerrar
+  final VoidCallback onClose;
 
   const ResultScreen({
     super.key,
@@ -22,100 +21,137 @@ class ResultScreen extends StatefulWidget {
   State<ResultScreen> createState() => _ResultScreenState();
 }
 
-class _ResultScreenState extends State<ResultScreen>
-    with SingleTickerProviderStateMixin {
-  String _selectedTab = 'ida';
+class _ResultScreenState extends State<ResultScreen> {
+  String _selectedTab = 'ida'; // 'ida' o 'vuelta'
 
   @override
   Widget build(BuildContext context) {
-    final stopsMap = widget.route.stops;
-    final List<String> currentStops = stopsMap[_selectedTab] ?? [];
+    // 1. Obtener paradas de forma segura
+    final List<String> currentStops = widget.route.stops[_selectedTab] ?? [];
     final bool isFavorite = widget.favoriteRoutes.contains(widget.route.lineNumber);
 
     return Scaffold(
       backgroundColor: AppColors.surface,
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          CustomScrollView(
-            slivers: [
-              // --- Encabezado (con botones actualizados) ---
-              SliverAppBar(
-                backgroundColor: Colors.transparent,
-                pinned: true,
-                leading: IconButton(
-                  icon: Icon(LucideIcons.x, color: AppColors.textSecondary),
-                  onPressed: widget.onClose,
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            // --- 1. Header (Nombre y Destino) ---
+            SliverAppBar(
+              backgroundColor: AppColors.surface,
+              expandedHeight: 80.0, // Altura fija segura
+              floating: false,
+              pinned: true,
+              leading: IconButton(
+                icon: const Icon(LucideIcons.arrowLeft, color: AppColors.textPrimary),
+                onPressed: widget.onClose,
+              ),
+              actions: [
+                 IconButton(
+                  icon: Icon(
+                    isFavorite ? LucideIcons.star : LucideIcons.star,
+                    color: isFavorite ? AppColors.star : AppColors.textSecondary,
+                  ),
+                  onPressed: () => widget.onToggleFavorite(widget.route.lineNumber),
                 ),
-                actions: [
-                  IconButton(
-                    icon: Icon(
-                      LucideIcons.star,
-                      color: isFavorite ? AppColors.star : AppColors.textInactive,
+              ],
+              flexibleSpace: FlexibleSpaceBar(
+                titlePadding: const EdgeInsets.only(left: 50, bottom: 16),
+                title: Text(
+                  "Línea ${widget.route.lineNumber}",
+                  style: const TextStyle(color: AppColors.textPrimary),
+                ),
+              ),
+            ),
+
+            // --- 2. Información Extra ---
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.route.routeName,
+                      style: const TextStyle(
+                        color: AppColors.textPrimary,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    onPressed: () {
-                      // Llama a la función para (des)marcar
-                      widget.onToggleFavorite(widget.route.lineNumber);
-                    },
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(LucideIcons.mapPin, color: AppColors.primary, size: 16),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            "Destino: ${widget.route.destination}",
+                            style: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    
+                    // --- TABS (IDA / VUELTA) ---
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.surfaceLight,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.all(4),
+                      child: Row(
+                        children: [
+                          _buildTabButton("ida", "Ida"),
+                          _buildTabButton("vuelta", "Vuelta"),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text("Recorrido", 
+                      style: TextStyle(color: AppColors.textSecondary, fontWeight: FontWeight.bold)
+                    ),
+                  ],
+                ),
               ),
+            ),
 
-              // --- Tarjeta principal de la Ruta (Sin cambios) ---
-              SliverToBoxAdapter(
+            // --- 3. Lista de Paradas (Timeline) ---
+            if (currentStops.isEmpty)
+              const SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Línea detectada", style: TextStyle(color: AppColors.textSecondary, fontSize: 16)),
-                      const SizedBox(height: 16),
-                      _buildRouteHeader(widget.route),
-                      const SizedBox(height: 32),
-                    ],
+                  padding: EdgeInsets.all(32.0),
+                  child: Center(
+                    child: Text("No hay información de paradas para este tramo.",
+                        style: TextStyle(color: AppColors.textSecondary)),
                   ),
                 ),
-              ),
+              )
+            else
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final stopName = currentStops[index];
+                    final isFirst = index == 0;
+                    final isLast = index == currentStops.length - 1;
 
-              // --- Pestañas de "Ida" y "Vuelta" (Sin cambios) ---
-              SliverPersistentHeader(
-                delegate: _StopsHeaderDelegate(
-                  selectedTab: _selectedTab,
-                  onTabSelected: (tab) {
-                    setState(() {
-                      _selectedTab = tab;
-                    });
-                  },
-                ),
-                pinned: true,
-              ),
-
-              // --- Lista de Paradas (Sin cambios) ---
-              if (currentStops.isNotEmpty)
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final stopName = currentStops[index];
-                      final isFirst = index == 0;
-                      final isLast = index == currentStops.length - 1;
-
-                      return IntrinsicHeight(
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: IntrinsicHeight(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            // Línea de tiempo izquierda
+                            // Línea visual
                             SizedBox(
-                              width: 50,
+                              width: 30,
                               child: Column(
                                 children: [
-                                  // Línea superior
                                   Expanded(
                                     child: Container(
                                       width: 2,
                                       color: isFirst ? Colors.transparent : AppColors.primary.withOpacity(0.3),
                                     ),
                                   ),
-                                  // Punto/Círculo
                                   Container(
                                     margin: const EdgeInsets.symmetric(vertical: 4),
                                     width: 12,
@@ -124,12 +160,11 @@ class _ResultScreenState extends State<ResultScreen>
                                       shape: BoxShape.circle,
                                       color: AppColors.surface,
                                       border: Border.all(
-                                        color: isFirst || isLast ? AppColors.secondary : AppColors.primary, 
-                                        width: 2
+                                        color: isFirst || isLast ? AppColors.secondary : AppColors.primary,
+                                        width: 2,
                                       ),
                                     ),
                                   ),
-                                  // Línea inferior
                                   Expanded(
                                     child: Container(
                                       width: 2,
@@ -139,7 +174,7 @@ class _ResultScreenState extends State<ResultScreen>
                                 ],
                               ),
                             ),
-                            // Texto de la parada
+                            // Texto
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
@@ -147,7 +182,7 @@ class _ResultScreenState extends State<ResultScreen>
                                   stopName,
                                   style: TextStyle(
                                     color: AppColors.textPrimary,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                     fontWeight: isFirst || isLast ? FontWeight.bold : FontWeight.normal,
                                   ),
                                 ),
@@ -155,231 +190,46 @@ class _ResultScreenState extends State<ResultScreen>
                             ),
                           ],
                         ),
-                      );
-                    },
-                    childCount: currentStops.length,
-                  ),
-                )
-              else
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 40),
-                    child: Center(
-                      child: Text(
-                        "No hay información de paradas\npara el tramo de $_selectedTab",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: AppColors.textSecondary),
                       ),
-                    ),
-                  ),
+                    );
+                  },
+                  childCount: currentStops.length,
                 ),
-
-              // Espacio final
-              const SliverToBoxAdapter(child: SizedBox(height: 120)),
-            ],
-          ),
-
-          // --- Botón flotante "Ver en Mapa" (Sin cambios) ---
-          _buildViewMapButton(context),
-        ],
-      ),
-    );
-  }
-
-  // --- WIDGETS INTERNOS ---
-
-  // _buildViewMapButton 
-  Widget _buildViewMapButton(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
-          child: GestureDetector(
-            onTap: () {
-              // Acción del mapa
-            },
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [AppColors.primary, AppColors.secondary],
-                ),
-                borderRadius: BorderRadius.circular(32),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(0.3),
-                    blurRadius: 20,
-                  )
-                ],
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(LucideIcons.map, color: Colors.white, size: 20),
-                  const SizedBox(width: 8),
-                  Text(
-                    "Ver en mapa",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
+
+             // Espacio extra al final
+             const SliverToBoxAdapter(child: SizedBox(height: 50)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabButton(String key, String label) {
+    final bool isActive = _selectedTab == key;
+    return Expanded(
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            _selectedTab = key;
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            color: isActive ? AppColors.primary : Colors.transparent,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: isActive ? Colors.black : AppColors.textSecondary,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
       ),
     );
   }
-
-  // _buildRouteHeader (Sin cambios)
-  Widget _buildRouteHeader(AppRoute route) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.background.withOpacity(0.5),
-        border: Border.all(color: AppColors.border),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.2),
-              border: Border.all(color: AppColors.primary.withOpacity(0.3)),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Icon(LucideIcons.bus, color: AppColors.primary, size: 24),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    route.lineNumber,
-                    style: TextStyle(color: AppColors.background, fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  route.routeName,
-                  style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w600),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// _StopRowItem (Sin cambios)
-class _StopRowItem extends StatelessWidget {
-  final String stopName;
-  final bool isFirst;
-  final bool isLast;
-
-  const _StopRowItem({required this.stopName, this.isFirst = false, this.isLast = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 24,
-            child: Column(
-              children: [
-                Container(width: 2, height: 12, color: isFirst ? Colors.transparent : AppColors.primary.withOpacity(0.3)),
-                Container(
-                  width: 12,
-                  height: 12,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.primary.withOpacity(0.3),
-                    border: Border.all(color: AppColors.primary, width: 2),
-                  ),
-                ),
-                Container(width: 2, height: 12, color: isLast ? Colors.transparent : AppColors.primary.withOpacity(0.3)),
-              ],
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text(stopName, style: TextStyle(color: AppColors.textPrimary, fontSize: 16)),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StopsHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final String selectedTab;
-  final ValueChanged<String> onTabSelected;
-
-  _StopsHeaderDelegate({required this.selectedTab, required this.onTabSelected});
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      color: AppColors.surface,
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-      child: Row(
-        children: [
-          _buildTab('ida', 'Paradas de Ida'),
-          const SizedBox(width: 16),
-          _buildTab('vuelta', 'Paradas de Vuelta'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTab(String tabKey, String title) {
-    final bool isActive = selectedTab == tabKey;
-    return GestureDetector(
-      onTap: () => onTabSelected(tabKey),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        decoration: BoxDecoration(
-          color: isActive ? AppColors.primary : AppColors.surfaceLight,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-            color: isActive ? AppColors.background : AppColors.textSecondary,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  double get maxExtent => 72.0;
-  @override
-  double get minExtent => 72.0;
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => true;
 }

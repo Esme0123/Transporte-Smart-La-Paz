@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:lucide_flutter/lucide_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// Imports de tus pantallas y lógica
 import 'package:transporte_smart_app/theme/app_colors.dart';
-import 'package:transporte_smart_app/models/route_model.dart'; // Importa tu modelo
+import 'package:transporte_smart_app/models/route_model.dart'; 
 import 'package:transporte_smart_app/screens/camera_screen.dart';
 import 'package:transporte_smart_app/screens/routes_screen.dart';
 import 'package:transporte_smart_app/screens/map_screen.dart';
 import 'package:transporte_smart_app/screens/profile_screen.dart';
 import 'package:transporte_smart_app/screens/result_screen.dart'; 
 import 'package:transporte_smart_app/screens/splash_screen.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transporte_smart_app/blocs/routes/routes_bloc.dart';
 import 'package:transporte_smart_app/blocs/routes/routes_event.dart';
 import 'package:transporte_smart_app/blocs/routes/routes_state.dart';
@@ -29,11 +31,9 @@ class MyApp extends StatelessWidget {
         title: 'Transporte Smart',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          brightness: Brightness.dark,
           scaffoldBackgroundColor: AppColors.background,
-          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            unselectedItemColor: AppColors.textInactive,
-          ),
+          fontFamily: 'Inter', // Si no tienes la fuente, usará la defecto
+          useMaterial3: true,
         ),
         home: const SplashScreen(),
       ),
@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// Estructura Principal con Navegación
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
 
@@ -49,186 +50,189 @@ class AppShell extends StatefulWidget {
 }
 
 class _AppShellState extends State<AppShell> {
-  int _selectedIndex = 0;
+  int _currentIndex = 0;
+  
+  // Variable para controlar si mostramos la pantalla de Resultado a pantalla completa
+  AppRoute? _selectedRouteResult;
 
-  // --- ESTADO CENTRALIZADO --- // Ejemplo de favorito inicial
-  AppRoute? _selectedRoute; // La ruta que se está viendo (null si no hay ninguna)
+  void _onTabTapped(int index) {
+    if (index == 2) {
+      // Si toca la cámara (índice 2), abrimos la pantalla completa
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => CameraScreen(
+            onShowResult: _showRouteResult,
+          ),
+        ),
+      );
+    } else {
+      setState(() {
+        _currentIndex = index;
+        _selectedRouteResult = null; // Limpiar resultado si cambiamos de tab
+      });
+    }
+  }
 
-  // --- FUNCIONES DE MANEJO DE ESTADO ---
-  void _onItemTapped(int index) {
+  // Método para mostrar el resultado (llamado desde Cámara o Lista)
+  void _showRouteResult(AppRoute route) {
+    // Si vienes de cámara, cerramos cámara primero
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
+    
     setState(() {
-      _selectedIndex = index;
+      _selectedRouteResult = route;
     });
   }
 
-  void _showResult(AppRoute route) {
+  void _closeResult() {
     setState(() {
-      _selectedRoute = route;
+      _selectedRouteResult = null;
     });
-  }
-
-  void _hideResult() {
-    setState(() {
-      _selectedRoute = null;
-    });
-  }
-
-  // --- CONSTRUCTOR DE PANTALLAS ---
-  List<Widget> _buildScreens() {
-    return [
-      CameraScreen(
-        onShowResult: _showResult,
-      ),
-      RoutesScreen(
-        onShowResult: _showResult,
-      ),
-      const MapScreen(),
-      const ProfileScreen(),
-    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    final bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+    // Si hay una ruta seleccionada, mostramos ResultScreen encima de todo
+    if (_selectedRouteResult != null) {
+      // Necesitamos pasar los favoritos actuales a la pantalla de resultados
+      return BlocBuilder<RoutesBloc, RoutesState>(
+        builder: (context, state) {
+          List<String> favs = [];
+          if (state is RoutesLoaded) {
+            favs = state.favoriteIds;
+          }
+          
+          return ResultScreen(
+            route: _selectedRouteResult!,
+            favoriteRoutes: favs,
+            onToggleFavorite: (id) {
+               context.read<RoutesBloc>().add(ToggleFavoriteEvent(id));
+            },
+            onClose: _closeResult,
+          );
+        },
+      );
+    }
+
+    // Pantallas principales
+    final List<Widget> screens = [
+      const MapScreen(),
+      RoutesScreen(onShowResult: _showRouteResult),
+      const SizedBox(), // Placeholder cámara (se abre modal)
+      const ProfileScreen(),
+    ];
 
     return Scaffold(
-      resizeToAvoidBottomInset: true, 
-      body: Stack(
-        children: [
-          // --- PANTALLAS DE NAVEGACIÓN ---
-          IndexedStack(
-            index: _selectedIndex,
-            children: _buildScreens(),
+      extendBody: true, // Permite que el contenido vaya detrás de la barra
+      body: screens[_currentIndex],
+      bottomNavigationBar: _buildCustomNavBar(),
+    );
+  }
+
+  Widget _buildCustomNavBar() {
+    return SafeArea(
+      child: Container(
+        height: 70, // Altura un poco mayor para comodidad
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        decoration: BoxDecoration(
+          color: AppColors.surface.withOpacity(0.9),
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: AppColors.surfaceLight),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Distribución equitativa
+              children: [
+                _buildNavItem(0, LucideIcons.map, "Mapa"),
+                _buildNavItem(1, LucideIcons.bus, "Rutas"),
+                // Botón central (Cámara) diferente
+                _buildCameraItem(),
+                _buildNavItem(3, LucideIcons.user, "Perfil"),
+              ],
+            ),
           ),
-
-          // --- BARRA DE NAVEGACIÓN ---
-          // Solo mostrar si NO hay ruta seleccionada Y el teclado NO está visible
-          if (_selectedRoute == null && !isKeyboardVisible)
-            _buildCustomNavBar(),
-
-          // --- PANTALLA DE RESULTADO ---
-          if (_selectedRoute != null)
-             // Necesitamos conectar el ResultScreen al BLoC también
-             // para que la estrella de favoritos funcione
-             BlocBuilder<RoutesBloc, RoutesState>(
-               builder: (context, state) {
-                 List<String> currentFavs = [];
-                 if (state is RoutesLoaded) {
-                   currentFavs = state.favoriteIds;
-                 }
-                 
-                 return ResultScreen(
-                    route: _selectedRoute!,
-                    favoriteRoutes: currentFavs, // Viene del BLoC
-                    onToggleFavorite: (id) {
-                      // Enviamos evento al BLoC
-                      context.read<RoutesBloc>().add(ToggleFavoriteEvent(id));
-                    },
-                    onClose: _hideResult,
-                 );
-               },
-             ),
-        ],
+        ),
       ),
     );
   }
 
-  // --- WIDGET DE NAVEGACIÓN PERSONALIZADO  ---
-  Widget _buildCustomNavBar() {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      //child: SafeArea( // <--- ESTO ARREGLA EL OVERFLOW EN IPHONE/ANDROID NUEVOS
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 30.0), // Margen manual
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(32.0),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
-                decoration: BoxDecoration(
-                  color: AppColors.surface.withOpacity(0.95),
-                  border: Border.all(color: AppColors.border),
-                  borderRadius: BorderRadius.circular(32.0),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _buildNavItem(icon: LucideIcons.camera, label: "Detectar", index: 0),
-                    _buildNavItem(icon: LucideIcons.list, label: "Rutas", index: 1),
-                    _buildNavItem(icon: LucideIcons.map, label: "Mapa", index: 2),
-                    _buildNavItem(icon: LucideIcons.user, label: "Perfil", index: 3),
-                  ],
+  Widget _buildNavItem(int index, IconData icon, String label) {
+    final bool isActive = _currentIndex == index;
+    final Color activeColor = AppColors.primary;
+    final Color inactiveColor = AppColors.textSecondary;
+
+    return GestureDetector(
+      onTap: () => _onTabTapped(index),
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        // padding reducido para evitar overflow
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8), 
+        decoration: BoxDecoration(
+          color: isActive ? activeColor.withOpacity(0.1) : Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: isActive ? activeColor : inactiveColor,
+              size: 22,
+            ),
+            if (isActive) ...[
+              const SizedBox(width: 6),
+              Flexible( // Flexible evita que el texto empuje demasiado si es largo
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: activeColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.clip,
                 ),
               ),
-            ),
-          ),
+            ]
+          ],
         ),
-      //),
+      ),
     );
   }
 
-  Widget _buildNavItem(
-      {required IconData icon, required String label, required int index}) {
-    final bool isActive = _selectedIndex == index;
-    final Color activeColor = AppColors.primary;
-    final Color inactiveColor = AppColors.textInactive;
-
+  Widget _buildCameraItem() {
     return GestureDetector(
-      onTap: () => _onItemTapped(index),
-      child: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.center,
-        children: [
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.ease,
-            width: isActive ? 75 : 60,
-            height: 50,
-            padding: const EdgeInsets.all(4.0),
-            decoration: BoxDecoration(
-              color: isActive ? activeColor.withOpacity(0.2) : Colors.transparent,
-              borderRadius: BorderRadius.circular(16.0),
-              border: isActive
-                  ? Border.all(color: AppColors.borderActive)
-                  : Border.all(color: Colors.transparent),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  color: isActive ? activeColor : inactiveColor,
-                  size: 20,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: isActive ? activeColor : inactiveColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
+      onTap: () => _onTabTapped(2),
+      child: Container(
+        width: 50, 
+        height: 50,
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [AppColors.primary, AppColors.secondary],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          if (isActive)
-            Positioned(
-              top: -8,
-              child: Container(
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(
-                  color: activeColor,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-        ],
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary.withOpacity(0.4),
+              blurRadius: 10,
+              spreadRadius: 2,
+            )
+          ],
+        ),
+        child: const Icon(LucideIcons.scan, color: Colors.white, size: 24),
       ),
     );
   }
