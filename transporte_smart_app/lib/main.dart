@@ -54,7 +54,7 @@ class _AppShellState extends State<AppShell> {
   
   // Variable para controlar si mostramos la pantalla de Resultado a pantalla completa
   AppRoute? _selectedRouteResult;
-
+  AppRoute? _activeMapRoute;
   void _onTabTapped(int index) {
     if (index == 2) {
       // Si toca la cámara (índice 2), abrimos la pantalla completa
@@ -82,6 +82,7 @@ class _AppShellState extends State<AppShell> {
     
     setState(() {
       _selectedRouteResult = route;
+      _activeMapRoute = route;
     });
   }
 
@@ -117,7 +118,7 @@ class _AppShellState extends State<AppShell> {
 
     // Pantallas principales
     final List<Widget> screens = [
-      const MapScreen(),
+      MapScreen(activeRoute: _activeMapRoute),
       RoutesScreen(onShowResult: _showRouteResult),
       const SizedBox(), // Placeholder cámara (se abre modal)
       const ProfileScreen(),
@@ -154,10 +155,10 @@ class _AppShellState extends State<AppShell> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Distribución equitativa
               children: [
+                _buildCameraItem(),
                 _buildNavItem(0, LucideIcons.map, "Mapa"),
                 _buildNavItem(1, LucideIcons.bus, "Rutas"),
                 // Botón central (Cámara) diferente
-                _buildCameraItem(),
                 _buildNavItem(3, LucideIcons.user, "Perfil"),
               ],
             ),

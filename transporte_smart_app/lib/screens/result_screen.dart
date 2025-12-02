@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/models/route_model.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class ResultScreen extends StatefulWidget {
   final AppRoute route;
@@ -23,13 +24,38 @@ class ResultScreen extends StatefulWidget {
 
 class _ResultScreenState extends State<ResultScreen> {
   String _selectedTab = 'ida'; // 'ida' o 'vuelta'
+  final FlutterTts flutterTts = FlutterTts(); // Instancia de voz
 
+  @override
+  void initState() {
+    super.initState();
+    _initTts();
+  }
+
+  // Configurar y hablar
+  Future<void> _initTts() async {
+    await flutterTts.setLanguage("es-ES"); // Español
+    await flutterTts.setPitch(1.0);
+    // Leemos la ruta
+    _speak();
+  }
+
+  Future<void> _speak() async {
+    String text = "Ruta encontrada. Línea ${widget.route.lineNumber}, con destino a ${widget.route.destination}";
+    await flutterTts.speak(text);
+  }
+
+  @override
+  void dispose() {
+    flutterTts.stop();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     // 1. Obtener paradas de forma segura
     final List<String> currentStops = widget.route.stops[_selectedTab] ?? [];
     final bool isFavorite = widget.favoriteRoutes.contains(widget.route.lineNumber);
-
+    
     return Scaffold(
       backgroundColor: AppColors.surface,
       body: SafeArea(
@@ -46,6 +72,10 @@ class _ResultScreenState extends State<ResultScreen> {
                 onPressed: widget.onClose,
               ),
               actions: [
+                IconButton(
+                  icon: const Icon(LucideIcons.volume2, color: AppColors.primary),
+                  onPressed: _speak,
+                ),
                  IconButton(
                   icon: Icon(
                     isFavorite ? LucideIcons.star : LucideIcons.star,
