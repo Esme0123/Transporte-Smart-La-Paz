@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-// Imports de tus pantallas y lógica
 import 'package:transporte_smart_app/theme/app_colors.dart';
-import 'package:transporte_smart_app/models/route_model.dart'; 
+import 'package:transporte_smart_app/models/route_model.dart';
 import 'package:transporte_smart_app/screens/camera_screen.dart';
 import 'package:transporte_smart_app/screens/routes_screen.dart';
 import 'package:transporte_smart_app/screens/map_screen.dart';
@@ -32,7 +30,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.background,
-          fontFamily: 'Inter', // Si no tienes la fuente, usará la defecto
+          fontFamily: 'Inter', 
           useMaterial3: true,
         ),
         home: const SplashScreen(),
@@ -41,7 +39,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Estructura Principal con Navegación
 class AppShell extends StatefulWidget {
   const AppShell({super.key});
 
@@ -51,49 +48,41 @@ class AppShell extends StatefulWidget {
 
 class _AppShellState extends State<AppShell> {
   int _currentIndex = 0;
-  
-  // Variable para controlar si mostramos la pantalla de Resultado a pantalla completa
   AppRoute? _selectedRouteResult;
   AppRoute? _activeMapRoute;
-  bool _isMapReturn = false;
+  bool _isMapReturn = false; 
 
   void _onTabTapped(int index) {
     if (index == 2) {
-      // Si toca la cámara (índice 2), abrimos la pantalla completa
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (_) => CameraScreen(
-            onShowResult: _showRouteResult,
-          ),
+          builder: (_) => CameraScreen(onShowResult: _showRouteResult),
         ),
       );
     } else {
       setState(() {
         _currentIndex = index;
-        _selectedRouteResult = null; // Limpiar resultado si cambiamos de tab
+        _selectedRouteResult = null; 
       });
     }
   }
 
-  // Método para mostrar el resultado (llamado desde Cámara o Lista)
   void _showRouteResult(AppRoute route) {
-    // Si vienes de cámara, cerramos cámara primero
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-    }
-    
+    if (Navigator.canPop(context)) Navigator.pop(context);
     setState(() {
       _selectedRouteResult = route;
-      _activeMapRoute = route;
-      _isMapReturn = false;
+      _activeMapRoute = route; 
+      _isMapReturn = false; // Por defecto ida al escanear
     });
   }
+
+  // --- FUNCIÓN CLAVE PARA EL MAPA ---
   void _goToMapFromDetail(AppRoute route, bool isReturn) {
     setState(() {
-      _selectedRouteResult = null; // Cerrar modal
-      _currentIndex = 0;           // Cambiar a pestaña Mapa
-      _activeMapRoute = route;     // Establecer ruta
-      _isMapReturn = isReturn;     // Establecer dirección
+      _selectedRouteResult = null; 
+      _currentIndex = 0;           
+      _activeMapRoute = route;     
+      _isMapReturn = isReturn; // Actualiza la dirección
     });
   }
 
@@ -105,48 +94,41 @@ class _AppShellState extends State<AppShell> {
 
   @override
   Widget build(BuildContext context) {
-    // Si hay una ruta seleccionada, mostramos ResultScreen encima de todo
     if (_selectedRouteResult != null) {
-      // Necesitamos pasar los favoritos actuales a la pantalla de resultados
       return BlocBuilder<RoutesBloc, RoutesState>(
         builder: (context, state) {
           List<String> favs = [];
-          if (state is RoutesLoaded) {
-            favs = state.favoriteIds;
-          }
+          if (state is RoutesLoaded) favs = state.favoriteIds;
           
           return ResultScreen(
             route: _selectedRouteResult!,
             favoriteRoutes: favs,
-            onToggleFavorite: (id) {
-               context.read<RoutesBloc>().add(ToggleFavoriteEvent(id));
-            },
+            onToggleFavorite: (id) => context.read<RoutesBloc>().add(ToggleFavoriteEvent(id)),
             onClose: _closeResult,
-            onGoToMap: _goToMapFromDetail,
+            onGoToMap: _goToMapFromDetail, 
           );
         },
       );
     }
 
-    // Pantallas principales
     final List<Widget> screens = [
-      MapScreen(activeRoute: _activeMapRoute),
+      MapScreen(activeRoute: _activeMapRoute, isReturn: _isMapReturn), 
       RoutesScreen(onShowResult: _showRouteResult),
-      const SizedBox(), // Placeholder cámara (se abre modal)
-      const ProfileScreen(),
+      const SizedBox(), 
+      const ProfileScreen(), // Ahora ProfileScreen tiene Login
     ];
 
     return Scaffold(
-      extendBody: true, // Permite que el contenido vaya detrás de la barra
+      extendBody: true,
       body: screens[_currentIndex],
       bottomNavigationBar: _buildCustomNavBar(),
     );
   }
 
-  Widget _buildCustomNavBar() {
+   Widget _buildCustomNavBar() {
     return SafeArea(
       child: Container(
-        height: 70, // Altura un poco mayor para comodidad
+        height: 70, 
         margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         decoration: BoxDecoration(
           color: AppColors.surface.withOpacity(0.9),
@@ -165,12 +147,11 @@ class _AppShellState extends State<AppShell> {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Distribución equitativa
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
               children: [
-                _buildCameraItem(),
                 _buildNavItem(0, LucideIcons.map, "Mapa"),
                 _buildNavItem(1, LucideIcons.bus, "Rutas"),
-                // Botón central (Cámara) diferente
+                _buildCameraItem(),
                 _buildNavItem(3, LucideIcons.user, "Perfil"),
               ],
             ),
@@ -189,7 +170,6 @@ class _AppShellState extends State<AppShell> {
       onTap: () => _onTabTapped(index),
       behavior: HitTestBehavior.opaque,
       child: Container(
-        // padding reducido para evitar overflow
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8), 
         decoration: BoxDecoration(
           color: isActive ? activeColor.withOpacity(0.1) : Colors.transparent,
@@ -205,7 +185,7 @@ class _AppShellState extends State<AppShell> {
             ),
             if (isActive) ...[
               const SizedBox(width: 6),
-              Flexible( // Flexible evita que el texto empuje demasiado si es largo
+              Flexible( 
                 child: Text(
                   label,
                   style: TextStyle(

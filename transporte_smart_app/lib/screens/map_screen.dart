@@ -6,12 +6,12 @@ import 'dart:ui';
 
 class MapScreen extends StatefulWidget {
   final AppRoute? activeRoute;
-  final bool isReturn; // NUEVO: Saber si es vuelta
+  final bool isReturn; // Esto controla la dirección del bus
 
   const MapScreen({
     super.key, 
     this.activeRoute,
-    this.isReturn = false, // Por defecto es ida
+    this.isReturn = false, 
   });
 
   @override
@@ -27,7 +27,7 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 12), // Un poco más lento para apreciar
+      duration: const Duration(seconds: 12),
       vsync: this,
     );
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
@@ -42,11 +42,11 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
     });
   }
 
+  // Esto es vital: Si cambia la ruta o la dirección (Ida/Vuelta), reseteamos
   @override
   void didUpdateWidget(MapScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Si cambia la ruta, reiniciamos
-    if (widget.activeRoute != oldWidget.activeRoute) {
+    if (widget.activeRoute != oldWidget.activeRoute || widget.isReturn != oldWidget.isReturn) {
       _controller.reset();
       setState(() => _isNavigating = false);
     }
@@ -81,7 +81,7 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
                   painter: _RouteSimulationPainter(
                     progress: _animation.value,
                     color: widget.isReturn ? AppColors.secondary : AppColors.primary,
-                    isReturn: widget.isReturn, // Pasamos el dato al pintor
+                    isReturn: widget.isReturn, // Pasamos el dato clave
                   ),
                   size: Size.infinite,
                 );
@@ -99,7 +99,10 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
                child: IconButton(
                  icon: const Icon(LucideIcons.rotateCcw, color: Colors.black),
                  style: IconButton.styleFrom(backgroundColor: Colors.white),
-                 onPressed: () => _controller.reset(),
+                 onPressed: () {
+                   _controller.reset();
+                   setState(() => _isNavigating = false);
+                 },
                ),
              )
         ],
@@ -202,14 +205,14 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
 class _RouteSimulationPainter extends CustomPainter {
   final double progress;
   final Color color;
-  final bool isReturn; // Para invertir cálculo
+  final bool isReturn;
 
   _RouteSimulationPainter({required this.progress, required this.color, required this.isReturn});
 
   @override
   void paint(Canvas canvas, Size size) {
     final Path path = Path();
-    // Coordenadas simuladas (curva simple)
+    // Curva del mapa
     path.moveTo(size.width * 0.2, size.height * 0.7);
     path.quadraticBezierTo(size.width * 0.5, size.height * 0.5, size.width * 0.8, size.height * 0.3);
 
@@ -220,7 +223,8 @@ class _RouteSimulationPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
     canvas.drawPath(path, linePaint);
 
-    // --- MAGIA: Invertir el progreso si es vuelta ---
+    // --- MAGIA: Si es vuelta (isReturn=true), invertimos el progreso (1.0 - progress) ---
+    // Esto hace que el bus vaya del final al inicio.
     final double effectiveProgress = isReturn ? (1.0 - progress) : progress;
 
     final PathMetrics pathMetrics = path.computeMetrics();
