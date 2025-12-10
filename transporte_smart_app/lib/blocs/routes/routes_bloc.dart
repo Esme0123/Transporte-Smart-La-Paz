@@ -1,41 +1,27 @@
-import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Importante
 import 'package:transporte_smart_app/models/route_model.dart';
+import 'package:transporte_smart_app/repositories/routes_repository.dart';
 import 'routes_event.dart';
 import 'routes_state.dart';
 
 class RoutesBloc extends Bloc<RoutesEvent, RoutesState> {
-  
-  RoutesBloc() : super(RoutesInitial()) {
+  final RoutesRepository repository;
+  RoutesBloc({required this.repository}) : super(RoutesInitial()) {
     
     // 1. Cargar Rutas y Favoritos al inicio
     on<LoadRoutesEvent>((event, emit) async {
       emit(RoutesLoading());
       try {
-        // A. Cargar JSON
-        final String data = await rootBundle.loadString('assets/rutas.json');
-        final Map<String, dynamic> jsonMap = jsonDecode(data);
-        final List<AppRoute> loadedRoutes = [];
-
-        for (var entry in jsonMap.entries) {
-          // Normalizamos la clave (ej: " 265 " -> "265")
-          final routeNumber = entry.key.trim(); 
-          loadedRoutes.add(AppRoute.fromJson(routeNumber, entry.value));
-        }
-
-        // B. Cargar Favoritos de memoria del celular
-        final prefs = await SharedPreferences.getInstance();
-        final List<String> savedFavs = prefs.getStringList('favorite_routes') ?? [];
+        final routes = await repository.getAllRoutes();
 
         emit(RoutesLoaded(
-          allRoutes: loadedRoutes,
-          filteredRoutes: loadedRoutes,
-          favoriteIds: savedFavs,
+          allRoutes: routes,
+          filteredRoutes: routes,
+          favoriteIds: [], // Esto luego lo conectamos con SharedPreferences
         ));
       } catch (e) {
-        emit(RoutesError("Error cargando datos: $e"));
+        emit(RoutesError("Error de BD: $e"));
       }
     });
 

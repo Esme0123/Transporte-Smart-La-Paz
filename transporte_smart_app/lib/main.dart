@@ -14,7 +14,10 @@ import 'package:transporte_smart_app/blocs/routes/routes_bloc.dart';
 import 'package:transporte_smart_app/blocs/routes/routes_event.dart';
 import 'package:transporte_smart_app/blocs/routes/routes_state.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Iniciar Firebase
+
   runApp(const MyApp());
 }
 
@@ -23,9 +26,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RoutesBloc()..add(LoadRoutesEvent()),
-      child: MaterialApp(
+    return RepositoryProvider(
+      create: (context) => RoutesRepository(),
+      child: BlocProvider(
+        create: (context) => RoutesBloc(
+          repository: context.read<RoutesRepository>()
+        )..add(LoadRoutesEvent()),
+        child: MaterialApp(
         title: 'Transporte Smart',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

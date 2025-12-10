@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
-import 'package:transporte_smart_app/main.dart'; // Para navegar a AppShell
+import 'package:transporte_smart_app/main.dart';
+import 'package:transporte_smart_app/services/data_uploader.dart'; // Para navegar a AppShell
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,6 +23,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _iniciarCarga() async {
     // Aquí podrías cargar tu RoutesBloc si quisieras esperar a que termine
     // Por ahora, usamos un retraso estético de 3 segundos
+    // --- DESCOMENTAR ESTO SOLO UNA VEZ PARA SUBIR DATOS ---
+    await DataUploader().uploadJsonToFirebase(); 
+    print("Datos subidos");
     await Future.delayed(const Duration(seconds: 3));
 
     if (mounted) {
