@@ -17,7 +17,7 @@ class AppRoute {
   });
 
   // Constructor desde Firebase
-  factory AppRoute.fromFirestore(Map<String, dynamic> json) {
+  factory AppRoute.fromFirestore(Map<String, dynamic> json, Map<String, dynamic> data) {
     // 1. Manejo de Paradas
     Map<String, List<String>> parsedStops = {};
     if (json['stops'] != null) {

@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:transporte_smart_app/repositories/routes_repository.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
 import 'package:transporte_smart_app/models/route_model.dart';
 import 'package:transporte_smart_app/screens/camera_screen.dart';
@@ -33,16 +35,17 @@ class MyApp extends StatelessWidget {
           repository: context.read<RoutesRepository>()
         )..add(LoadRoutesEvent()),
         child: MaterialApp(
-        title: 'Transporte Smart',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          scaffoldBackgroundColor: AppColors.background,
-          fontFamily: 'Inter', 
-          useMaterial3: true,
+          title: 'Transporte Smart',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            scaffoldBackgroundColor: AppColors.background,
+            fontFamily: 'Inter', 
+            useMaterial3: true,
+          ),
+          home: const SplashScreen(),
         ),
-        home: const SplashScreen(),
       ),
-    );
+    ); 
   }
 }
 

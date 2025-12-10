@@ -26,55 +26,49 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
   LatLng _center = const LatLng(-16.5000, -68.1193);
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void didUpdateWidget(MapScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
     // Si cambia la ruta y tiene coordenadas, centrar el mapa
     if (widget.activeRoute != null && 
         widget.activeRoute!.coordinates.isNotEmpty && 
         widget.activeRoute != oldWidget.activeRoute) {
-      
       _mapController.move(widget.activeRoute!.coordinates.first, 14.0);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Verificamos si la ruta tiene coordenadas reales
+    // 1. VERIFICACIÓN DE DATOS 
     final hasCoords = widget.activeRoute != null && widget.activeRoute!.coordinates.isNotEmpty;
     
-    // Si es vuelta, invertimos las coordenadas para pintar (opcional, visualmente es igual la línea)
-    final pointsToShow = (hasCoords && widget.isReturn) 
+    final List<LatLng> pointsToShow = (hasCoords && widget.isReturn) 
         ? widget.activeRoute!.coordinates.reversed.toList()
         : (hasCoords ? widget.activeRoute!.coordinates : []);
 
     return Scaffold(
       body: Stack(
         children: [
-          // 1. MAPA REAL (OpenStreetMap)
+          // --- CAPA 1: EL MAPA REAL ---
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
+              // Si hay puntos, centramos en el primero; si no, en La Paz general
               initialCenter: hasCoords ? pointsToShow.first : _center,
               initialZoom: 13.5,
             ),
             children: [
-              // Capa de Mapa (Estilo Oscuro CartoDB - Gratis)
+              // Tiles (El diseño visual del mapa - Gratis)
               TileLayer(
                 urlTemplate: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-                userAgentPackageName: 'com.transporte.smart', // Pon cualquier ID
+                userAgentPackageName: 'com.tu_nombre.transporte_app', 
               ),
               
-              // Capa de Ruta (Polyline)
+              // Dibujo de la Ruta (Línea Azul/Naranja)
               if (hasCoords)
                 PolylineLayer(
                   polylines: [
                     Polyline(
-                      points: pointsToShow,
+                      points: pointsToShow, // Aquí usamos la variable arreglada
                       strokeWidth: 5.0,
                       color: widget.isReturn ? AppColors.secondary : AppColors.primary,
                     ),
@@ -82,7 +76,7 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
                 ),
 
               // Marcadores (Inicio y Fin)
-              if (hasCoords)
+              if (hasCoords && pointsToShow.isNotEmpty)
                 MarkerLayer(
                   markers: [
                     // Inicio
@@ -102,7 +96,9 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
             ],
           ),
 
-          // 2. PANEL DE ERROR SI NO HAY GPS
+          // --- CAPA 2: PANELES INFORMATIVOS ---
+          
+          // Caso A: No hay GPS para esta ruta
           if (widget.activeRoute != null && !hasCoords)
              Positioned(
                bottom: 100, left: 20, right: 20,
@@ -111,48 +107,46 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
                  decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(16)),
                  child: Row(
                    children: const [
-                     Icon(LucideIcons.alarmClock, color: AppColors.secondary),
+                     Icon(LucideIcons.triangleAlert, color: AppColors.secondary),
                      SizedBox(width: 12),
-                     Expanded(child: Text("Esta ruta aún no tiene mapa GPS activo. Mostrando vista general.", style: TextStyle(color: Colors.white))),
+                     Expanded(child: Text("Sin GPS activo para esta ruta.", style: TextStyle(color: Colors.white))),
                    ],
                  ),
                ),
              ),
 
-          // 3. PANEL DE NAVEGACIÓN (Si hay GPS)
+          // Caso B: Sí hay GPS -> Panel de Navegación
           if (hasCoords)
-            _buildInfoPanel()
+            Positioned(
+              bottom: 100, left: 20, right: 20,
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: AppColors.surface.withOpacity(0.95),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(color: AppColors.surfaceLight),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Línea ${widget.activeRoute!.lineNumber}", 
+                         style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 18)),
+                    Text(widget.activeRoute!.routeName, style: const TextStyle(color: Colors.white)),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: const [
+                        Icon(LucideIcons.bus, color: Colors.white, size: 16),
+                        SizedBox(width: 8),
+                        Text("Rastreo GPS (OpenStreetMaps)", 
+                             style: TextStyle(color: Colors.green, fontSize: 12, fontWeight: FontWeight.bold)),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildInfoPanel() {
-    return Positioned(
-      bottom: 100, left: 20, right: 20,
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: AppColors.surface.withOpacity(0.95),
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: AppColors.surfaceLight),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Línea ${widget.activeRoute!.lineNumber}", style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 18)),
-            Text(widget.activeRoute!.routeName, style: const TextStyle(color: Colors.white)),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                const Icon(LucideIcons.bus, color: Colors.white, size: 16),
-                const SizedBox(width: 8),
-                const Text("Rastreo GPS Activo (OpenStreetMaps)", style: TextStyle(color: Colors.green, fontSize: 12, fontWeight: FontWeight.bold)),
-              ],
-            )
-          ],
-        ),
       ),
     );
   }
