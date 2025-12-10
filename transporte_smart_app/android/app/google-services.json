@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "544067716196",
+    "project_id": "transportesmart-5e467",
+    "storage_bucket": "transportesmart-5e467.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544067716196:android:74cba7d7a8708f8e708b71",
+        "android_client_info": {
+          "package_name": "com.example.transporte_smart_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8GA0aEsivWfgNyciiyj6MLGOKmdyaHV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
