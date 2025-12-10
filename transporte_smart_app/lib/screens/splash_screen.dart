@@ -24,8 +24,8 @@ class _SplashScreenState extends State<SplashScreen> {
     // Aquí podrías cargar tu RoutesBloc si quisieras esperar a que termine
     // Por ahora, usamos un retraso estético de 3 segundos
     // --- DESCOMENTAR ESTO SOLO UNA VEZ PARA SUBIR DATOS ---
-    await DataUploader().uploadJsonToFirebase(); 
-    print("Datos subidos");
+    //await DataUploader().uploadJsonToFirebase(); 
+    //print("Datos subidos");
     await Future.delayed(const Duration(seconds: 3));
 
     if (mounted) {

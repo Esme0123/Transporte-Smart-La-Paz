@@ -2,22 +2,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:transporte_smart_app/models/route_model.dart';
 
 class RoutesRepository {
-  // Aquí se hace la conexión. 'rutas' es el nombre de la colección en tu Firebase.
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Método para obtener todas las rutas
   Future<List<AppRoute>> getAllRoutes() async {
     try {
-      // Petición REAL a la nube
+      print("Consultando Firebase...");
       final QuerySnapshot snapshot = await _firestore.collection('rutas').get();
       
-      // Convertimos los documentos de Firebase a objetos Dart (AppRoute)
+      print("Documentos encontrados: ${snapshot.docs.length}");
+
       return snapshot.docs.map((doc) {
-        return AppRoute.fromFirestore(doc.id as Map<String, dynamic>, doc.data() as Map<String, dynamic>);
+        // Aseguramos que data() sea tratado como Map<String, dynamic>
+        // Si data() falla, pasamos un mapa vacío para que no crashee
+        final data = doc.data() as Map<String, dynamic>? ?? {};
+        return AppRoute.fromFirestore(data);
       }).toList();
+      
     } catch (e) {
-      print("Error Firebase: $e");
-      return []; // Retorna lista vacía si falla para no romper la app
+      print("ERROR CRÍTICO EN REPOSITORIO: $e");
+      // Retornamos lista vacía en vez de lanzar error para que la UI no se ponga roja
+      return []; 
     }
   }
 }

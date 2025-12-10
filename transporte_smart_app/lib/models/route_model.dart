@@ -6,7 +6,7 @@ class AppRoute {
   final String routeName;
   final String destination;
   final Map<String, List<String>> stops;
-  final List<LatLng> coordinates; 
+  final List<LatLng> coordinates;
 
   AppRoute({
     required this.lineNumber,
@@ -16,42 +16,58 @@ class AppRoute {
     this.coordinates = const [],
   });
 
-  // Constructor desde Firebase
-  factory AppRoute.fromFirestore(Map<String, dynamic> json, Map<String, dynamic> data) {
-    // 1. Manejo de Paradas
+  // Constructor BLINDADO para Firebase
+  factory AppRoute.fromFirestore(Map<String, dynamic> json) {
+    
+    // 1. Manejo seguro de Paradas (Stops)
     Map<String, List<String>> parsedStops = {};
-    if (json['stops'] != null) {
-      Map<String, dynamic> rawStops = json['stops'];
-      rawStops.forEach((key, value) {
-        if (value is List) {
-          parsedStops[key] = value.map((e) => e.toString()).toList();
-        }
-      });
+    try {
+      if (json['stops'] != null) {
+        // Usamos Map.from para asegurar que Dart entienda el tipo
+        final rawStops = Map<String, dynamic>.from(json['stops']);
+        
+        rawStops.forEach((key, value) {
+          if (value is List) {
+            // Convertimos cada elemento de la lista a String explícitamente
+            parsedStops[key] = value.map((e) => e.toString()).toList();
+          }
+        });
+      }
+    } catch (e) {
+      print("Error parseando paradas de ${json['lineNumber']}: $e");
     }
 
-    // 2. Manejo de Coordenadas (GeoPoint a LatLng)
+    // 2. Manejo seguro de Coordenadas
     List<LatLng> parsedCoords = [];
-    if (json['coordinates'] != null) {
-      var coordsList = json['coordinates'] as List;
-      for (var point in coordsList) {
-        if (point is GeoPoint) {
-          parsedCoords.add(LatLng(point.latitude, point.longitude));
-        } else if (point is Map) {
-          // Por si subimos como Map simple
-          parsedCoords.add(LatLng(point['lat'], point['lng']));
+    try {
+      if (json['coordinates'] != null && json['coordinates'] is List) {
+        var coordsList = json['coordinates'] as List;
+        for (var point in coordsList) {
+          if (point is Map) {
+            // Caso: se subió como Map {'lat': x, 'lng': y}
+            parsedCoords.add(LatLng(
+              (point['lat'] as num).toDouble(), 
+              (point['lng'] as num).toDouble()
+            ));
+          } else if (point is GeoPoint) {
+            // Caso: se subió como GeoPoint nativo de Firebase
+            parsedCoords.add(LatLng(point.latitude, point.longitude));
+          }
         }
       }
+    } catch (e) {
+      print("Error parseando coordenadas: $e");
     }
 
     return AppRoute(
-      lineNumber: json['lineNumber'] ?? '000',
-      routeName: json['routeName'] ?? 'Sin Nombre',
-      destination: json['destination'] ?? '',
+      lineNumber: (json['lineNumber'] ?? '000').toString(),
+      routeName: (json['routeName'] ?? 'Ruta Sin Nombre').toString(),
+      destination: (json['destination'] ?? '').toString(),
       stops: parsedStops,
       coordinates: parsedCoords,
     );
   }
-  
+
   // Convertir a Map para subir a Firebase (Usado por el script)
   Map<String, dynamic> toMap() {
     return {
@@ -63,31 +79,13 @@ class AppRoute {
     };
   }
 
-  // Mantén tu fromJson antiguo si quieres, pero adáptalo para devolver AppRoute
+  // Helper para el JSON local (si alguna vez se necesita)
   factory AppRoute.fromJson(String number, Map<String, dynamic> json) {
-
-     final paradasMap = json['paradas'] is Map<String, dynamic> 
-        ? json['paradas'] as Map<String, dynamic> 
-        : <String, dynamic>{};
-
-    final rawIda = paradasMap['ida'];
-    final List<String> paradasIda = (rawIda is List) 
-        ? rawIda.map((e) => e.toString()).where((e) => e.trim().isNotEmpty).toList() 
-        : [];
-    
-    final rawVuelta = paradasMap['vuelta'];
-    final List<String> paradasVuelta = (rawVuelta is List) 
-        ? rawVuelta.map((e) => e.toString()).where((e) => e.trim().isNotEmpty).toList() 
-        : [];
-
     return AppRoute(
       lineNumber: number,
       routeName: json['nombre'] ?? '',
-      destination: paradasIda.isNotEmpty ? paradasIda.last : '',
-      stops: {
-        'ida': paradasIda,
-        'vuelta': paradasVuelta
-      },
+      destination: '',
+      stops: {},
     );
   }
 }
