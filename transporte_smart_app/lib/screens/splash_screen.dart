@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:transporte_smart_app/theme/app_colors.dart';
 import 'package:transporte_smart_app/main.dart';
-import 'package:transporte_smart_app/services/data_uploader.dart'; // Para navegar a AppShell
+//import 'package:transporte_smart_app/services/data_uploader.dart'; 
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
