@@ -17,7 +17,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _isLoading = false;
 
   void _registerReal() async {
-    if (_emailCtrl.text.isEmpty || _passCtrl.text.isEmpty) return;
+    if (_emailCtrl.text.isEmpty || _passCtrl.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Por favor llena todos los campos")),
+      );
+      return;
+    }
 
     setState(() => _isLoading = true);
     try {
@@ -28,10 +33,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
         Navigator.pop(context, true); // Cierra login y avisa éxito
       }
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error: ${e.toString().split(']').last}")),
-        );
+      if (_authRepo.currentUser != null) {
+        if (mounted) {
+          Navigator.pop(context);
+          Navigator.pop(context, true);
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(e.toString().replaceAll("Exception: ", "")),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);

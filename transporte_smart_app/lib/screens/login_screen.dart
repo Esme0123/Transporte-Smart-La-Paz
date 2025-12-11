@@ -30,13 +30,19 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pop(context, true); 
       }
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.toString().replaceAll("Exception: ", "")),
-            backgroundColor: AppColors.error,
-          ),
-        );
+      if (_authRepo.currentUser != null) {
+        // ¡Sí entró! Ignoramos el error y salimos al perfil
+        if (mounted) Navigator.pop(context, true);
+      } else {
+        // Error real (contraseña mal, etc), mostramos mensaje
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(e.toString().replaceAll("Exception: ", "")),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
