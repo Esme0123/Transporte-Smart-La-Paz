@@ -143,8 +143,9 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
             ),
             children: [
               TileLayer(
-                urlTemplate: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-                userAgentPackageName: 'com.tu_nombre.app',
+                urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', 
+                userAgentPackageName: 'com.example.transporte_smart_app',
+                subdomains: const ['a', 'b', 'c'],
               ),
               
               if (hasCoords)
@@ -152,7 +153,7 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
                   polylines: [
                     Polyline(
                       points: pointsToShow,
-                      strokeWidth: 5.0,
+                      strokeWidth: 6.0,
                       color: widget.isReturn ? AppColors.secondary : AppColors.primary,
                     ),
                   ],

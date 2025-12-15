@@ -6,6 +6,8 @@ import 'package:transporte_smart_app/models/route_model.dart';
 import 'package:transporte_smart_app/blocs/routes/routes_bloc.dart';
 import 'package:transporte_smart_app/blocs/routes/routes_state.dart';
 import 'package:transporte_smart_app/blocs/routes/routes_event.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:transporte_smart_app/screens/login_screen.dart';
 
 class RoutesScreen extends StatelessWidget {
   final Function(AppRoute) onShowResult;
@@ -26,7 +28,7 @@ class RoutesScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 60),
             // Título
-            Text("Mis Rutas",
+            const Text("Mis Rutas",
                 style: TextStyle(
                     color: AppColors.textPrimary,
                     fontSize: 28,
@@ -36,15 +38,14 @@ class RoutesScreen extends StatelessWidget {
             
             // --- BUSCADOR ---
             TextField(
-              style: const TextStyle(color: Colors.white),
               onChanged: (value) {
-                // Dispara el evento al Bloc
                 context.read<RoutesBloc>().add(SearchRoutesEvent(value));
               },
+              style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                hintText: "Buscar línea (ej: 265, San Pedro...)",
-                hintStyle: const TextStyle(color: AppColors.textSecondary),
-                prefixIcon: const Icon(LucideIcons.search, color: AppColors.primary),
+                hintText: "Buscar línea o calle...",
+                hintStyle: TextStyle(color: AppColors.textSecondary.withOpacity(0.5)),
+                prefixIcon: const Icon(LucideIcons.search, color: AppColors.textSecondary),
                 filled: true,
                 fillColor: AppColors.surface,
                 border: OutlineInputBorder(
@@ -53,161 +54,142 @@ class RoutesScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
-            
-            // Texto subtítulo
-            const Text("Resultados",
-                style: TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 14)),
-            
-            const SizedBox(height: 10),
 
-            // Lista de Rutas (BlocBuilder)
+            const SizedBox(height: 20),
+
+            // --- LISTA DE RUTAS ---
             Expanded(
               child: BlocBuilder<RoutesBloc, RoutesState>(
                 builder: (context, state) {
                   if (state is RoutesLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator(color: AppColors.primary));
                   } else if (state is RoutesLoaded) {
                     if (state.filteredRoutes.isEmpty) {
-                      return const Center(
-                        child: Text("No se encontraron rutas", 
-                        style: TextStyle(color: Colors.white))
-                      );
+                      return const Center(child: Text("No se encontraron rutas", style: TextStyle(color: Colors.white)));
                     }
-                    
+
                     return ListView.builder(
                       padding: EdgeInsets.zero,
                       itemCount: state.filteredRoutes.length,
                       itemBuilder: (context, index) {
                         final route = state.filteredRoutes[index];
-                        // Verificamos si esta ruta está en la lista de IDs favoritos
-                        final isFav = state.favoriteIds.contains(route.lineNumber);
-                        
-                        return _RouteCard(
-                          route: route,
-                          isFavorite: isFav,
-                          onTap: () => onShowResult(route),
-                          onToggleFavorite: () {
-                            context.read<RoutesBloc>().add(ToggleFavoriteEvent(route.lineNumber));
-                          },
+                        final isFavorite = state.favoriteIds.contains(route.lineNumber);
+
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 12),
+                          decoration: BoxDecoration(
+                            color: AppColors.surface,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: isFavorite ? AppColors.primary.withOpacity(0.5) : Colors.transparent,
+                            ),
+                          ),
+                          child: InkWell(
+                            onTap: () => onShowResult(route),
+                            borderRadius: BorderRadius.circular(16),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                children: [
+                                  // Icono Bus
+                                  Container(
+                                    width: 40, height: 40,
+                                    decoration: BoxDecoration(
+                                      color: isFavorite ? AppColors.primary : AppColors.surfaceLight,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(LucideIcons.bus, color: Colors.black, size: 20),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  
+                                  // Textos
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Línea ${route.lineNumber}",
+                                          style: const TextStyle(
+                                            color: AppColors.primary, 
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14
+                                          ),
+                                        ),
+                                        const SizedBox(height: 6),
+                                        Text(
+                                          route.routeName,
+                                          style: const TextStyle(
+                                              color: AppColors.textPrimary,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Text(
+                                          "Destino: ${route.destination}",
+                                          style: const TextStyle(
+                                              color: AppColors.textSecondary, fontSize: 12),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  
+                                  // --- BOTÓN FAVORITO CON RESTRICCIÓN DE LOGIN ---
+                                  IconButton(
+                                    icon: Icon(
+                                      isFavorite ? LucideIcons.star : LucideIcons.star,
+                                      fill: isFavorite ? 1.0 : 0.0,
+                                      color: isFavorite ? AppColors.star : AppColors.textSecondary.withOpacity(0.3),
+                                    ),
+                                    onPressed: () {
+                                      // 1. Verificamos Login
+                                      final user = FirebaseAuth.instance.currentUser;
+                                      
+                                      if (user == null) {
+                                        // 2. Si es invitado -> Alerta
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            backgroundColor: AppColors.surface,
+                                            title: const Text("Inicia Sesión", style: TextStyle(color: AppColors.textPrimary)),
+                                            content: const Text("Debes registrarte para guardar tus rutas favoritas.", style: TextStyle(color: AppColors.textSecondary)),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(context),
+                                                child: const Text("Cancelar", style: TextStyle(color: AppColors.textSecondary)),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+                                                },
+                                                child: const Text("Ir al Login", style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      } else {
+                                        // 3. Si está logueado -> Guardamos (Llamada al BLoC)
+                                        context.read<RoutesBloc>().add(ToggleFavoriteEvent(route.lineNumber));
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         );
                       },
                     );
                   }
-                  return const Text("Error al cargar", style: TextStyle(color: Colors.white));
+                  return const SizedBox();
                 },
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-// --- WIDGET TARJETA INDIVIDUAL (Faltaba esto) ---
-class _RouteCard extends StatelessWidget {
-  final AppRoute route;
-  final bool isFavorite;
-  final VoidCallback onTap;
-  final VoidCallback onToggleFavorite;
-
-  const _RouteCard({
-    required this.route,
-    required this.isFavorite,
-    required this.onTap,
-    required this.onToggleFavorite,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.surfaceLight),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(16),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                // Ícono de bus
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(LucideIcons.bus, color: AppColors.primary),
-                ),
-                const SizedBox(width: 16),
-                
-                // Textos
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: AppColors.surfaceLight,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              "Línea ${route.lineNumber}",
-                              style: const TextStyle(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        route.routeName,
-                        style: const TextStyle(
-                            color: AppColors.textPrimary,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        "Destino: ${route.destination}",
-                        style: const TextStyle(
-                            color: AppColors.textSecondary, fontSize: 12),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-                
-                // Botón Favorito
-                IconButton(
-                  icon: Icon(
-                    isFavorite ? LucideIcons.star : LucideIcons.star, // Icono lleno si es favorito
-                    fill: isFavorite ? 1.0 : 0.0, // Relleno visual (hack para Lucide) o usa Icons.star
-                    color: isFavorite ? AppColors.star : AppColors.textSecondary.withOpacity(0.3),
-                  ),
-                  onPressed: onToggleFavorite,
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );
