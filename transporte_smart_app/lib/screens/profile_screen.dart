@@ -22,15 +22,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _notifications = false;
   
   final AuthRepository _authRepo = AuthRepository();
-  User? _currentUser; // Usuario real de Firebase
+  User? _currentUser; 
 
   @override
   void initState() {
     super.initState();
-    // 1. Cargar usuario al inicio
     _currentUser = _authRepo.currentUser;
     
-    // 2. Escuchar cambios (login/logout) en tiempo real
+    // Escuchar cambios de sesión en tiempo real
     _authRepo.authStateChanges.listen((user) {
       if (mounted) {
         setState(() {
@@ -56,12 +55,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  // --- LÓGICA DE INSIGNIAS (GAMIFICACIÓN) ---
+  String _getBadgeTitle(int favCount) {
+    if (!_isUserLoggedIn()) return "Visitante";
+    if (favCount == 0) return "Turista";
+    if (favCount <= 2) return "Explorador";
+    return "Guía Paceño"; // Nivel experto
+  }
+
+  IconData _getBadgeIcon(int favCount) {
+    if (!_isUserLoggedIn()) return LucideIcons.user;
+    if (favCount == 0) return LucideIcons.map;
+    if (favCount <= 2) return LucideIcons.compass;
+    return LucideIcons.crown; // Corona para el experto
+  }
+
+  Color _getBadgeColor(int favCount) {
+    if (!_isUserLoggedIn()) return AppColors.textSecondary;
+    if (favCount == 0) return Colors.blueGrey;
+    if (favCount <= 2) return AppColors.primary;
+    return AppColors.star; // Dorado para el experto
+  }
+
+  bool _isUserLoggedIn() => _currentUser != null;
+
   @override
   Widget build(BuildContext context) {
-    // Si _currentUser no es null, estamos logueados
-    final bool isLoggedIn = _currentUser != null;
+    final bool isLoggedIn = _isUserLoggedIn();
     final String displayName = isLoggedIn ? (_currentUser!.email ?? "Usuario") : "Invitado";
-    final String userLevel = isLoggedIn ? "Usuario Verificado" : "Turista";
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -77,6 +98,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 .toList();
           }
 
+          // Calculamos la insignia actual basada en favoritos
+          final String currentBadge = _getBadgeTitle(favCount);
+          final IconData currentIcon = _getBadgeIcon(favCount);
+          final Color currentColor = _getBadgeColor(favCount);
+
           return ListView(
             padding: const EdgeInsets.symmetric(horizontal: 24.0).copyWith(top: 60.0, bottom: 120.0),
             children: [
@@ -89,17 +115,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       shape: BoxShape.circle,
                       color: AppColors.surface,
                       border: Border.all(
-                        color: isLoggedIn ? AppColors.primary : AppColors.textSecondary, 
+                        color: isLoggedIn ? currentColor : AppColors.textSecondary, 
                         width: 2
                       ),
                       boxShadow: isLoggedIn 
-                        ? [BoxShadow(color: AppColors.primary.withOpacity(0.3), blurRadius: 15)]
+                        ? [BoxShadow(color: currentColor.withOpacity(0.3), blurRadius: 15)]
                         : [],
                     ),
                     child: Icon(
-                      isLoggedIn ? LucideIcons.userCheck : LucideIcons.user, 
+                      currentIcon, 
                       size: 30, 
-                      color: isLoggedIn ? AppColors.primary : AppColors.textSecondary
+                      color: isLoggedIn ? currentColor : AppColors.textSecondary
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -109,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          displayName, // Muestra el correo real
+                          displayName, 
                           style: const TextStyle(
                             color: AppColors.textPrimary, 
                             fontSize: 18, 
@@ -135,7 +161,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           )
                         else
-                           Text(userLevel, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                           Row(
+                             children: [
+                               Text("Nivel: ", style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                               Text(currentBadge, style: TextStyle(color: currentColor, fontSize: 12, fontWeight: FontWeight.bold)),
+                             ],
+                           ),
                       ],
                     ),
                   )
@@ -147,9 +178,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // --- 2. ESTADÍSTICAS ---
               Row(
                 children: [
-                  Expanded(child: _buildStatCard("Nivel", userLevel.split(" ").last, LucideIcons.medal)),
+                  Expanded(child: _buildStatCard("Insignia", currentBadge, currentIcon, iconColor: currentColor)),
                   const SizedBox(width: 12),
-                  Expanded(child: _buildStatCard("Guardados", "$favCount", LucideIcons.heart)),
+                  Expanded(child: _buildStatCard("Guardados", "$favCount", LucideIcons.heart, iconColor: AppColors.primary)),
                 ],
               ),
 
@@ -172,7 +203,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.bold)),
               const SizedBox(height: 12),
               
-              _buildSettingsTile("Modo Oscuro", LucideIcons.moon, _darkMode, (v) => setState(() => _darkMode = v)),
+              // MODO OSCURO (Truco para la defensa)
+              _buildSettingsTile("Modo Oscuro", LucideIcons.moon, _darkMode, (v) {
+                // No permitimos desactivarlo, pero mostramos un mensaje cool
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Transporte Smart usa Modo Oscuro para ahorrar batería en ruta."),
+                    backgroundColor: AppColors.surface,
+                    duration: Duration(seconds: 2),
+                  )
+                );
+                // Mantenemos el switch en true
+                setState(() => _darkMode = true);
+              }),
+
               _buildSettingsTile("Notificaciones", LucideIcons.bell, _notifications, (v) => setState(() => _notifications = v)),
               
               const SizedBox(height: 20),
@@ -205,14 +249,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildStatCard(String label, String value, IconData icon) {
+  Widget _buildStatCard(String label, String value, IconData icon, {Color? iconColor}) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.surfaceLight)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.primary, size: 20),
+          Icon(icon, color: iconColor ?? AppColors.primary, size: 20),
           const SizedBox(height: 8),
           Text(value, style: const TextStyle(color: AppColors.textPrimary, fontSize: 16, fontWeight: FontWeight.bold), maxLines: 1, overflow: TextOverflow.ellipsis),
           Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
